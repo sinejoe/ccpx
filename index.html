@@ -164,10 +164,10 @@
   .cell.white input::selection{ background:transparent; color:var(--ink); }
   .cell .num{
     position:absolute;
-    top:0px; left:1px;
-    font-size:7px;
-    font-family:'Courier New',monospace;
-    color:#5a5346;
+    top:0.5px; left:1.5px;
+    font-size:7.5px;
+    font-family:monospace;
+    color:#060687;
     pointer-events:none;
   }
   .cell.hi{ background:var(--hi); }
@@ -272,7 +272,7 @@
     grid-template-rows:repeat(15, 1fr);
   }
   body.focus-mode .cell.white input{ font-size:clamp(11px, 3.2vmin, 30px); }
-  body.focus-mode .cell .num{ font-size:clamp(6px, 1vmin, 11px); }
+  body.focus-mode .cell .num{ font-size:clamp(9.5px, 1.3vmin, 15.5px); }
   body.focus-mode #cluesPanel{
     flex:1 1 auto;
     max-width:none;
