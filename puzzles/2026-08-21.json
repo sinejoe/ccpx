@@ -6,6 +6,8 @@
   "subtitle": "Jonesin' by Matt Jones",
   "solutionSalt": "ccpxwd-2026-ref-solve",
   "solutionHashesFile": "puzzles/2026-08-21.solution-hashes.txt",
+  "solutionSource": "official",
+  "officialSolutionUrl": "https://issuu.com/charlestoncitypaper/docs/charleston_city_paper_08_28_2026_-_30.5/23",
   "pattern": [
     "....#...##.....",
     "....#...#......",
