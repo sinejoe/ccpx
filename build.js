@@ -12,7 +12,7 @@ const DIST = path.join(ROOT, 'dist');
 const SITE_URL = 'https://ccpx.fyi';
 
 const HTML_FILES = ['index.html', 'archive.html', '404.html'];
-const COPY_PATHS = ['puzzles', '_redirects', 'favicon.svg', 'favicon.ico'];
+const COPY_PATHS = ['puzzles', '_redirects', 'favicon.svg', 'favicon.ico', 'favicon-96x96.png'];
 
 const MINIFY_OPTS = {
   collapseWhitespace: true,
