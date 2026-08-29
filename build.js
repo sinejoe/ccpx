@@ -39,7 +39,10 @@ async function main(){
   }
 
   for(const p of COPY_PATHS){
-    fs.cpSync(path.join(ROOT, p), path.join(DIST, p), { recursive: true });
+    fs.cpSync(path.join(ROOT, p), path.join(DIST, p), {
+      recursive: true,
+      filter: (src) => !src.endsWith('.solution.json'),
+    });
   }
 
   await buildPuzzleVariants();

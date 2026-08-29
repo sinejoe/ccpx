@@ -398,6 +398,7 @@
     line-height:1.5;
   }
   .status-badge.show{ display:inline-block; }
+  #completionSourceLink{ width:fit-content; margin-left:auto; margin-right:auto; }
   /* Understated either way -- a mismatch isn't an error state, just a note */
   .status-badge.match{ background:#dce8dc; }
   .status-badge.mismatch{ background:#efe2c8; }
@@ -423,7 +424,7 @@
 <div id="app">
   <div id="leftCol">
     <div id="gridWrap"><div id="grid"></div></div>
-    <span id="completionStatus" class="status-badge"><span id="completionStatusText"></span><a id="completionSourceLink" href="#" target="_blank" rel="noopener" style="display:none; margin-top:4px; color:inherit;">(source)</a></span>
+    <span id="completionStatus" class="status-badge"><span id="completionStatusText"></span><a id="completionSourceLink" href="#" target="_blank" rel="noopener" style="display:none; margin-top:4px; color:inherit; text-decoration:none;">(<span style="text-decoration:underline;">source</span>)</a></span>
   </div>
   <div id="cluesPanel">
     <button id="hamburgerBtn" aria-label="Tools">&#9776;</button>
