@@ -1,0 +1,326 @@
+{
+  "id": "20260911",
+  "date": "2026-09-11",
+  "kickerDate": "Sep 11 2026",
+  "title": "“The Little Sleep”",
+  "subtitle": "Jonesin' by Matt Jones — I'll just step away for a bit.",
+  "solutionSalt": "ccpxwd-2026-ref-solve",
+  "solutionHashesFile": "puzzles/2026-09-11.solution-hashes.txt",
+  "pattern": [
+    ".....#....#....",
+    ".....#....#....",
+    "..........#....",
+    "......#........",
+    "###....#.......",
+    "........#....##",
+    ".....#.....#...",
+    "....#.....#....",
+    "...#.....#.....",
+    "##....#........",
+    ".......#....###",
+    "........#......",
+    "....#..........",
+    "....#....#.....",
+    "....#....#....."
+  ],
+  "across": [
+    [
+      1,
+      "Audibly stunned"
+    ],
+    [
+      6,
+      "Obstacle"
+    ],
+    [
+      10,
+      "Attempt"
+    ],
+    [
+      14,
+      "Firenze’s ___ Vecchio"
+    ],
+    [
+      15,
+      "Beginning of a Shakespearean soliloquy"
+    ],
+    [
+      16,
+      "Luau tuber"
+    ],
+    [
+      17,
+      "Introduction to cooking?"
+    ],
+    [
+      19,
+      "Chain selling meatballs (and other, larger things)"
+    ],
+    [
+      20,
+      "“300” setting"
+    ],
+    [
+      21,
+      "Happening"
+    ],
+    [
+      23,
+      "Tuesday offering?"
+    ],
+    [
+      25,
+      "Museum guides"
+    ],
+    [
+      26,
+      "Like random whistling, say"
+    ],
+    [
+      30,
+      "Southwest formation"
+    ],
+    [
+      31,
+      "Long-legged wader"
+    ],
+    [
+      32,
+      "The “T” in GTA 6"
+    ],
+    [
+      34,
+      "Friend-o"
+    ],
+    [
+      37,
+      "Cookware items"
+    ],
+    [
+      38,
+      "Exhausted"
+    ],
+    [
+      39,
+      "Curse"
+    ],
+    [
+      40,
+      "___ Na Na (oldies vocal group)"
+    ],
+    [
+      41,
+      "Japanese barberry feature"
+    ],
+    [
+      42,
+      "___-Potty (music festival amenity)"
+    ],
+    [
+      43,
+      "Response in court"
+    ],
+    [
+      45,
+      "Where wrecks may lead to an x-ray?"
+    ],
+    [
+      47,
+      "Close off"
+    ],
+    [
+      50,
+      "Farm females"
+    ],
+    [
+      51,
+      "2016 film whose poster was updated slightly in 2026 to fix the angle of a hand"
+    ],
+    [
+      53,
+      "One way to get around the U.S."
+    ],
+    [
+      57,
+      "Subject of adulation"
+    ],
+    [
+      58,
+      "Forensic scientist’s findings"
+    ],
+    [
+      60,
+      "Golden Fleece ship"
+    ],
+    [
+      61,
+      "Invisible glow"
+    ],
+    [
+      62,
+      "“Cars” singer Gary"
+    ],
+    [
+      63,
+      "Chips supplier"
+    ],
+    [
+      64,
+      "Second-person plural pronoun, to Pittsburgh residents"
+    ],
+    [
+      65,
+      "Caught a little shuteye (which can be found in the four longest answers)"
+    ]
+  ],
+  "down": [
+    [
+      1,
+      "Alerts from HQ"
+    ],
+    [
+      2,
+      "Paltrow lifestyle brand"
+    ],
+    [
+      3,
+      "“Black Beauty” novelist Sewell"
+    ],
+    [
+      4,
+      "First courses"
+    ],
+    [
+      5,
+      "Motivator’s message"
+    ],
+    [
+      6,
+      "___-Foy, Quebec"
+    ],
+    [
+      7,
+      "“Chicken Little” denial"
+    ],
+    [
+      8,
+      "In ___ (trapped)"
+    ],
+    [
+      9,
+      "Settle in"
+    ],
+    [
+      10,
+      "Malt liquor hyped in ‘90s hip-hop (and not the “man with seven wives” town)"
+    ],
+    [
+      11,
+      "Dismantled"
+    ],
+    [
+      12,
+      "“___ you the cutest?”"
+    ],
+    [
+      13,
+      "Regatta entrants"
+    ],
+    [
+      18,
+      "Racing speed"
+    ],
+    [
+      22,
+      "Rapper on “Law & Order: SVU”"
+    ],
+    [
+      24,
+      "Bony prefix"
+    ],
+    [
+      26,
+      "Amts. in recipes"
+    ],
+    [
+      27,
+      "Monument Valley locale"
+    ],
+    [
+      28,
+      "It means never having to say you’re sorry?"
+    ],
+    [
+      29,
+      "Like a 41-Across"
+    ],
+    [
+      33,
+      "“Rubber Duckie” singer"
+    ],
+    [
+      35,
+      "Against"
+    ],
+    [
+      36,
+      "Tilt to the side"
+    ],
+    [
+      38,
+      "Exclamation after getting home"
+    ],
+    [
+      39,
+      "Full of oneself"
+    ],
+    [
+      41,
+      "Greenish-blue"
+    ],
+    [
+      42,
+      "“Bugonia” star Jesse"
+    ],
+    [
+      44,
+      "Colombian plains"
+    ],
+    [
+      46,
+      "Satirical horror-metal band in giant foam costumes"
+    ],
+    [
+      47,
+      "Related to a hipbone"
+    ],
+    [
+      48,
+      "Pelvic bones"
+    ],
+    [
+      49,
+      "Tedious feeling"
+    ],
+    [
+      52,
+      "“Well, shucks”"
+    ],
+    [
+      54,
+      "“The ___ of the Ancient Mariner”"
+    ],
+    [
+      55,
+      "“Take ___!” (coach’s order)"
+    ],
+    [
+      56,
+      "“The Simpsons” news anchor Brockman"
+    ],
+    [
+      59,
+      "Ciudad de la ___ (Equatorial Guinea’s new capital, not to be confused with Bolivia’s)"
+    ]
+  ]
+}

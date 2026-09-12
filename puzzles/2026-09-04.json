@@ -24,83 +24,313 @@
     "...#.....##...."
   ],
   "across": [
-    [1, "Letter between Juliet and Lima?"],
-    [5, "Forfeit voluntarily"],
-    [10, "Bryan Cranston’s “Malcolm in the Middle” role"],
-    [13, "Cynthia of “Wicked”"],
-    [15, "“This ___ a drill!”"],
-    [16, "Pub quaff"],
-    [17, "Food served in an Olympic-sized swimming pool?"],
-    [19, "Animated image"],
-    [20, "“Stormy” seabird"],
-    [21, "Simon Cowell NBC show, for short"],
-    [22, "Play group?"],
-    [23, "Character in a Copenhagen production of “Sherlock Holmes”?"],
-    [26, "Like a melody in F# while the harmony is in C, e.g."],
-    [29, "Fitting"],
-    [30, "Shakespeare’s river"],
-    [31, "Speech therapy issues"],
-    [34, "Three Gorges project"],
-    [37, "Furry animal feature, if it were only missing a stripe down the back?"],
-    [41, "Indeterminate number"],
-    [42, "Comedian Chieng"],
-    [43, "Clay-like soil"],
-    [44, "Comedian Mayall of “The Young Ones”"],
-    [45, "“I Love Lucy” surname"],
-    [48, "Offerings at a “The Dark Knight Rises”-themed taqueria?"],
-    [53, "Splitting it releases energy"],
-    [54, "Recognize"],
-    [55, "“The English Patient” setting"],
-    [59, "Obtained"],
-    [60, "Outerwear items for Tarzan’s companion?"],
-    [62, "N.Y.-to-Boston dir."],
-    [63, "Young child, informally"],
-    [64, "“___ to you!”"],
-    [65, "Took charge of"],
-    [66, "Sibilant summons"],
-    [67, "Classics IV lead singer Dennis"]
+    [
+      1,
+      "Letter between Juliet and Lima?"
+    ],
+    [
+      5,
+      "Forfeit voluntarily"
+    ],
+    [
+      10,
+      "Bryan Cranston’s “Malcolm in the Middle” role"
+    ],
+    [
+      13,
+      "Cynthia of “Wicked”"
+    ],
+    [
+      15,
+      "“This ___ a drill!”"
+    ],
+    [
+      16,
+      "Pub quaff"
+    ],
+    [
+      17,
+      "Food served in an Olympic-sized swimming pool?"
+    ],
+    [
+      19,
+      "Animated image"
+    ],
+    [
+      20,
+      "“Stormy” seabird"
+    ],
+    [
+      21,
+      "Simon Cowell NBC show, for short"
+    ],
+    [
+      22,
+      "Play group?"
+    ],
+    [
+      23,
+      "Character in a Copenhagen production of “Sherlock Holmes”?"
+    ],
+    [
+      26,
+      "Like a melody in F# while the harmony is in C, e.g."
+    ],
+    [
+      29,
+      "Fitting"
+    ],
+    [
+      30,
+      "Shakespeare’s river"
+    ],
+    [
+      31,
+      "Speech therapy issues"
+    ],
+    [
+      34,
+      "Three Gorges project"
+    ],
+    [
+      37,
+      "Furry animal feature, if it were only missing a stripe down the back?"
+    ],
+    [
+      41,
+      "Indeterminate number"
+    ],
+    [
+      42,
+      "Comedian Chieng"
+    ],
+    [
+      43,
+      "Clay-like soil"
+    ],
+    [
+      44,
+      "Comedian Mayall of “The Young Ones”"
+    ],
+    [
+      45,
+      "“I Love Lucy” surname"
+    ],
+    [
+      48,
+      "Offerings at a “The Dark Knight Rises”-themed taqueria?"
+    ],
+    [
+      53,
+      "Splitting it releases energy"
+    ],
+    [
+      54,
+      "Recognize"
+    ],
+    [
+      55,
+      "“The English Patient” setting"
+    ],
+    [
+      59,
+      "Obtained"
+    ],
+    [
+      60,
+      "Outerwear items for Tarzan’s companion?"
+    ],
+    [
+      62,
+      "N.Y.-to-Boston dir."
+    ],
+    [
+      63,
+      "Young child, informally"
+    ],
+    [
+      64,
+      "“___ to you!”"
+    ],
+    [
+      65,
+      "Took charge of"
+    ],
+    [
+      66,
+      "Sibilant summons"
+    ],
+    [
+      67,
+      "Classics IV lead singer Dennis"
+    ]
   ],
   "down": [
-    [1, "Seaweed type"],
-    [2, "“Dies ___” (“Day of Wrath”)"],
-    [3, "Dryer trap collection"],
-    [4, "Cooked too long"],
-    [5, "Gaming console with a fitness component"],
-    [6, "Black tea from India"],
-    [7, "“The Princess Bride” swordsman Montoya"],
-    [8, "“The Sound of Music” family name"],
-    [9, "French summer"],
-    [10, "“Horrible” Viking, in the comics"],
-    [11, "Top-name celebs"],
-    [12, "Southpaw"],
-    [14, "Arctic, e.g."],
-    [18, "Radius counterpart"],
-    [22, "Bill in “Bloom County,” e.g."],
-    [24, "Actress Pompeo"],
-    [25, "___ facto (therefore)"],
-    [26, "“Roll Tide” school, for short"],
-    [27, "Novelist Turgenev"],
-    [28, "Bourdain biopic of 2026"],
-    [32, "Particle in a cloud chamber"],
-    [33, "“Heidi” creator Johanna"],
-    [34, "New Look designer Christian"],
-    [35, "Barely at all"],
-    [36, "“I must have missed the ___”"],
-    [38, "Chicago paper nickname"],
-    [39, "All “Thirty-six Views of Mount Fuji” pieces, technically (if you can pluralize Picassos and Monets ...)"],
-    [40, "It shares space with the question mark"],
-    [44, "“Automatic for the People” group"],
-    [46, "Words repeated before “sin” in a Pet Shop Boys lyric"],
-    [47, "Alternative to first class"],
-    [48, "Schmear spot"],
-    [49, "Right wrongs"],
-    [50, "“I heard you”"],
-    [51, "Tears to bits"],
-    [52, "Oboes and saxes, e.g."],
-    [56, "Prefix with space"],
-    [57, "Waze offerings, for short"],
-    [58, "Helper, in brief"],
-    [60, "Monogram of the 11th U.S. president"],
-    [61, "Write quickly"]
-  ]
+    [
+      1,
+      "Seaweed type"
+    ],
+    [
+      2,
+      "“Dies ___” (“Day of Wrath”)"
+    ],
+    [
+      3,
+      "Dryer trap collection"
+    ],
+    [
+      4,
+      "Cooked too long"
+    ],
+    [
+      5,
+      "Gaming console with a fitness component"
+    ],
+    [
+      6,
+      "Black tea from India"
+    ],
+    [
+      7,
+      "“The Princess Bride” swordsman Montoya"
+    ],
+    [
+      8,
+      "“The Sound of Music” family name"
+    ],
+    [
+      9,
+      "French summer"
+    ],
+    [
+      10,
+      "“Horrible” Viking, in the comics"
+    ],
+    [
+      11,
+      "Top-name celebs"
+    ],
+    [
+      12,
+      "Southpaw"
+    ],
+    [
+      14,
+      "Arctic, e.g."
+    ],
+    [
+      18,
+      "Radius counterpart"
+    ],
+    [
+      22,
+      "Bill in “Bloom County,” e.g."
+    ],
+    [
+      24,
+      "Actress Pompeo"
+    ],
+    [
+      25,
+      "___ facto (therefore)"
+    ],
+    [
+      26,
+      "“Roll Tide” school, for short"
+    ],
+    [
+      27,
+      "Novelist Turgenev"
+    ],
+    [
+      28,
+      "Bourdain biopic of 2026"
+    ],
+    [
+      32,
+      "Particle in a cloud chamber"
+    ],
+    [
+      33,
+      "“Heidi” creator Johanna"
+    ],
+    [
+      34,
+      "New Look designer Christian"
+    ],
+    [
+      35,
+      "Barely at all"
+    ],
+    [
+      36,
+      "“I must have missed the ___”"
+    ],
+    [
+      38,
+      "Chicago paper nickname"
+    ],
+    [
+      39,
+      "All “Thirty-six Views of Mount Fuji” pieces, technically (if you can pluralize Picassos and Monets ...)"
+    ],
+    [
+      40,
+      "It shares space with the question mark"
+    ],
+    [
+      44,
+      "“Automatic for the People” group"
+    ],
+    [
+      46,
+      "Words repeated before “sin” in a Pet Shop Boys lyric"
+    ],
+    [
+      47,
+      "Alternative to first class"
+    ],
+    [
+      48,
+      "Schmear spot"
+    ],
+    [
+      49,
+      "Right wrongs"
+    ],
+    [
+      50,
+      "“I heard you”"
+    ],
+    [
+      51,
+      "Tears to bits"
+    ],
+    [
+      52,
+      "Oboes and saxes, e.g."
+    ],
+    [
+      56,
+      "Prefix with space"
+    ],
+    [
+      57,
+      "Waze offerings, for short"
+    ],
+    [
+      58,
+      "Helper, in brief"
+    ],
+    [
+      60,
+      "Monogram of the 11th U.S. president"
+    ],
+    [
+      61,
+      "Write quickly"
+    ]
+  ],
+  "solutionSource": "official",
+  "officialSolutionUrl": "https://issuu.com/charlestoncitypaper/docs/charleston_city_paper_09_11_2026_-_30.7/23"
 }
