@@ -16,4 +16,3 @@ working-files/*/printed_solution_grid_CANDIDATE.jpg
 # directory, which would silently drop .claude/ -- and project-dry.md with
 # it. Track it here on purpose.
 !.claude/
-!.claude/settings.local.json
