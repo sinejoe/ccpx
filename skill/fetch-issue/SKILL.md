@@ -67,9 +67,11 @@ moving on to `build-puzzle-json`.
 Every issue prints last week's completed grid as a small solution key.
 The fetch script opportunistically crops it and drops it in the *prior*
 week's `working-files/` directory, since that's the puzzle it belongs
-to. Treat it strictly as archival source material for whoever builds
-that prior week's puzzle JSON later — it is not wired into anything on
-its own, and turning it into an on-site "official answer key" feature is
+to. Treat it strictly as short-lived scratch for whoever builds
+that prior week's puzzle JSON later — it gets deleted as soon as its
+letters are transcribed into that week's solution hashes (it's
+gitignored, and `build-puzzle-json` Step 7 removes it). It is not wired
+into anything on its own, and turning it into an on-site "official answer key" feature is
 a separate product decision. Discuss with the user first per the
 `SOLUTION`-framing rules in the repo's `CLAUDE.md` before building
 anything that surfaces it to players.

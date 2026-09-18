@@ -5,3 +5,9 @@ _site/
 node_modules/
 dist/
 *.solution.json
+
+# Scratch crop of the prior week's printed answer grid, made fresh by
+# fetch_issue.py each week and consumed once its letters are transcribed
+# into that week's solution hashes -- never worth keeping or committing.
+working-files/*/printed_solution_grid_CANDIDATE.jpg
+.wrangler/

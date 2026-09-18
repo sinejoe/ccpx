@@ -70,6 +70,10 @@ to `solutionSource: "official"`:
 5. Verify in a real browser: fill the prior week's grid with the
    transcribed letters and confirm the completion badge shows the
    "match ... official answer key" wording, not a mismatch.
+6. Delete `printed_solution_grid_CANDIDATE.jpg` — it's scratch, consumed
+   once its letters are in the hashes file, and is gitignored so it never
+   gets committed. Same rule as the preview deploy: nothing that's served
+   its purpose gets left lying around.
 
 Skip this only if the crop is unusable (bad bounds, obscured page) or
 the prior week has no published puzzle to upgrade (e.g. a gap week) —

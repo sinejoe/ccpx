@@ -153,6 +153,10 @@ prior week's `meta.json`. Use it to upgrade that already-published
    via `input.dispatchEvent(new Event('input',{bubbles:true}))` with
    the transcribed letters, and confirm the completion badge reads the
    "match ... official answer key from a later issue" wording.
+6. Delete the crop (`printed_solution_grid_CANDIDATE.jpg`, and any
+   re-crop you made from `page.jpg`). Its letters now live in the hashes
+   file, so the image is spent scratch — it's gitignored, and it doesn't
+   stay on disk either.
 
 Skip only if the crop is unusable or the prior week has no published
 puzzle (e.g. a gap week) — note why in your final report if so, since
