@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/joe/.claude/**)",
+      "Bash(curl *)",
+      "Bash(launchctl list *)",
+      "Bash(brew services *)",
+      "Bash(docker port *)",
+      "Bash(docker exec *)",
+      "Bash(docker restart *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(brew list *)",
+      "Bash(brew install *)",
+      "Bash(git push *)",
+      "Bash(git branch *)",
+      "Bash(git reset *)",
+      "Bash(git checkout *)",
+      "Bash(git *)",
+      "Read(//Users/joe/**)",
+      "Bash(scp *)",
+      "Bash(docker cp *)",
+      "Bash(env)",
+      "Bash(echo '')",
+      "Bash(git rm *)",
+      "Bash(rm -f *)",
+      "Bash(rmdir *)",
+      "Bash(rm -rf *)"
+    ]
+  },
+  "outputStyle": "Concise",
+  "spinnerTipsEnabled": false
+}
