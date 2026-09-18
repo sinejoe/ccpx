@@ -1,0 +1,342 @@
+{
+  "id": "20260918",
+  "date": "2026-09-18",
+  "kickerDate": "Sep 18 2026",
+  "title": "“It's the Pits”",
+  "subtitle": "Jonesin' by Matt Jones — double the disappointment.",
+  "solutionSalt": "ccpxwd-2026-ref-solve",
+  "solutionHashesFile": "puzzles/2026-09-18.solution-hashes.txt",
+  "pattern": [
+    "....##....#....",
+    ".....#....#....",
+    "..........#....",
+    ".......##......",
+    "###...#.......#",
+    ".....#...#...##",
+    "...#......#....",
+    "...#.......#...",
+    "....#......#...",
+    "##...#...#.....",
+    "#.......#...###",
+    "......##.......",
+    "....#..........",
+    "....#....#.....",
+    "....#....##...."
+  ],
+  "across": [
+    [
+      1,
+      "Lowest of SATB"
+    ],
+    [
+      5,
+      "One of Stephen Baldwin’s brothers"
+    ],
+    [
+      9,
+      "“Aladdin ___” (David Bowie album)"
+    ],
+    [
+      13,
+      "Become troublesome"
+    ],
+    [
+      15,
+      "Cowboy’s tie"
+    ],
+    [
+      16,
+      "Racetrack shape"
+    ],
+    [
+      17,
+      "Sport that involves throwing very small rocks?"
+    ],
+    [
+      19,
+      "“Much to learn, you still have” speaker"
+    ],
+    [
+      20,
+      "Representative’s counterpart"
+    ],
+    [
+      21,
+      "Garage container"
+    ],
+    [
+      23,
+      "Letter after pi"
+    ],
+    [
+      24,
+      "A bit hard to believe"
+    ],
+    [
+      26,
+      "Old photograph tone"
+    ],
+    [
+      29,
+      "Rowing machine target"
+    ],
+    [
+      30,
+      "It may come between partners?"
+    ],
+    [
+      31,
+      "World Cup shout"
+    ],
+    [
+      32,
+      "Introspective query"
+    ],
+    [
+      35,
+      "“The Wind in the Willows” character"
+    ],
+    [
+      38,
+      "___ grecque (cooked with olive oil and lemon)"
+    ],
+    [
+      39,
+      "Pockets on a plate"
+    ],
+    [
+      41,
+      "Made a meal of"
+    ],
+    [
+      42,
+      "Alliance agreement"
+    ],
+    [
+      44,
+      "___ of interest"
+    ],
+    [
+      45,
+      "Actor Perlman"
+    ],
+    [
+      46,
+      "Short trip"
+    ],
+    [
+      48,
+      "Allow"
+    ],
+    [
+      49,
+      "Belly"
+    ],
+    [
+      51,
+      "Fish-eating raptors"
+    ],
+    [
+      53,
+      "Bank counter item, once"
+    ],
+    [
+      54,
+      "Knuckleheads"
+    ],
+    [
+      55,
+      "Earl Grey purveyor"
+    ],
+    [
+      59,
+      "State where “MomTok” was popularized"
+    ],
+    [
+      60,
+      "Stuff to help you slide past slam dancers?"
+    ],
+    [
+      63,
+      "Faith No More lead vocalist Patton"
+    ],
+    [
+      64,
+      "Great Lake not changing its name currently"
+    ],
+    [
+      65,
+      "Chips go-with"
+    ],
+    [
+      66,
+      "Enchilada option, at many Mexican restaurants"
+    ],
+    [
+      67,
+      "Provocative"
+    ],
+    [
+      68,
+      "Accepted"
+    ]
+  ],
+  "down": [
+    [
+      1,
+      "Birkin offerings"
+    ],
+    [
+      2,
+      "Piece of property?"
+    ],
+    [
+      3,
+      "Actor Sebastian"
+    ],
+    [
+      4,
+      "“American Beauty” actress Mena"
+    ],
+    [
+      5,
+      "Shortened version, but shorter?"
+    ],
+    [
+      6,
+      "Mauna ___"
+    ],
+    [
+      7,
+      "Bent pipe shape"
+    ],
+    [
+      8,
+      "Spectrum band"
+    ],
+    [
+      9,
+      "“___ Green” (1973 sci-fi thriller)"
+    ],
+    [
+      10,
+      "Condition caused by lifting alligator pears with one hand?"
+    ],
+    [
+      11,
+      "Rival of Federer and Djokovic"
+    ],
+    [
+      12,
+      "Stylish elegance"
+    ],
+    [
+      14,
+      "Target for some vacuum attachments"
+    ],
+    [
+      18,
+      "Stop along the Underground, maybe"
+    ],
+    [
+      22,
+      "Lyricist Gershwin"
+    ],
+    [
+      24,
+      "Biting works"
+    ],
+    [
+      25,
+      "Extreme limit"
+    ],
+    [
+      26,
+      "Laundry need"
+    ],
+    [
+      27,
+      "“Choosin’ Texas” singer Langley"
+    ],
+    [
+      28,
+      "Serpent hanging around Georgia orchards?"
+    ],
+    [
+      29,
+      "Full of vigor"
+    ],
+    [
+      33,
+      "Maple tree output"
+    ],
+    [
+      34,
+      "“Can’t Get It Out of My Head” rockers"
+    ],
+    [
+      36,
+      "Particle in a smasher"
+    ],
+    [
+      37,
+      "Say it ain’t so"
+    ],
+    [
+      40,
+      "Visibly happy or sad"
+    ],
+    [
+      43,
+      "Show currently hosted by Kristen Kish"
+    ],
+    [
+      47,
+      "“Before,” when before"
+    ],
+    [
+      50,
+      "Depose"
+    ],
+    [
+      51,
+      "Bellybutton type"
+    ],
+    [
+      52,
+      "Namesakes of a Salinger girl"
+    ],
+    [
+      53,
+      "Wooden pin"
+    ],
+    [
+      54,
+      "Word in a Jim Carrey film title"
+    ],
+    [
+      55,
+      "The “T” of TMBG"
+    ],
+    [
+      56,
+      "Master Chief’s franchise"
+    ],
+    [
+      57,
+      "___ buco"
+    ],
+    [
+      58,
+      "High point"
+    ],
+    [
+      61,
+      "Minecraft material"
+    ],
+    [
+      62,
+      "Touchdown points"
+    ]
+  ]
+}
