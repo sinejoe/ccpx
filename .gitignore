@@ -11,3 +11,8 @@ dist/
 # into that week's solution hashes -- never worth keeping or committing.
 working-files/*/printed_solution_grid_CANDIDATE.jpg
 .wrangler/
+
+# A global gitignore rule (~/.gitignore_global: ".*") hides every dotfile
+# directory, which would silently drop .claude/ -- and project-dry.md with
+# it. Track it here on purpose.
+!.claude/
