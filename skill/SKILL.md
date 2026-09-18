@@ -85,18 +85,52 @@ removed feature (see `HANDOFF.md` history) and stays removed. Instead,
 this week's puzzle gets a *reference* (non-official) solve straight
 from a live solve session:
 
-1. Serve the repo locally and open this week's puzzle in a Playwright
-   browser window; the user solves it there like a normal player.
-2. Once they say it's done, read the finished grid back out —
-   `localStorage.getItem('crossword:<id>')` (autosaved as
-   `{"rows":[...]}`, `#`=black/`.`=empty) is the simplest source, or
-   read each `.cell input`'s value directly from the DOM.
-3. Compute `sha256hex(solutionSalt + word)` per Across/Down entry (same
+The user solves on their own device (typically an iPad), so publish a
+private preview deploy rather than serving `localhost` — a local server
+isn't reachable from the device they're solving on.
+
+1. Build with the preview flag and deploy a branch preview:
+
+   ```bash
+   CCPX_PREVIEW=1 npm run build
+   CLOUDFLARE_API_TOKEN="$CF_API_TOKEN_SINE" \
+     CLOUDFLARE_ACCOUNT_ID=ee6dc5f16660ea40f92271ec5fc1ec2b \
+     npx wrangler pages deploy dist --project-name=ccpx --branch=solve-<id>
+   ```
+
+   That yields `https://solve-<id>.ccpx.pages.dev`. Give the user that
+   URL. `CCPX_PREVIEW=1` is what keeps the in-page export box in the
+   build — a default (production) build strips it out entirely, and
+   `build.js` hard-fails if a stray reference survives the strip.
+2. The user solves there. On grid-complete, a copy box appears at the
+   bottom of the grid column with the finished grid as
+   `crossword:<id>={"rows":[...]}` (`#`=black/`.`=empty); they paste
+   that back. It only ever renders on a `*.pages.dev` host
+   (`isPreviewHost()`), so it can't show up on `ccpx.fyi`.
+3. Sanity-check every answer against its clue before writing anything —
+   silently, surfacing only genuine conflicts, never framed as the user
+   being "wrong". Verify the black-cell positions in the pasted grid
+   match the published `pattern` too.
+4. Compute `sha256hex(solutionSalt + word)` per Across/Down entry (same
    method as "Baking in the official solve" above) and write
-   `puzzles/<date>.solution-hashes.txt`.
-4. Leave `solutionSource` unset (defaults to `"reference"`) on
+   `puzzles/<date>.solution-hashes.txt` — Across entries first, then
+   Down, each sorted by number.
+5. Leave `solutionSource` unset (defaults to `"reference"`) on
    `puzzles/<date>.json` — this is a submitted solve, not an official
    answer key, per the framing rules in `CLAUDE.md`.
+6. **Delete the preview deployment once production is live.** These are
+   unlisted but unauthenticated, and they hold an unpublished puzzle —
+   they don't get to linger. After the push to `main` has deployed and
+   `https://ccpx.fyi` serves the new puzzle:
+
+   ```bash
+   npx wrangler pages deployment list --project-name=ccpx   # find the preview id
+   ```
+
+   then `DELETE /accounts/<acct>/pages/projects/ccpx/deployments/<id>?force=true`
+   (the API is easier than wrangler here — no interactive prompt).
+   Confirm none are left with
+   `GET .../pages/projects/ccpx/deployments?env=preview`.
 
 When that puzzle's official printed key shows up the *following* week,
 the "Baking in the official solve" step above overwrites this file and

@@ -402,6 +402,7 @@
   /* Understated either way -- a mismatch isn't an error state, just a note */
   .status-badge.match{ background:#dce8dc; }
   .status-badge.mismatch{ background:#efe2c8; }
+  /* dev-export-box:start */
   /* Only ever shown on a *.pages.dev preview deploy -- see isPreviewHost() --
      never on the production custom domain. Lets whoever's solving there hand
      the finished grid back without a separate export page. */
@@ -421,6 +422,7 @@
     font-size:11px;
     resize:vertical;
   }
+  /* dev-export-box:end */
 </style>
 </head>
 <body>
@@ -444,10 +446,12 @@
   <div id="leftCol">
     <div id="gridWrap"><div id="grid"></div></div>
     <span id="completionStatus" class="status-badge"><span id="completionStatusText"></span><a id="completionSourceLink" href="#" target="_blank" rel="noopener" style="display:none; margin-top:4px; color:inherit; text-decoration:none;">(<span style="text-decoration:underline;">source</span>)</a></span>
+    <!-- dev-export-box:start -->
     <div id="devExportBox" style="display:none;">
       <label for="devExportText">Preview-deploy only — paste this back to Claude:</label>
       <textarea id="devExportText" readonly onclick="this.select()"></textarea>
     </div>
+    <!-- dev-export-box:end -->
   </div>
   <div id="cluesPanel">
     <button id="hamburgerBtn" aria-label="Tools">&#9776;</button>
@@ -725,6 +729,7 @@ function isGridFull(){
   return true;
 }
 let completionStatusToken = 0;
+/* dev-export-box:start */
 // True only on a Cloudflare Pages *.pages.dev preview deployment (branch
 // deploys used to solve a not-yet-published puzzle), never on the
 // production custom domain -- gates devExportBox below.
@@ -740,6 +745,7 @@ function updateDevExportBox(full){
   document.getElementById('devExportText').value = 'crossword:'+PUZZLE_ID+'='+currentSnapshot();
   box.style.display = 'block';
 }
+/* dev-export-box:end */
 async function updateCompletionStatus(){
   const full = isGridFull();
   const badge = document.getElementById('completionStatus');
@@ -747,7 +753,9 @@ async function updateCompletionStatus(){
   const sourceLink = document.getElementById('completionSourceLink');
   badge.classList.remove('match','mismatch');
   sourceLink.style.display = 'none';
+  /* dev-export-box:start */
   updateDevExportBox(full);
+  /* dev-export-box:end */
 
   if(!full){
     badge.classList.remove('show');
@@ -1017,7 +1025,9 @@ const appEl = document.getElementById('app');
 const focusBadgeRowEl = document.getElementById('focusBadgeRow');
 const leftColEl = document.getElementById('leftCol');
 const completionStatusEl = document.getElementById('completionStatus');
+/* dev-export-box:start */
 const devExportBoxEl = document.getElementById('devExportBox');
+/* dev-export-box:end */
 
 // CSS 100vh/100dvh assumes #app starts at the very top of the viewport, which
 // isn't necessarily true here -- if this is embedded in something with its own
@@ -1055,7 +1065,9 @@ document.getElementById('focusBtn').addEventListener('click', (e)=>{
   document.body.classList.add('focus-mode');
   toolbarEl.classList.remove('open');
   focusBadgeRowEl.appendChild(completionStatusEl);
+  /* dev-export-box:start */
   focusBadgeRowEl.appendChild(devExportBoxEl);
+  /* dev-export-box:end */
   const raf = window.requestAnimationFrame || (fn => setTimeout(fn, 16));
   raf(()=>{ sizeFocusMode(); positionToolbarDropdown(); });
 });
@@ -1081,7 +1093,9 @@ exitFocusBtn.addEventListener('click', ()=>{
   toolbarEl.classList.remove('open');
   appEl.style.height = ''; // hand sizing back to normal-mode CSS
   leftColEl.appendChild(completionStatusEl);
+  /* dev-export-box:start */
   leftColEl.appendChild(devExportBoxEl);
+  /* dev-export-box:end */
 });
 toolbarEl.appendChild(exitFocusBtn);
 toolbarEl.addEventListener('click', (e)=>{
