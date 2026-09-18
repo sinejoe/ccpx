@@ -35,8 +35,9 @@ Pages serves. The weekly content pipeline is implemented as Claude Code skills u
 - `CF_API_TOKEN_SINE` — shell environment variable; the Cloudflare API token used for
   `wrangler pages deploy` and direct REST calls against the `ccpx` Pages project.
   (`CF_API_TOKEN_CDC` exists in the same shell for a different property.)
-- **Superseded belief:** a memory note says these tokens live in `~/.env.secrets`. They do
-  not — they're already exported in the shell. See Superseded below.
+  Defined in `~/.secrets/tools/cloudflare.env`; `~/.profile:81` sources every `*.env` in
+  `~/.secrets/tools/` at shell startup, so they're already in the environment — no sourcing
+  step needed. (`paypal.env` and `porkbun.env` sit alongside it; same pattern.)
 - `.claude-env` (gitignored) holds only the CF account shortname `sansjoe`, no secret value.
 - Nothing in this repo needs a credential to *build* or *serve* — only to deploy.
 
@@ -160,7 +161,8 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
 ## Superseded (kept for history, don't rely on these)
 
 - *2026-09-18* — "Cloudflare tokens live in `~/.env.secrets`" (from
-  `reference_cf_api_tokens.md`). They're shell env vars: `CF_API_TOKEN_SINE`, `CF_API_TOKEN_CDC`.
+  `reference_cf_api_tokens.md`). No such file; it's `~/.secrets/tools/cloudflare.env`,
+  auto-sourced via `~/.profile:81`.
 - *2026-09-18* — "The dev export box is absent from the DOM on preview builds" (recorded as an
   unresolved bug in an earlier session's topup state). Did not reproduce anywhere; it was a
   stale dev server, not a code defect.
@@ -172,4 +174,4 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
   endpoint is better anyway).
 
 ---
-**Last updated:** 2026-09-18 — initial scan.
+**Last updated:** 2026-09-18 — initial scan; corrected the Cloudflare token location.
