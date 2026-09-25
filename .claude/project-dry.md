@@ -54,6 +54,21 @@ Pages serves. The weekly content pipeline is implemented as Claude Code skills u
 
 ## Methods & Conventions
 
+### Weekly MO — the user's standing routine (same every week, don't ask)
+
+User directive (2026-09-25): "i want every week to be same MO." Run straight through without
+asking which path to take:
+
+1. Fetch → build JSON → verify locally → bake last week's official solve → commit locally.
+   **Do not push yet.**
+2. `CCPX_PREVIEW=1` build + deploy to `solve-<id>`, hand the user
+   `https://solve-<id>.ccpx.pages.dev`.
+3. User solves on their iPad and pastes back `crossword:<id>={"rows":[...]}`.
+4. Silently sanity-check answers vs. clues, write `puzzles/<date>.solution-hashes.txt`,
+   commit it.
+5. Push to `main`, confirm `https://ccpx.fyi` serves the new puzzle, then **delete the
+   preview deployment** and confirm zero preview deployments remain.
+
 ### Weekly pipeline (the thing that repeats)
 
 `skill/SKILL.md` is the router. Order of operations every week:
@@ -130,7 +145,12 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
 ## Gotchas & Notes
 
 - **`extract_grid.py` has never worked bare.** Always pass `--crop`; other dark page content
-  confuses line detection. `--crop 20,80,1400,1400` worked for 2026-09-18.
+  confuses line detection. `--crop 20,80,1400,1400` worked for 2026-09-18; the grid moves
+  week to week (2026-09-25 it was top-right: `--crop 1390,95,2765,1400`). A crop that clips
+  an edge silently yields a 14×14 or shifted pattern — if the result isn't 15×15 with
+  numbering matching the printed clues, widen the crop. Locate the grid by viewing a
+  downscaled `page.jpg` and scaling coords back up (mind that `sips -Z` scales by the
+  *larger* dimension).
 - **`printed_solution_grid_CANDIDATE.jpg` routinely has bad bounds** (it grabbed a large ad
   once). Expect to re-crop from `page.jpg` with PIL — `(840,2470,1390,3000)` upscaled 3× with
   LANCZOS was right for the 2026-09-18 issue — and delete both crops once the letters are in
@@ -174,4 +194,4 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
   endpoint is better anyway).
 
 ---
-**Last updated:** 2026-09-18 — initial scan; corrected the Cloudflare token location.
+**Last updated:** 2026-09-25 — added the fixed weekly MO; grid-crop placement note.
