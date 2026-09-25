@@ -111,10 +111,20 @@ isn't reachable from the device they're solving on.
    `crossword:<id>={"rows":[...]}` (`#`=black/`.`=empty); they paste
    that back. It only ever renders on a `*.pages.dev` host
    (`isPreviewHost()`), so it can't show up on `ccpx.fyi`.
-3. Sanity-check every answer against its clue before writing anything —
-   silently, surfacing only genuine conflicts, never framed as the user
-   being "wrong". Verify the black-cell positions in the pasted grid
-   match the published `pattern` too.
+3. **Answer check (required gate, every week).** Before writing anything:
+   - Verify the pasted grid's black cells match the published `pattern`
+     and no cell is empty (`.`).
+   - Extract every Across/Down word and read each one against its clue
+     for correctness and plausibility (fits the clue's tense/number/
+     abbreviation signals, real word/name/phrase).
+   - Web-check anything obscure, recent, or pop-culture (new films/TV,
+     game/book lore, trivia) — a crossing-consistent grid can still hold
+     a wrong-but-plausible pair (it has happened: LOBERO/CROSTI vs.
+     LIBERO/CRISTI).
+   - Report a short verdict to the user: N/N checked, which ones were
+     looked up, and any genuine conflict posed as a question — never
+     framed as the user being "wrong", no cell-by-cell dump. Resolve
+     any question before writing hashes.
 4. Compute `sha256hex(solutionSalt + word)` per Across/Down entry (same
    method as "Baking in the official solve" above) and write
    `puzzles/<date>.solution-hashes.txt` — Across entries first, then

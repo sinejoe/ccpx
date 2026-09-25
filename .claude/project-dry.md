@@ -64,8 +64,10 @@ asking which path to take:
 2. `CCPX_PREVIEW=1` build + deploy to `solve-<id>`, hand the user
    `https://solve-<id>.ccpx.pages.dev`.
 3. User solves on their iPad and pastes back `crossword:<id>={"rows":[...]}`.
-4. Silently sanity-check answers vs. clues, write `puzzles/<date>.solution-hashes.txt`,
-   commit it.
+4. **Answer check** (see `skill/SKILL.md` "Reference solve" step 3): pattern/empty-cell
+   check, read every answer against its clue, web-check obscure/recent ones, give the user
+   a short verdict (N/N checked, what was looked up, conflicts as questions). Only then
+   write `puzzles/<date>.solution-hashes.txt` and commit it.
 5. Push to `main`, confirm `https://ccpx.fyi` serves the new puzzle, then **delete the
    preview deployment** and confirm zero preview deployments remain.
 
@@ -109,7 +111,8 @@ resulting Across/Down number sets exactly equal that JSON's existing clue-number
 2. `npx wrangler pages deploy dist --project-name=ccpx --branch=solve-<id>`
 3. Give the user the `*.pages.dev` URL — **not** localhost. They solve on a separate device.
 4. They paste back `crossword:<id>={"rows":[...]}` from the in-page copy box.
-5. Sanity-pass every answer against its clue before writing hashes.
+5. Answer check every entry against its clue (web-check obscure ones), report the verdict,
+   then write hashes.
 6. **Delete the preview deployment once production is live.** Non-optional.
 
 `CCPX_PREVIEW=1` is the only thing that keeps the dev export box in the build; a production
@@ -194,4 +197,4 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
   endpoint is better anyway).
 
 ---
-**Last updated:** 2026-09-25 — added the fixed weekly MO; grid-crop placement note.
+**Last updated:** 2026-09-25 — weekly MO; grid-crop note; answer-check gate made explicit.
