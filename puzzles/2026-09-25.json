@@ -1,0 +1,302 @@
+{
+  "id": "20260925",
+  "date": "2026-09-25",
+  "kickerDate": "Sep 25 2026",
+  "title": "“Free Skate”",
+  "subtitle": "Jonesin' by Matt Jones — a themeless puzzle to skate through.",
+  "solutionSalt": "ccpxwd-2026-ref-solve",
+  "solutionHashesFile": "puzzles/2026-09-25.solution-hashes.txt",
+  "pattern": [
+    "....#.........#",
+    "....#..........",
+    "....#..........",
+    "......#....#...",
+    ".....#.........",
+    "..........#...#",
+    "...#....##...##",
+    ".......#.......",
+    "##...##....#...",
+    "#...#..........",
+    ".........#.....",
+    "...#....#......",
+    "..........#....",
+    "..........#....",
+    "#.........#...."
+  ],
+  "across": [
+    [
+      1,
+      "Bowl of noodles and broth, e.g."
+    ],
+    [
+      5,
+      "What might be really low in the trunk"
+    ],
+    [
+      14,
+      "No longer in force"
+    ],
+    [
+      15,
+      "1984 Wim Wenders film set in the Southwest"
+    ],
+    [
+      17,
+      "Blues Hall of Fame inductee ___ James"
+    ],
+    [
+      18,
+      "Sasha Baron Cohen sequel scheduled for October 2026"
+    ],
+    [
+      19,
+      "Shady Records co-founder"
+    ],
+    [
+      21,
+      "TV show that landed 207 songs on the Billboard Hot 100"
+    ],
+    [
+      22,
+      "Magician Shin ___, “America’s Got Talent: The Champions” winner"
+    ],
+    [
+      23,
+      "1-Across with a tonkotsu variety"
+    ],
+    [
+      24,
+      "“Colorful” House Targaryen faction"
+    ],
+    [
+      26,
+      "Ticket offerer at a mini-mart, perhaps"
+    ],
+    [
+      28,
+      "Understand the lingo"
+    ],
+    [
+      29,
+      "Show initiative"
+    ],
+    [
+      30,
+      "Defrauds, say"
+    ],
+    [
+      31,
+      "Baha ___ (“Who Let the Dogs Out” group)"
+    ],
+    [
+      32,
+      "What Eli Wallach represents, in a spaghetti western title"
+    ],
+    [
+      34,
+      "Word after game or CD"
+    ],
+    [
+      38,
+      "Use a griddle"
+    ],
+    [
+      39,
+      "December refrain"
+    ],
+    [
+      40,
+      "“Ceci n’est pas ___ pipe” (Magritte caption)"
+    ],
+    [
+      41,
+      "“Midsommar” director Aster"
+    ],
+    [
+      42,
+      "Low-level unintelligent humanoid, in “Dungeon Crawler Carl”"
+    ],
+    [
+      45,
+      "Exhaust output"
+    ],
+    [
+      47,
+      "Lacked roots"
+    ],
+    [
+      48,
+      "Start of the 14th title in Sue Grafton’s Kinsey Millhone series"
+    ],
+    [
+      49,
+      "Tolkien creatures from the Old English for “giant”"
+    ],
+    [
+      50,
+      "Bow nickname, in early film"
+    ],
+    [
+      51,
+      "Little Debbie offerings with striped icing"
+    ],
+    [
+      54,
+      "Actress Sommer of “A Shot in the Dark”"
+    ],
+    [
+      55,
+      "Single file"
+    ],
+    [
+      56,
+      "Brewmaster’s concoctions"
+    ],
+    [
+      57,
+      "Irritate in a big way"
+    ],
+    [
+      58,
+      "“Curious George” authors H.A. and Margret (they were married)"
+    ]
+  ],
+  "down": [
+    [
+      1,
+      "Expresses scorn for"
+    ],
+    [
+      2,
+      "Top"
+    ],
+    [
+      3,
+      "Popular college campus sport"
+    ],
+    [
+      4,
+      "Arrakis, for instance"
+    ],
+    [
+      5,
+      "Filtered stuff"
+    ],
+    [
+      6,
+      "Suffix for spirit"
+    ],
+    [
+      7,
+      "High beams"
+    ],
+    [
+      8,
+      "It may contain just a few artificial locks"
+    ],
+    [
+      9,
+      "The “O” in the Portland suburb nicknamed “Lake O”"
+    ],
+    [
+      10,
+      "“The ___ Bennet Sister”"
+    ],
+    [
+      11,
+      "Hideous, as a Honduran hombre"
+    ],
+    [
+      12,
+      "1993 Liz Phair studio double album"
+    ],
+    [
+      13,
+      "Demolition"
+    ],
+    [
+      16,
+      "Virtual people in a video game series"
+    ],
+    [
+      20,
+      "Oomph"
+    ],
+    [
+      24,
+      "HR rep on “The Office”"
+    ],
+    [
+      25,
+      "Sistine Chapel ceiling inspiration"
+    ],
+    [
+      27,
+      "“OMG, funny!”"
+    ],
+    [
+      31,
+      "Chicago liqueur described as “like Skittles drenched in gasoline”"
+    ],
+    [
+      33,
+      "“The Haj” novelist"
+    ],
+    [
+      34,
+      "Teeth in a factory"
+    ],
+    [
+      35,
+      "The daughter of Loki, you say?"
+    ],
+    [
+      36,
+      "It evolved from “return”"
+    ],
+    [
+      37,
+      "Like flutes, as opposed to oboes and clarinets"
+    ],
+    [
+      39,
+      "Like some tires"
+    ],
+    [
+      41,
+      "Site of France’s largest cathedral"
+    ],
+    [
+      42,
+      "Recycling bin item"
+    ],
+    [
+      43,
+      "Take turns"
+    ],
+    [
+      44,
+      "Folded marker"
+    ],
+    [
+      45,
+      "Auto designer Ferrari"
+    ],
+    [
+      46,
+      "1955-77 defense gp."
+    ],
+    [
+      50,
+      "“Hmm, yes ...”"
+    ],
+    [
+      52,
+      "Sing"
+    ],
+    [
+      53,
+      "Physiotherapist’s muscle test, for short"
+    ]
+  ]
+}
