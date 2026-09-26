@@ -715,6 +715,8 @@ function handleInput(e,r,c){
   }
   queueSave();
   updateCompletionStatus();
+  if(v) trackUsage('start');
+  if(v && isGridFull()) trackUsage('complete');
 }
 
 // A persistent status, not a one-time popup -- just always reflects whether
@@ -1215,6 +1217,35 @@ async function loadState(){
   }catch(err){ return false; } // no saved state yet, or storage unavailable
 }
 
+// ---- Usage counts: anonymous load/start/complete events ----
+// Sent only from the production domain, so preview solves and local testing
+// never count. A random visitor id in localStorage (no cookie) lets repeat
+// visits be told apart from new people; functions/api/e.js adds coarse geo
+// server-side. Set localStorage 'ccpx:notrack' to anything to opt a browser
+// out (e.g. the site owner's own devices).
+const USAGE_HOST = 'ccpx.fyi';
+const sentUsage = new Set();
+function usageVisitorId(){
+  try{
+    if(window.localStorage.getItem('ccpx:notrack') !== null) return null;
+    let id = window.localStorage.getItem('ccpx:vid');
+    if(!id){
+      id = crypto.randomUUID();
+      window.localStorage.setItem('ccpx:vid', id);
+    }
+    return id;
+  }catch(e){ return null; } // storage blocked -- skip rather than count every load as a new person
+}
+function trackUsage(event){
+  if(location.hostname !== USAGE_HOST || sentUsage.has(event)) return;
+  sentUsage.add(event); // once per page view per event
+  const visitor = usageVisitorId();
+  if(!visitor) return;
+  try{
+    navigator.sendBeacon('/api/e', JSON.stringify({e:event, p:PUZZLE_ID, v:visitor}));
+  }catch(e){ /* counting is best-effort; never let it affect play */ }
+}
+
 let restoredLetters = Array.from({length:SIZE},()=>Array(SIZE).fill(''));
 
 (async function boot(){
@@ -1228,6 +1259,7 @@ let restoredLetters = Array.from({length:SIZE},()=>Array(SIZE).fill(''));
   }
   render();
   updateCompletionStatus();
+  trackUsage('load');
 })();
 
 // grid initialization + first render happens in boot() above, after checking for saved progress

@@ -38,6 +38,10 @@ that week's puzzle.
   puzzle id straight out of `location.pathname`. `?puzzle=<id>` still
   works too as a plain query-string alternative.
 - `404.html` — plain not-found page for genuinely missing URLs.
+- `functions/api/e.js` + `wrangler.toml` — a Cloudflare Pages Function that
+  records anonymous usage counts (page load / started / completed, puzzle id,
+  coarse geo, random visitor id) to Workers Analytics Engine. Only
+  `ccpx.fyi` sends events.
 - `build.js` / `package.json` — `npm run build` minifies
   `index.html`/`archive.html`/`404.html` into `dist/` (comments
   stripped, inline JS/CSS minified) and copies `puzzles/` and

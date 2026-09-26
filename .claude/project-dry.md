@@ -7,7 +7,8 @@
 ## Overview
 
 `ccpx.fyi` — a static, single-page crossword player for the Charleston City Paper's weekly
-Jonesin' crossword. No framework, no server: `index.html` is one self-contained HTML/CSS/JS
+Jonesin' crossword. No framework, and no server beyond one tiny Pages Function for usage counts
+(`functions/api/e.js`): `index.html` is one self-contained HTML/CSS/JS
 file that fetches puzzle data as JSON at runtime. Puzzle data lives in `puzzles/<date>.json`
 (+ `puzzles/index.json` as the newest-first manifest). `build.js` (Node, `npm run build`)
 minifies the HTML and generates per-puzzle static variants into `dist/`, which Cloudflare
@@ -19,6 +20,11 @@ Pages serves. The weekly content pipeline is implemented as Claude Code skills u
   Builds from git integration on push to `main` (there is **no** `.github/workflows` — don't
   go looking for CI config). Build command `npm run build`, output dir `dist`.
 - **Cloudflare DNS/zone** — `ccpx.fyi`, zone id `dea22632210f991842d6a0da8c0e9829`.
+- **Workers Analytics Engine** — dataset `ccpx_usage`, bound as `USAGE` in `wrangler.toml`
+  (the Pages config source of truth for bindings). Holds the usage counts — see "Usage counts".
+- **Cloudflare Web Analytics** — auto-injected beacon on ccpx.fyi (site tag
+  `79b096da8ab74a2298882372deabd140`, since 2026-08-16). Reported **zero** page loads for
+  ccpx.fyi as of 2026-09-26 even though real browser loads exist; ignore it, use `ccpx_usage`.
 - **Issuu** — source of the weekly issue. Publisher listing:
   `https://issuu.com/charlestoncitypaper`. Static endpoints used by
   `skill/scripts/fetch_issue.py`:
@@ -35,6 +41,9 @@ Pages serves. The weekly content pipeline is implemented as Claude Code skills u
 - `CF_API_TOKEN_SINE` — shell environment variable; the Cloudflare API token used for
   `wrangler pages deploy` and direct REST calls against the `ccpx` Pages project.
   (`CF_API_TOKEN_CDC` exists in the same shell for a different property.)
+  As of 2026-09-26 it can read GraphQL analytics but gets `Authorization error` from the
+  Analytics Engine SQL API — it needs **Account → Account Analytics → Read** added to query
+  `ccpx_usage`. (Writes go through the Pages binding and need no token.)
   Defined in `~/.secrets/tools/cloudflare.env`; `~/.profile:81` sources every `*.env` in
   `~/.secrets/tools/` at shell startup, so they're already in the environment — no sourcing
   step needed. (`paypal.env` and `porkbun.env` sit alongside it; same pattern.)
@@ -120,6 +129,31 @@ build strips those `dev-export-box:start/end` marker regions from `index.html` o
 `build.js` throws if any `devExportBox`/`devExportText`/`isPreviewHost` reference survives the
 strip. The box must not exist in public source, not merely be runtime-gated.
 
+### Usage counts (answering "do we have real users?")
+
+Added 2026-09-26 by user request. The page sends `load` / `start` (first letter typed) /
+`complete` (grid filled by typing) at most once per page view each, via `sendBeacon` to
+`/api/e`. It only sends from `ccpx.fyi`, so previews and localhost never count. The visitor
+ID is a random UUID in `localStorage['ccpx:vid']`; no cookie, no IP or user agent stored.
+Setting `localStorage['ccpx:notrack']` (any value) opts a browser out. User chose **no
+on-page notice**, and numbers **on request** (no dashboard/script). Schema lives in the
+header of `functions/api/e.js`: blob1 event, blob2 puzzle id, blob3 country, blob4 region,
+blob5 city, blob6 mobile/desktop, index1 visitor id.
+
+Query via the SQL API (needs the token's Account Analytics Read permission; see Credentials):
+
+```sh
+curl -s -H "Authorization: Bearer $CF_API_TOKEN_SINE" \
+  "https://api.cloudflare.com/client/v4/accounts/ee6dc5f16660ea40f92271ec5fc1ec2b/analytics_engine/sql" \
+  -d "SELECT blob2 AS puzzle, blob1 AS event, count(DISTINCT index1) AS people, sum(_sample_interval) AS events
+      FROM ccpx_usage WHERE timestamp > NOW() - INTERVAL '7' DAY
+      GROUP BY puzzle, event ORDER BY puzzle, event FORMAT JSON"
+```
+
+Swap the GROUP BY to `blob3, blob4, blob5` for geo. AE keeps data 3 months.
+Pre-tracking baseline (2026-09-19→26, from zone logs): ~50 HTML hits/day on `/` (mostly
+bots), but only 0–8/day fetches of `/puzzles/index.json`, i.e. real JS-running loads.
+
 ### Deleting a preview deployment
 
 ```
@@ -142,6 +176,9 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
   `.cell[data-r][data-c] > input`
 - clue lists are **divs**, not `ul`: `document.getElementById('acrossList').children.length`
   (same for `downList`). `#acrossList li` matches nothing.
+- To test usage beacons locally: `npx wrangler pages dev --port 8843` (runs the Function with
+  a local AE binding), then in Playwright `context.route('https://ccpx.fyi/**')` → fetch from
+  `http://localhost:8843` so `location.hostname` is `ccpx.fyi` and the gate opens.
 - To fill a cell programmatically: set `input.value` then
   `input.dispatchEvent(new Event('input',{bubbles:true}))`.
 
@@ -197,4 +234,4 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
   endpoint is better anyway).
 
 ---
-**Last updated:** 2026-09-25 — weekly MO; grid-crop note; answer-check gate made explicit.
+**Last updated:** 2026-09-26 — usage counts (Pages Function + Analytics Engine).

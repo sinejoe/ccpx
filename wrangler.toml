@@ -1,0 +1,11 @@
+# Cloudflare Pages config for the `ccpx` project. Both the Git-connected
+# production build and `wrangler pages deploy` previews read bindings from
+# here -- this file is their source of truth, not the dashboard.
+name = "ccpx"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-08-16"
+
+# Usage counts written by functions/api/e.js.
+[[analytics_engine_datasets]]
+binding = "USAGE"
+dataset = "ccpx_usage"
