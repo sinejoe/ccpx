@@ -15,8 +15,8 @@ const PUZZLE_RE = /^\d{8}$/; // puzzle id, e.g. 20260925
 const VISITOR_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
 export async function onRequestPost({ request, env }) {
-  if (!env.USAGE) {
-    console.error('functions/api/e.js: USAGE Analytics Engine binding missing (check wrangler.toml)');
+  if (!env.ANALYTICS_ENGINE) {
+    console.error('functions/api/e.js: ANALYTICS_ENGINE binding missing (check wrangler.toml)');
     return new Response(null, { status: 503 });
   }
   let body;
@@ -33,7 +33,7 @@ export async function onRequestPost({ request, env }) {
   }
   const cf = request.cf ?? {};
   const ua = request.headers.get('user-agent') ?? '';
-  env.USAGE.writeDataPoint({
+  env.ANALYTICS_ENGINE.writeDataPoint({
     blobs: [
       event,
       puzzle,

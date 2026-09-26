@@ -7,5 +7,5 @@ compatibility_date = "2026-08-16"
 
 # Usage counts written by functions/api/e.js.
 [[analytics_engine_datasets]]
-binding = "USAGE"
-dataset = "ccpx_usage"
+binding = "ANALYTICS_ENGINE"
+dataset = "CCPX"

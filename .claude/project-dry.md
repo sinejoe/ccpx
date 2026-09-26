@@ -20,11 +20,12 @@ Pages serves. The weekly content pipeline is implemented as Claude Code skills u
   Builds from git integration on push to `main` (there is **no** `.github/workflows` — don't
   go looking for CI config). Build command `npm run build`, output dir `dist`.
 - **Cloudflare DNS/zone** — `ccpx.fyi`, zone id `dea22632210f991842d6a0da8c0e9829`.
-- **Workers Analytics Engine** — dataset `ccpx_usage`, bound as `USAGE` in `wrangler.toml`
+- **Workers Analytics Engine** — enabled on the account 2026-09-26 (deploys with an AE binding
+  fail with "You need to enable Analytics Engine" until it is). Dataset `CCPX`, bound as `ANALYTICS_ENGINE` in `wrangler.toml`
   (the Pages config source of truth for bindings). Holds the usage counts — see "Usage counts".
 - **Cloudflare Web Analytics** — auto-injected beacon on ccpx.fyi (site tag
   `79b096da8ab74a2298882372deabd140`, since 2026-08-16). Reported **zero** page loads for
-  ccpx.fyi as of 2026-09-26 even though real browser loads exist; ignore it, use `ccpx_usage`.
+  ccpx.fyi as of 2026-09-26 even though real browser loads exist; ignore it, use `CCPX`.
 - **Issuu** — source of the weekly issue. Publisher listing:
   `https://issuu.com/charlestoncitypaper`. Static endpoints used by
   `skill/scripts/fetch_issue.py`:
@@ -41,9 +42,8 @@ Pages serves. The weekly content pipeline is implemented as Claude Code skills u
 - `CF_API_TOKEN_SINE` — shell environment variable; the Cloudflare API token used for
   `wrangler pages deploy` and direct REST calls against the `ccpx` Pages project.
   (`CF_API_TOKEN_CDC` exists in the same shell for a different property.)
-  As of 2026-09-26 it can read GraphQL analytics but gets `Authorization error` from the
-  Analytics Engine SQL API — it needs **Account → Account Analytics → Read** added to query
-  `ccpx_usage`. (Writes go through the Pages binding and need no token.)
+  Has Account Analytics Read (added 2026-09-26) for the Analytics Engine SQL API. Writes to
+  `CCPX` go through the Pages binding and need no token.
   Defined in `~/.secrets/tools/cloudflare.env`; `~/.profile:81` sources every `*.env` in
   `~/.secrets/tools/` at shell startup, so they're already in the environment — no sourcing
   step needed. (`paypal.env` and `porkbun.env` sit alongside it; same pattern.)
@@ -140,13 +140,13 @@ on-page notice**, and numbers **on request** (no dashboard/script). Schema lives
 header of `functions/api/e.js`: blob1 event, blob2 puzzle id, blob3 country, blob4 region,
 blob5 city, blob6 mobile/desktop, index1 visitor id.
 
-Query via the SQL API (needs the token's Account Analytics Read permission; see Credentials):
+Query via the SQL API (needs the token's Account Analytics Read permission, added 2026-09-26):
 
 ```sh
 curl -s -H "Authorization: Bearer $CF_API_TOKEN_SINE" \
   "https://api.cloudflare.com/client/v4/accounts/ee6dc5f16660ea40f92271ec5fc1ec2b/analytics_engine/sql" \
   -d "SELECT blob2 AS puzzle, blob1 AS event, count(DISTINCT index1) AS people, sum(_sample_interval) AS events
-      FROM ccpx_usage WHERE timestamp > NOW() - INTERVAL '7' DAY
+      FROM CCPX WHERE timestamp > NOW() - INTERVAL '7' DAY
       GROUP BY puzzle, event ORDER BY puzzle, event FORMAT JSON"
 ```
 
