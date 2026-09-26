@@ -43,10 +43,33 @@
     padding:14px;
   }
   header{
+    position:relative;
+    padding-left:120px; padding-right:120px;
     text-align:center;
     border-bottom:3px double var(--ink);
     padding-bottom:10px;
     margin-bottom:14px;
+  }
+  /* Site mark, top-left -- mirrors the menu button top-right */
+  #brand{
+    position:absolute;
+    top:0; left:0;
+    height:33px; /* the menu button's height, so the two line up */
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-family:'Courier New',monospace;
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:0.5px;
+    color:var(--ink);
+    text-decoration:none;
+  }
+  #brand img{ width:26px; height:26px; display:block; }
+  /* Narrow: brand and menu share a row above the centered heading
+     instead of squeezing it from both sides. */
+  @media(max-width:700px){
+    header{ padding:40px 0 10px; }
   }
   header .kicker{
     font-family:'Courier New', monospace;
@@ -104,9 +127,33 @@
     background:var(--ink);
     color:var(--paper);
   }
+  /* The menu: top-right of the header normally; in focus mode it moves to
+     the clue panel's corner (or the phone top strip) -- see placeHamburger. */
   #hamburgerBtn{
-    display:none;
+    position:absolute;
+    top:0; right:0;
+    z-index:10;
+    /* Must stay above the dropdown panel once it's open, or the panel covers
+       the button and there's no way to click it again to close. */
+    font-size:20px;
+    line-height:20px;
+    padding:5px 7px;
+    border:1.5px solid var(--rule);
+    background:var(--cell);
+    border-radius:0;
   }
+  /* Under the grid: Focus mode on the left, Reset puzzle (only while there's
+     something to clear) on the right, so neither shifts when it appears.
+     Hidden in focus mode along with the other .toolbar rows. */
+  #gridTools{
+    align-self:stretch;
+    justify-content:space-between;
+    margin:12px 0 0;
+  }
+  /* Interest check for a not-yet-built feature -- quieter than the real
+     tools above it. */
+  #statsInterestBtn{ border-style:dotted; border-color:#8a8272; color:#594923; }
+  #statsInterestBtn.noted{ opacity:0.6; cursor:default; }
 
   /* ---- Normal mode: comfortable centered layout ---- */
   #app{
@@ -173,12 +220,16 @@
   }
   .cell.hi{ background:var(--hi); }
   .cell.hi2{ background:var(--hi2); }
-  #cluesPanel{
+  #rightCol{
     display:flex;
-    gap:16px;
+    flex-direction:column;
     flex:1 1 340px;
     min-width:280px;
     max-width:460px;
+  }
+  #cluesPanel{
+    display:flex;
+    gap:16px;
     height:600px;
     padding:10px 12px;
     border:1px solid var(--rule);
@@ -220,7 +271,8 @@
   .clue b{ margin-right:4px; }
   @media(max-width:860px){
     #app{ flex-direction:column; align-items:center; }
-    #cluesPanel{ max-width:640px; height:auto; }
+    #rightCol{ width:100%; max-width:640px; }
+    #cluesPanel{ height:auto; }
     .cluecol{ height:auto; overflow-y:visible; }
   }
 
@@ -237,20 +289,7 @@
   body.focus-mode header,
   body.focus-mode .toolbar,
   body.focus-mode footer{ display:none; }
-  body.focus-mode #hamburgerBtn{
-    display:block;
-    position:absolute;
-    top:-1px; right:-1px;
-    z-index:10;
-    /* Must stay above the dropdown panel once it's open, or the panel covers
-       the button and there's no way to click it again to close. */
-    font-size:20px;
-    line-height:20px;
-    padding:5px 7px;
-    border:1.5px solid var(--rule);
-    background:var(--cell);
-    border-radius:0;
-  }
+  body.focus-mode #hamburgerBtn{ top:-1px; right:-1px; }
   body.focus-mode #app{
     max-width:none;
     width:100vw;
@@ -274,10 +313,15 @@
   }
   body.focus-mode .cell.white input{ font-size:clamp(11px, 3.2vmin, 30px); }
   body.focus-mode .cell .num{ font-size:clamp(9.5px, 1.3vmin, 15.5px); }
-  body.focus-mode #cluesPanel{
+  body.focus-mode #rightCol{
     flex:1 1 auto;
     max-width:none;
     height:100%;
+    min-width:0;
+  }
+  body.focus-mode #cluesPanel{
+    flex:1 1 auto;
+    min-height:0;
   }
   /* Clue text can afford to be noticeably bigger once the panel isn't
      capped at a small fixed width. */
@@ -291,7 +335,7 @@
   body.focus-mode #focusBtn{ display:none; }
   #exitFocusBtn{ display:none; }
   body.focus-mode #exitFocusBtn{ display:inline-block; }
-  body.focus-mode #toolbar{
+  #toolbar{
     display:none;
     position:fixed;
     z-index:9;
@@ -303,11 +347,15 @@
     gap:8px;
     min-width:230px;
   }
-  body.focus-mode #toolbar button{
+  #toolbar button, #toolbar a{
     padding:9px 14px;
     font-size:12.5px;
+    text-align:center;
   }
-  body.focus-mode #toolbar.open{ display:flex; }
+  #toolbar.open{ display:flex; }
+  /* Secondary links: smaller, set off below the tools */
+  #toolbar #archiveBtn{ margin-top:6px; }
+  #toolbar #archiveBtn, #toolbar #statsInterestBtn{ padding:6px 10px; font-size:10.5px; }
   /* Full-width row under grid+clues in focus mode -- the completion badge
      moves here (via JS) so it spans the whole app, not just the grid column.
      sizeFocusMode() measures its rendered height and shrinks #app to match,
@@ -325,12 +373,102 @@
     width:100%;
     font-size:12px;
   }
+  /* The narrow layout lets the clue columns grow and the page scroll, but
+     focus mode locks the page -- so the columns have to scroll themselves
+     or most clues are unreachable. */
+  body.focus-mode .cluecol{ height:100%; overflow-y:auto; }
+
+  /* Current-clue bar, NYT-app style: phone focus mode only (see below). */
+  #clueBar, #focusTopBar{ display:none; }
   @media(max-width:700px){
-    body.focus-mode #app{ flex-direction:column; }
-    body.focus-mode #leftCol{ height:auto; flex:0 0 auto; }
-    body.focus-mode #grid{ height:auto; width:min(94vw,94vh); }
-    body.focus-mode #cluesPanel{ flex:1 1 auto; min-height:0; }
+    body.focus-mode #app{ flex-direction:column; gap:8px; padding:0 8px 8px; }
+    body.focus-mode #leftCol{ height:auto; flex:0 0 auto; align-items:center; }
+    body.focus-mode #gridWrap{ height:auto; }
+    body.focus-mode #grid{ height:auto; width:min(calc(100vw - 16px), 62dvh); }
+    body.focus-mode #rightCol{ flex:1 1 auto; min-height:0; height:auto; }
+    body.focus-mode #cluesPanel{ padding:6px 8px; gap:10px; }
+    body.focus-mode .clue{ font-size:13.5px; }
+    body.focus-mode #focusBadgeRow{ padding:0 8px 8px; }
+    /* Slim top strip so the menu is always reachable, not tucked in the
+       clue panel's corner below the fold. */
+    body.focus-mode #focusTopBar{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      height:40px;
+      padding:0 8px;
+      box-sizing:border-box;
+    }
+    #focusTopIcon{ flex:0 0 auto; width:22px; height:22px; display:block; }
+    /* Title then date on one line; the title gives way (ellipsis) first. */
+    #focusTopText{
+      flex:1 1 auto;
+      min-width:0;
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+      white-space:nowrap;
+    }
+    #focusTopTitle{
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      font-size:16px;
+      font-weight:bold;
+      color:var(--ink);
+    }
+    #focusTopDate{
+      flex:0 0 auto;
+      font-family:'Courier New',monospace;
+      font-size:10.5px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:#8a8272;
+    }
+    body.focus-mode #hamburgerBtn{ position:static; }
+    body.focus-mode #clueBar{
+      display:flex;
+      align-items:stretch;
+      width:min(calc(100vw - 16px), 62dvh);
+      margin-top:6px;
+      background:var(--hi);
+      border:1px solid var(--rule);
+      box-sizing:border-box;
+      min-height:52px;
+    }
   }
+  #clueBar button{
+    flex:0 0 36px;
+    padding:0;
+    border:none;
+    background:transparent;
+    font-size:26px;
+    line-height:1;
+    color:#594923;
+    text-transform:none;
+    letter-spacing:0;
+  }
+  #clueBarText{
+    flex:1 1 auto;
+    min-width:0;
+    padding:5px 2px;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  #clueBarMain{ font-size:15px; line-height:1.3; color:var(--ink); }
+  /* The crossing clue: deliberately tiny, one line, just enough to glance at. */
+  #clueBarCross{
+    font-size:10.5px;
+    line-height:1.3;
+    color:#8a8272;
+    margin-top:2px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #clueBar b{ margin-right:5px; }
 
   footer{
     text-align:center;
@@ -429,23 +567,42 @@
 <body>
 
 <header>
+  <a id="brand" href="/"><img src="/favicon.svg" alt="">ccpx.fyi</a>
   <div class="kicker" id="kicker">
     <div class="kicker-title">Charleston City Paper Crossword</div>
     <div class="kicker-date" id="kickerDate"></div>
   </div>
   <h1 id="puzzleTitle"></h1>
   <div class="sub" id="puzzleSub"></div>
+  <button id="hamburgerBtn" aria-label="Menu">&#9776;</button>
 </header>
 
+<!-- The hamburger's dropdown: every tool lives here. Focus mode / Exit focus
+     mode swap via CSS; Reset puzzle only shows while there's something to clear. -->
 <div class="toolbar" id="toolbar">
   <button id="focusBtn">Focus mode</button>
-  <button id="clearBtn">Clear all</button>
+  <button id="exitFocusBtn">Exit focus mode</button>
+  <button id="clearBtn" hidden>Reset puzzle</button>
   <a id="archiveBtn" href="/archive">Past Puzzles</a>
+  <button id="statsInterestBtn">Want solve times &amp; streaks?</button>
 </div>
+
+<!-- Phone focus mode only: puzzle date + the menu (hamburger moves here). -->
+<div id="focusTopBar"><img id="focusTopIcon" src="/favicon.svg" alt=""><span id="focusTopText"><span id="focusTopTitle"></span><span id="focusTopDate"></span></span></div>
 
 <div id="app">
   <div id="leftCol">
     <div id="gridWrap"><div id="grid"></div></div>
+    <!-- Regular view only: shortcuts duplicating the menu's first two items -->
+    <div class="toolbar" id="gridTools">
+      <button id="gridFocusBtn">Focus mode</button>
+      <button id="gridClearBtn" hidden>Reset puzzle</button>
+    </div>
+    <div id="clueBar">
+      <button id="clueBarPrev" aria-label="Previous clue">&lsaquo;</button>
+      <div id="clueBarText" title="Tap to switch direction"><div id="clueBarMain"></div><div id="clueBarCross"></div></div>
+      <button id="clueBarNext" aria-label="Next clue">&rsaquo;</button>
+    </div>
     <span id="completionStatus" class="status-badge"><span id="completionStatusText"></span><span id="completionLockNote">Type over a square to unlock.</span><a id="completionSourceLink" href="#" target="_blank" rel="noopener" style="display:none; margin-top:4px; color:inherit; text-decoration:none;">(<span style="text-decoration:underline;">source</span>)</a></span>
     <!-- dev-export-box:start -->
     <div id="devExportBox" style="display:none;">
@@ -454,8 +611,8 @@
     </div>
     <!-- dev-export-box:end -->
   </div>
+  <div id="rightCol">
   <div id="cluesPanel">
-    <button id="hamburgerBtn" aria-label="Tools">&#9776;</button>
     <div class="cluecol">
       <h2>Across</h2>
       <div id="acrossList"></div>
@@ -464,6 +621,7 @@
       <h2>Down</h2>
       <div id="downList"></div>
     </div>
+  </div>
   </div>
 </div>
 
@@ -761,6 +919,19 @@ function setGridMatchesSolve(matches){
   gridMatchesSolve = matches;
   if(!matches) solveLockDismissed = false;
   document.getElementById('completionLockNote').style.display = isSolveLocked() ? 'block' : 'none';
+  updateClearBtn();
+}
+// Reset puzzle only shows while there's something to clear and the grid isn't
+// locked as solved. Runs from every updateCompletionStatus() path, i.e.
+// after load and every edit.
+function updateClearBtn(){
+  let hasLetters = false;
+  for(let r=0;r<SIZE && !hasLetters;r++) for(let c=0;c<SIZE;c++){
+    if(!grid[r][c].black && grid[r][c].letter){ hasLetters = true; break; }
+  }
+  const hide = !hasLetters || isSolveLocked();
+  document.getElementById('clearBtn').hidden = hide;
+  document.getElementById('gridClearBtn').hidden = hide;
 }
 function confirmUnlock(){
   if(!confirm('This grid matches the solve, so it\'s locked against accidental changes. Unlock it to edit?')) return false;
@@ -1044,8 +1215,38 @@ function updateActiveClue(w){
     const crossEl = document.getElementById((crossDir==='A'?'a-':'d-')+crossWord.num);
     if(crossEl) crossEl.classList.add('crossing');
   }
+  updateClueBar(w, crossWord, crossDir);
   scrollActiveCluesIntoView();
 }
+
+// ---- Phone focus mode's current-clue bar (NYT-app style): the active clue,
+// with the crossing clue underneath in tiny type. Tap the text to switch
+// direction; the arrows step to the previous/next clue. ----
+function clueHTML(dir, num){
+  const entry = (dir==='A' ? ACROSS : DOWN).find(([n])=>n===num);
+  return entry ? `<b>${num}${dir}</b>${entry[1]}` : '';
+}
+function updateClueBar(w, crossWord, crossDir){
+  document.getElementById('clueBarMain').innerHTML = w ? clueHTML(cur.dir, w.num) : '';
+  document.getElementById('clueBarCross').innerHTML = crossWord ? clueHTML(crossDir, crossWord.num) : '';
+}
+const clueBarEl = document.getElementById('clueBar');
+// Keep the grid input focused while tapping the bar, so the phone keyboard
+// doesn't drop and pop back up on every tap.
+clueBarEl.addEventListener('mousedown', e=> e.preventDefault());
+document.getElementById('clueBarText').addEventListener('click', ()=>{
+  const other = cur.dir==='A' ? 'D' : 'A';
+  if(wordAt(cur.r, cur.c, other)){ cur.dir = other; highlight(); }
+  refocusGrid();
+});
+function stepClue(step){
+  const w = wordAt(cur.r, cur.c, cur.dir);
+  if(!w) return;
+  const target = adjacentWordFirstCell(w.num, cur.dir, step);
+  if(target) selectCell(target.r, target.c);
+}
+document.getElementById('clueBarPrev').addEventListener('click', ()=> stepClue(-1));
+document.getElementById('clueBarNext').addEventListener('click', ()=> stepClue(1));
 
 // Keep the active and crossing clues visible in their own columns -- instant,
 // not smooth (smooth was reported as distracting). Done by hand rather than
@@ -1132,7 +1333,9 @@ const devExportBoxEl = document.getElementById('devExportBox');
 // anything) sits above/below it.
 function sizeFocusMode(){
   if(!document.body.classList.contains('focus-mode')) return;
-  const top = appEl.getBoundingClientRect().top;
+  // Document-relative, so a leftover page scroll (e.g. restored on reload)
+  // can't shrink the measurement and push the top bar off screen.
+  const top = appEl.getBoundingClientRect().top + window.scrollY;
   const barHeight = focusBadgeRowEl.offsetHeight;
   const bottomMargin = 12;
   const available = window.innerHeight - top - barHeight - bottomMargin;
@@ -1145,24 +1348,47 @@ window.addEventListener('resize', sizeFocusMode);
 // so it sits flush against the panel -- covering the Across/Down header
 // strip underneath rather than floating with a gap above or beside it.
 const cluesPanelEl = document.getElementById('cluesPanel');
+const narrowQuery = window.matchMedia('(max-width:700px)');
+const focusTopBarEl = document.getElementById('focusTopBar');
+const headerEl = document.querySelector('header');
+// Normally the menu sits top-right in the header. Focus mode hides the
+// header: on phones the menu moves to a slim strip above the grid (the clue
+// panel's corner is below the fold there), elsewhere to the panel's corner.
+function placeHamburger(){
+  if(!document.body.classList.contains('focus-mode')) headerEl.appendChild(hamburgerBtn);
+  else if(narrowQuery.matches) focusTopBarEl.appendChild(hamburgerBtn);
+  else cluesPanelEl.insertBefore(hamburgerBtn, cluesPanelEl.firstChild);
+}
+narrowQuery.addEventListener('change', ()=>{ placeHamburger(); toolbarEl.classList.remove('open'); });
+// Dropdown hangs just below the button, except in wide focus mode where it
+// sits flush over the clue panel's corner.
 function positionToolbarDropdown(){
-  if(!document.body.classList.contains('focus-mode')) return;
-  const rect = cluesPanelEl.getBoundingClientRect();
-  toolbarEl.style.top = rect.top + 'px';
+  const underButton = narrowQuery.matches || !document.body.classList.contains('focus-mode');
+  const rect = (underButton ? hamburgerBtn : cluesPanelEl).getBoundingClientRect();
+  toolbarEl.style.top = (underButton ? rect.bottom + 4 : rect.top) + 'px';
   toolbarEl.style.right = (window.innerWidth - rect.right) + 'px';
   toolbarEl.style.left = 'auto';
 }
 window.addEventListener('resize', positionToolbarDropdown);
 
+// Phones start in focus mode (it's the only layout that fits a grid, a clue
+// and the keyboard on screen) unless the reader has chosen to leave it.
+const FOCUS_PREF_KEY = 'ccpx:focusMode';
+function setFocusPref(v){ try{ window.localStorage.setItem(FOCUS_PREF_KEY, v); }catch(e){} }
+function getFocusPref(){ try{ return window.localStorage.getItem(FOCUS_PREF_KEY) || ''; }catch(e){ return ''; } }
 document.getElementById('focusBtn').addEventListener('click', (e)=>{
+  if(e.isTrusted) setFocusPref('on');
   document.body.classList.add('focus-mode');
+  placeHamburger();
+  document.getElementById('focusTopTitle').textContent = document.getElementById('puzzleTitle').textContent;
+  document.getElementById('focusTopDate').textContent = document.getElementById('kickerDate').textContent;
   toolbarEl.classList.remove('open');
   focusBadgeRowEl.appendChild(completionStatusEl);
   /* dev-export-box:start */
   focusBadgeRowEl.appendChild(devExportBoxEl);
   /* dev-export-box:end */
   const raf = window.requestAnimationFrame || (fn => setTimeout(fn, 16));
-  raf(()=>{ sizeFocusMode(); positionToolbarDropdown(); scrollActiveCluesIntoView(); refocusGrid(); });
+  raf(()=>{ window.scrollTo(0, 0); sizeFocusMode(); positionToolbarDropdown(); scrollActiveCluesIntoView(); refocusGrid(); });
 });
 hamburgerBtn.addEventListener('click', (e)=>{
   e.stopPropagation(); // don't let this immediately trigger the outside-click-closes listener below
@@ -1179,13 +1405,13 @@ document.addEventListener('click', (e)=>{
 });
 // Any toolbar action closes the dropdown afterward, and exiting focus mode
 // is just another toolbar button so it's reachable from the same menu.
-const exitFocusBtn = document.createElement('button');
-exitFocusBtn.id = 'exitFocusBtn';
-exitFocusBtn.textContent = 'Exit focus mode';
-exitFocusBtn.addEventListener('click', ()=>{
+const exitFocusBtn = document.getElementById('exitFocusBtn');
+exitFocusBtn.addEventListener('click', (e)=>{
+  if(e.isTrusted) setFocusPref('off');
   document.body.classList.remove('focus-mode');
   toolbarEl.classList.remove('open');
   appEl.style.height = ''; // hand sizing back to normal-mode CSS
+  placeHamburger();
   leftColEl.appendChild(completionStatusEl);
   /* dev-export-box:start */
   leftColEl.appendChild(devExportBoxEl);
@@ -1193,22 +1419,36 @@ exitFocusBtn.addEventListener('click', ()=>{
   scrollActiveCluesIntoView();
   refocusGrid();
 });
-toolbarEl.appendChild(exitFocusBtn);
+// (The streaks button stays open so its "Noted" reply is seen.)
 toolbarEl.addEventListener('click', (e)=>{
-  if(document.body.classList.contains('focus-mode') && e.target.tagName==='BUTTON'){
+  if(e.target.tagName==='BUTTON' && e.target!==statsInterestBtn){
     toolbarEl.classList.remove('open');
   }
 });
+// The dropdown is position:fixed but the header scrolls away in normal
+// mode, so close it rather than leave it floating.
+window.addEventListener('scroll', ()=>{
+  if(toolbarEl.classList.contains('open') && !document.body.classList.contains('focus-mode')){
+    toolbarEl.classList.remove('open');
+  }
+}, {passive:true});
 // Esc exits focus mode -- standard convention for a fullscreen-ish view, and
 // works even mid-typing since it fires on the grid's own inputs too.
 document.addEventListener('keydown', (e)=>{
   if(e.key==='Escape' && document.body.classList.contains('focus-mode')){
+    setFocusPref('off');
     exitFocusBtn.click();
   }
 });
 
+// The under-grid duplicates just hand off to the menu's buttons
+document.getElementById('gridFocusBtn').addEventListener('click', ()=>{
+  setFocusPref('on');
+  document.getElementById('focusBtn').click();
+});
+document.getElementById('gridClearBtn').addEventListener('click', ()=> document.getElementById('clearBtn').click());
 document.getElementById('clearBtn').addEventListener('click', ()=>{
-  if(!confirm('Clear the whole grid? This can\'t be undone.')){ refocusGrid(); return; }
+  if(!confirm('Reset the puzzle? This clears every square and can\'t be undone.')){ refocusGrid(); return; }
   for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(!grid[r][c].black) grid[r][c].letter='';
   render();
   queueSave();
@@ -1368,6 +1608,23 @@ function trackUsage(event){
   }catch(e){ /* counting is best-effort; never let it affect play */ }
 }
 
+// ---- Interest check: would anyone use solve times & streaks? ----
+// Not built yet -- this only counts who asks for it, once per browser; the
+// button then shows a checkmark. Remembered in localStorage so it stays checked.
+const STATS_INTEREST_KEY = 'ccpx:wantsStats';
+const statsInterestBtn = document.getElementById('statsInterestBtn');
+function markStatsInterestNoted(){
+  statsInterestBtn.textContent = '✓ Solve times & streaks';
+  statsInterestBtn.classList.add('noted');
+  statsInterestBtn.disabled = true;
+}
+try{ if(window.localStorage.getItem(STATS_INTEREST_KEY)) markStatsInterestNoted(); }catch(e){}
+statsInterestBtn.addEventListener('click', ()=>{
+  try{ window.localStorage.setItem(STATS_INTEREST_KEY, '1'); }catch(e){}
+  trackUsage('interest');
+  markStatsInterestNoted();
+});
+
 let restoredLetters = Array.from({length:SIZE},()=>Array(SIZE).fill(''));
 
 (async function boot(){
@@ -1381,6 +1638,7 @@ let restoredLetters = Array.from({length:SIZE},()=>Array(SIZE).fill(''));
   }
   render();
   updateCompletionStatus();
+  if(narrowQuery.matches && getFocusPref()!=='off') document.getElementById('focusBtn').click();
   refocusGrid();
   trackUsage('load');
 })();

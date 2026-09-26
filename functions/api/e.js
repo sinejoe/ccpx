@@ -13,7 +13,8 @@
 //   blob1 event   blob2 puzzle   blob3 country   blob4 region
 //   blob5 city    blob6 device   blob7 me (label, '' = public)
 //   blob8 browser                index1 visitor id
-const EVENTS = new Set(['load', 'start', 'complete']);
+// interest = tapped "Want solve times & streaks?" (feature not built yet)
+const EVENTS = new Set(['load', 'start', 'complete', 'interest']);
 const PUZZLE_RE = /^\d{8}$/; // puzzle id, e.g. 20260925
 const VISITOR_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 // ?me=<name> values that get recorded as a label: joe = the site owner,
