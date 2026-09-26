@@ -137,29 +137,37 @@ Added 2026-09-26 by user request. The page sends `load` / `start` (first letter 
 `complete` (grid filled by typing) at most once per page view each, via `sendBeacon` to
 `/api/e`. It only sends from `ccpx.fyi`, so previews and localhost never count. The visitor
 ID is a random UUID in `localStorage['ccpx:vid']`; no cookie, no IP or user agent stored.
-**Known browsers are labeled, not excluded** (user, 2026-09-26: "i dont want to not be
-counted in, i just want the tracker to know who is me or you"). Visiting any page with
-`?who=<label>` stores it in `localStorage['ccpx:who']` and strips it from the URL; every
-event then carries it. Labels: `owner` = the user's devices, `claude` = Claude's live test
-runs; empty = the public. There is no opt-out. User chose **no on-page notice**, and numbers
-**on request** (no dashboard/script). Schema lives in the header of `functions/api/e.js`:
-blob1 event, blob2 puzzle id, blob3 country, blob4 region, blob5 city, blob6 mobile/desktop,
-blob7 who, index1 visitor id.
+**Known people are labeled, not excluded** (user, 2026-09-26: "i dont want to not be
+counted in, i just want the tracker to know who is me or you"). Visit any page with
+`?me=joe` (the user) or `?me=cc` (Claude's live test runs) once per browser: it's stored in
+`localStorage['ccpx:me']` and stripped from the URL. The server whitelist (`KNOWN_ME` in
+`functions/api/e.js`) is the only place names become labels; anything else = public.
+History: `?who=` was rejected as too easily stumbled on by bots, and a secret-token `?zk=`
+scheme as too hard to type on a phone — the user picked `?me=` knowingly. There is no
+opt-out. Each browser has its own visitor id, and device/browser are parsed from the user
+agent (raw UA not stored); iPadOS Safari sends a Mac UA, so the page sends
+`navigator.maxTouchPoints` and a touch-capable "Mac" is recorded as iPad. User chose **no
+on-page notice**, and numbers **on request** (no dashboard/script). Schema lives in the
+header of `functions/api/e.js`: blob1 event, blob2 puzzle id, blob3 country, blob4 region,
+blob5 city, blob6 device, blob7 me, blob8 browser, index1 visitor id. (Rows before
+2026-09-26's `?me=` deploy have mobile/desktop in blob6 and nothing in blob7/8 — test
+traffic only.)
 
 Query via the SQL API (needs the token's Account Analytics Read permission, added 2026-09-26):
 
 ```sh
 curl -s -H "Authorization: Bearer $CF_API_TOKEN_SINE" \
   "https://api.cloudflare.com/client/v4/accounts/ee6dc5f16660ea40f92271ec5fc1ec2b/analytics_engine/sql" \
-  -d "SELECT blob2 AS puzzle, blob7 AS who, blob1 AS event, count(DISTINCT index1) AS people,
+  -d "SELECT blob2 AS puzzle, blob7 AS me, blob1 AS event, count(DISTINCT index1) AS browsers,
         sum(_sample_interval) AS events
       FROM CCPX WHERE timestamp > NOW() - INTERVAL '7' DAY
         AND index1 != '00000000-0000-4000-8000-000000000000'
-      GROUP BY puzzle, who, event ORDER BY puzzle, who, event FORMAT JSON"
+      GROUP BY puzzle, me, event ORDER BY puzzle, me, event FORMAT JSON"
 ```
 
-Swap the GROUP BY to `blob3, blob4, blob5` for geo. AE keeps data 3 months.
-- For a live check, load `https://ccpx.fyi/?who=claude` in Playwright; clear localStorage
+Swap the GROUP BY to `blob3, blob4, blob5` for geo, or `blob7, blob6, blob8, index1` to
+list each labeled person's devices. AE keeps data 3 months.
+- For a live check, load `https://ccpx.fyi/?me=cc` in Playwright; clear localStorage
   afterwards. Visitor `00000000-0000-4000-8000-000000000000` holds two unlabeled test events
   from before labels existed (2026-09-26 16:18 UTC, US / South Carolina / Charleston); the
   query above excludes it.
@@ -248,4 +256,4 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
   endpoint is better anyway).
 
 ---
-**Last updated:** 2026-09-26 — usage counts (Pages Function + Analytics Engine); who labels.
+**Last updated:** 2026-09-26 — usage counts (Pages Function + Analytics Engine); ?me= labels + device parsing.

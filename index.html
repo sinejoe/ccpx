@@ -1221,20 +1221,21 @@ async function loadState(){
 // Sent only from the production domain, so preview solves and local testing
 // never count. A random visitor id in localStorage (no cookie) lets repeat
 // visits be told apart from new people; functions/api/e.js adds coarse geo
-// server-side. Known browsers (the site owner's devices, Claude's test runs)
-// are still counted but carry a label: visit once with ?who=<label> and it's
-// remembered in localStorage 'ccpx:who' and stripped from the URL.
+// and device/browser server-side. Known people are still counted but
+// labeled: visit once with ?me=<name> and it's remembered in localStorage
+// 'ccpx:me' and stripped from the URL. The server only accepts its own
+// short list of names; anything else counts as the public.
 const USAGE_HOST = 'ccpx.fyi';
-const USAGE_WHO_RE = /^[a-z0-9-]{1,20}$/;
+const USAGE_ME_RE = /^[a-z]{1,12}$/;
 const sentUsage = new Set();
-(function rememberUsageLabel(){
+(function rememberUsageName(){
   const params = new URLSearchParams(location.search);
-  const who = (params.get('who') || '').toLowerCase();
-  if(!params.has('who')) return;
+  if(!params.has('me')) return;
+  const me = (params.get('me') || '').toLowerCase();
   try{
-    if(USAGE_WHO_RE.test(who)) window.localStorage.setItem('ccpx:who', who);
+    if(USAGE_ME_RE.test(me)) window.localStorage.setItem('ccpx:me', me);
   }catch(e){ /* storage blocked -- nothing to remember it in */ }
-  params.delete('who');
+  params.delete('me');
   const qs = params.toString();
   history.replaceState(null, '', location.pathname + (qs ? '?'+qs : '') + location.hash);
 })();
@@ -1245,7 +1246,7 @@ function usageVisitor(){
       id = crypto.randomUUID();
       window.localStorage.setItem('ccpx:vid', id);
     }
-    return {id, who: window.localStorage.getItem('ccpx:who') || ''};
+    return {id, me: window.localStorage.getItem('ccpx:me') || ''};
   }catch(e){ return null; } // storage blocked -- skip rather than count every load as a new person
 }
 function trackUsage(event){
@@ -1254,7 +1255,11 @@ function trackUsage(event){
   const visitor = usageVisitor();
   if(!visitor) return;
   try{
-    navigator.sendBeacon('/api/e', JSON.stringify({e:event, p:PUZZLE_ID, v:visitor.id, w:visitor.who}));
+    // t: touch points -- iPadOS Safari sends a Mac user agent, so the
+    // server needs this to tell an iPad from a Mac.
+    navigator.sendBeacon('/api/e', JSON.stringify({
+      e:event, p:PUZZLE_ID, v:visitor.id, m:visitor.me, t:navigator.maxTouchPoints || 0
+    }));
   }catch(e){ /* counting is best-effort; never let it affect play */ }
 }
 
