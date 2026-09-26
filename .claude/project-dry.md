@@ -25,7 +25,9 @@ Pages serves. The weekly content pipeline is implemented as Claude Code skills u
   (the Pages config source of truth for bindings). Holds the usage counts — see "Usage counts".
 - **Cloudflare Web Analytics** — auto-injected beacon on ccpx.fyi (site tag
   `79b096da8ab74a2298882372deabd140`, since 2026-08-16). Reported **zero** page loads for
-  ccpx.fyi as of 2026-09-26 even though real browser loads exist; ignore it, use `CCPX`.
+  ccpx.fyi as of 2026-09-26 even though real browser loads exist; ignore it, use `CCPX`. Its
+  script (`static.cloudflareinsights.com`) failed with `ERR_CONNECTION_RESET` in Playwright
+  here, consistent with it being blocked for many visitors.
 - **Issuu** — source of the weekly issue. Publisher listing:
   `https://issuu.com/charlestoncitypaper`. Static endpoints used by
   `skill/scripts/fetch_issue.py`:
@@ -147,10 +149,16 @@ curl -s -H "Authorization: Bearer $CF_API_TOKEN_SINE" \
   "https://api.cloudflare.com/client/v4/accounts/ee6dc5f16660ea40f92271ec5fc1ec2b/analytics_engine/sql" \
   -d "SELECT blob2 AS puzzle, blob1 AS event, count(DISTINCT index1) AS people, sum(_sample_interval) AS events
       FROM CCPX WHERE timestamp > NOW() - INTERVAL '7' DAY
+        AND index1 != '00000000-0000-4000-8000-000000000000'
       GROUP BY puzzle, event ORDER BY puzzle, event FORMAT JSON"
 ```
 
 Swap the GROUP BY to `blob3, blob4, blob5` for geo. AE keeps data 3 months.
+- Visitor `00000000-0000-4000-8000-000000000000` is the fixed test ID (set via Playwright
+  `addInitScript` before loading ccpx.fyi). Use it for any live check and exclude it as above.
+  Its first events (2026-09-26 16:18 UTC) confirmed geo works: US / South Carolina / Charleston.
+- `ORDER BY timestamp` errors ("unable to find type of column") unless `timestamp` is also
+  in the SELECT list.
 Pre-tracking baseline (2026-09-19→26, from zone logs): ~50 HTML hits/day on `/` (mostly
 bots), but only 0–8/day fetches of `/puzzles/index.json`, i.e. real JS-running loads.
 
