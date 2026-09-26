@@ -206,6 +206,16 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
 
 ## Gotchas & Notes
 
+- **No cachebuster exists or is needed.** CSS/JS are inline in the HTML and data fetches use
+  `cache:'no-store'`; a push to `main` is live in ~1 min.
+- **`build.js`'s dev-export strip check is by name.** Any mention of `devExportBox` /
+  `devExportText` / `isPreviewHost` outside the marker regions (even a CSS selector in an
+  unrelated handler) fails the production build. Run `node build.js` before pushing.
+- **Solved-grid lock** (`isSolveLocked` in `index.html`): testing it needs a known solve, and
+  only hashes are stored — in Playwright, fill the grid with any letters, rebuild
+  `SOLUTION_HASHES` from `sha256hex(SOLUTION_SALT + wordText(...))`, and stub `window.confirm`
+  (the MCP dialog handler doesn't catch confirms raised inside `run_code`).
+
 - **`extract_grid.py` has never worked bare.** Always pass `--crop`; other dark page content
   confuses line detection. `--crop 20,80,1400,1400` worked for 2026-09-18; the grid moves
   week to week (2026-09-25 it was top-right: `--crop 1390,95,2765,1400`). A crop that clips
