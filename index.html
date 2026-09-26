@@ -399,6 +399,7 @@
   }
   .status-badge.show{ display:inline-block; }
   #completionSourceLink{ width:fit-content; margin-left:auto; margin-right:auto; }
+  #completionLockNote{ display:none; margin-top:4px; opacity:0.75; }
   /* Understated either way -- a mismatch isn't an error state, just a note */
   .status-badge.match{ background:#dce8dc; }
   .status-badge.mismatch{ background:#efe2c8; }
@@ -439,13 +440,13 @@
 <div class="toolbar" id="toolbar">
   <button id="focusBtn">Focus mode</button>
   <button id="clearBtn">Clear all</button>
-  <a id="archiveBtn" href="/archive">Archive</a>
+  <a id="archiveBtn" href="/archive">Past Puzzles</a>
 </div>
 
 <div id="app">
   <div id="leftCol">
     <div id="gridWrap"><div id="grid"></div></div>
-    <span id="completionStatus" class="status-badge"><span id="completionStatusText"></span><a id="completionSourceLink" href="#" target="_blank" rel="noopener" style="display:none; margin-top:4px; color:inherit; text-decoration:none;">(<span style="text-decoration:underline;">source</span>)</a></span>
+    <span id="completionStatus" class="status-badge"><span id="completionStatusText"></span><span id="completionLockNote">Type over a square to unlock.</span><a id="completionSourceLink" href="#" target="_blank" rel="noopener" style="display:none; margin-top:4px; color:inherit; text-decoration:none;">(<span style="text-decoration:underline;">source</span>)</a></span>
     <!-- dev-export-box:start -->
     <div id="devExportBox" style="display:none;">
       <label for="devExportText">Preview-deploy only — paste this back to Claude:</label>
@@ -691,10 +692,10 @@ function wordAt(r,c,dir){
   return null;
 }
 
-function focusInput(r,c){
+function focusInput(r,c,focusOpts){
   const el = document.querySelector(`.cell[data-r="${r}"][data-c="${c}"] input`);
   if(el){
-    el.focus();
+    el.focus(focusOpts);
     // Select any existing letter so the next keystroke always replaces it,
     // rather than depending on wherever the browser happens to leave the
     // caret (which isn't reliably "at the end" after we set .value via JS,
@@ -704,7 +705,25 @@ function focusInput(r,c){
   }
 }
 
+// Put the keyboard back in the grid at the current cell without moving the
+// selection or scrolling -- used on load and after page-level clicks (toolbar
+// buttons, focus-mode toggles, empty space) so typing works without first
+// clicking a cell. Goes through focusInput, not selectCell, so it can't
+// toggle orientation the way a click on the current cell would.
+function refocusGrid(){
+  focusInput(cur.r, cur.c, {preventScroll:true});
+}
+
 function handleInput(e,r,c){
+  // Fallback lock check for keyboards that don't send a usable keydown
+  // (mobile virtual keyboards report key 'Unidentified'), so the edit has
+  // already landed in the input by the time we see it -- put it back, then ask.
+  if(isSolveLocked()){
+    const attempted = e.target.value;
+    e.target.value = grid[r][c].letter;
+    if(!confirmUnlock()){ focusInput(r,c); return; }
+    e.target.value = attempted;
+  }
   let v = e.target.value.toUpperCase().replace(/[^A-Z]/g,'');
   v = v.slice(-1);
   grid[r][c].letter = v;
@@ -730,6 +749,31 @@ function isGridFull(){
   }
   return true;
 }
+// ---- Solve lock: once the filled grid matches the loaded solve, edits ask
+// first, so a stray keystroke can't quietly undo a finished puzzle. Moving
+// around (clicks, arrows, Tab, Space) still works -- only changing letters
+// is gated. Unlocking lasts until the grid stops matching; if it's brought
+// back to matching later, it locks again. Not saved: a reload re-locks.
+let gridMatchesSolve = false;
+let solveLockDismissed = false;
+function isSolveLocked(){ return gridMatchesSolve && !solveLockDismissed; }
+function setGridMatchesSolve(matches){
+  gridMatchesSolve = matches;
+  if(!matches) solveLockDismissed = false;
+  document.getElementById('completionLockNote').style.display = isSolveLocked() ? 'block' : 'none';
+}
+function confirmUnlock(){
+  if(!confirm('This grid matches the solve, so it\'s locked against accidental changes. Unlock it to edit?')) return false;
+  solveLockDismissed = true;
+  setGridMatchesSolve(gridMatchesSolve);
+  sizeFocusMode();
+  return true;
+}
+function isEditKey(e){
+  if(e.key==='Backspace' || e.key==='Delete') return true;
+  return e.key.length===1 && e.key!==' ' && !e.ctrlKey && !e.metaKey && !e.altKey;
+}
+
 let completionStatusToken = 0;
 /* dev-export-box:start */
 // True only on a Cloudflare Pages *.pages.dev preview deployment (branch
@@ -760,6 +804,8 @@ async function updateCompletionStatus(){
   /* dev-export-box:end */
 
   if(!full){
+    completionStatusToken++; // a still-running hash check is now stale
+    setGridMatchesSolve(false);
     badge.classList.remove('show');
     badgeText.textContent = '';
     sizeFocusMode();
@@ -768,6 +814,7 @@ async function updateCompletionStatus(){
   badge.classList.add('show');
 
   if(!SOLUTION_HASHES){
+    setGridMatchesSolve(false);
     badgeText.textContent = 'Grid complete';
     sizeFocusMode();
     return;
@@ -790,6 +837,7 @@ async function updateCompletionStatus(){
     if(hash !== SOLUTION_HASHES[num+'D']) mismatches++;
   }
   if(token !== completionStatusToken) return;
+  setGridMatchesSolve(mismatches===0);
   const isOfficial = SOLUTION_SOURCE === 'official';
   if(mismatches===0){
     badgeText.textContent = isOfficial
@@ -811,6 +859,17 @@ async function updateCompletionStatus(){
 
 function handleKey(e,r,c){
   const key = e.key;
+  if(isSolveLocked() && isEditKey(e)){
+    e.preventDefault();
+    if(!confirmUnlock()) return;
+    if(key!=='Backspace' && key!=='Delete'){
+      // Unlocked -- carry out the keystroke that asked, so it isn't lost.
+      e.target.value = key;
+      handleInput({target:e.target}, r, c);
+      return;
+    }
+    // Backspace/Delete: fall through to the normal handling below
+  }
   if(key==='Backspace' || key==='Delete'){
     e.preventDefault();
     if(grid[r][c].letter){
@@ -975,10 +1034,7 @@ function updateActiveClue(w){
   if(!w) return;
   const id = (cur.dir==='A'?'a-':'d-')+w.num;
   const el = document.getElementById(id);
-  if(el){
-    el.classList.add('active');
-    if(typeof el.scrollIntoView === 'function') el.scrollIntoView({block:'nearest', behavior:'instant'});
-  }
+  if(el) el.classList.add('active');
   // The crossing word at the current cell -- highlighted (not bold) so you can
   // see at a glance what the intersecting clue is as you move through a word,
   // without it reading as "also selected".
@@ -986,12 +1042,47 @@ function updateActiveClue(w){
   const crossWord = wordAt(cur.r, cur.c, crossDir);
   if(crossWord){
     const crossEl = document.getElementById((crossDir==='A'?'a-':'d-')+crossWord.num);
-    if(crossEl){
-      crossEl.classList.add('crossing');
-      if(typeof crossEl.scrollIntoView === 'function') crossEl.scrollIntoView({block:'nearest', behavior:'instant'});
-    }
+    if(crossEl) crossEl.classList.add('crossing');
+  }
+  scrollActiveCluesIntoView();
+}
+
+// Keep the active and crossing clues visible in their own columns -- instant,
+// not smooth (smooth was reported as distracting). Done by hand rather than
+// scrollIntoView({block:'nearest'}), which lined a clue up with the column's
+// top edge -- underneath the sticky Across/Down header, so it looked like it
+// hadn't scrolled into view at all. This measures the header and keeps the
+// clue below it, and only ever scrolls the column itself, never the page.
+const CLUE_SCROLL_GAP = 4;
+function scrollClueIntoView(el){
+  const col = el.closest('.cluecol');
+  if(!col) return;
+  if(getComputedStyle(col).overflowY === 'visible'){
+    // Narrow layout: the columns don't scroll on their own, the page does --
+    // keep the previous behavior there.
+    if(typeof el.scrollIntoView === 'function') el.scrollIntoView({block:'nearest', behavior:'instant'});
+    return;
+  }
+  const header = col.querySelector('h2');
+  const colRect = col.getBoundingClientRect();
+  const visTop = colRect.top + col.clientTop + (header ? header.offsetHeight : 0);
+  const visBottom = colRect.top + col.clientTop + col.clientHeight;
+  const r = el.getBoundingClientRect();
+  if(r.top < visTop + CLUE_SCROLL_GAP){
+    col.scrollTop -= (visTop + CLUE_SCROLL_GAP) - r.top;
+  } else if(r.bottom > visBottom - CLUE_SCROLL_GAP){
+    // Scroll down only as far as keeps the clue's top below the header, so a
+    // clue taller than the column shows its start rather than its end.
+    col.scrollTop += Math.min(r.bottom - (visBottom - CLUE_SCROLL_GAP), r.top - (visTop + CLUE_SCROLL_GAP));
   }
 }
+function scrollActiveCluesIntoView(){
+  document.querySelectorAll('.clue.active, .clue.crossing').forEach(scrollClueIntoView);
+}
+// The columns change height on resize and entering/leaving focus mode, which
+// can leave the highlighted clues outside the new viewport.
+// Deferred a frame so it runs after sizeFocusMode's own resize handler.
+window.addEventListener('resize', ()=> requestAnimationFrame(scrollActiveCluesIntoView));
 
 function renderClues(){
   const aEl = document.getElementById('acrossList');
@@ -1071,12 +1162,13 @@ document.getElementById('focusBtn').addEventListener('click', (e)=>{
   focusBadgeRowEl.appendChild(devExportBoxEl);
   /* dev-export-box:end */
   const raf = window.requestAnimationFrame || (fn => setTimeout(fn, 16));
-  raf(()=>{ sizeFocusMode(); positionToolbarDropdown(); });
+  raf(()=>{ sizeFocusMode(); positionToolbarDropdown(); scrollActiveCluesIntoView(); refocusGrid(); });
 });
 hamburgerBtn.addEventListener('click', (e)=>{
   e.stopPropagation(); // don't let this immediately trigger the outside-click-closes listener below
   positionToolbarDropdown();
   toolbarEl.classList.toggle('open');
+  if(!toolbarEl.classList.contains('open')) refocusGrid();
 });
 // Click anywhere outside the open dropdown closes it -- the standard way people
 // expect to dismiss this kind of menu, on top of clicking the hamburger again.
@@ -1098,6 +1190,8 @@ exitFocusBtn.addEventListener('click', ()=>{
   /* dev-export-box:start */
   leftColEl.appendChild(devExportBoxEl);
   /* dev-export-box:end */
+  scrollActiveCluesIntoView();
+  refocusGrid();
 });
 toolbarEl.appendChild(exitFocusBtn);
 toolbarEl.addEventListener('click', (e)=>{
@@ -1114,11 +1208,22 @@ document.addEventListener('keydown', (e)=>{
 });
 
 document.getElementById('clearBtn').addEventListener('click', ()=>{
-  if(!confirm('Clear the whole grid? This can\'t be undone.')) return;
+  if(!confirm('Clear the whole grid? This can\'t be undone.')){ refocusGrid(); return; }
   for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(!grid[r][c].black) grid[r][c].letter='';
   render();
   queueSave();
   updateCompletionStatus();
+  refocusGrid();
+});
+// A click on non-interactive page space (headings, margins, the clue panel's
+// background) would otherwise leave focus on <body>, so typing silently does
+// nothing -- send it back to the grid. Skips drag-selections so clue text can
+// still be selected/copied, and anything that takes its own focus or input.
+document.addEventListener('click', (e)=>{
+  if(e.target.closest('input, textarea, select, button, a, .clue')) return;
+  const sel = window.getSelection && window.getSelection();
+  if(sel && !sel.isCollapsed) return;
+  refocusGrid();
 });
 
 // ---- Persistence: autosaves your letters, restores on reopen ----
@@ -1276,6 +1381,7 @@ let restoredLetters = Array.from({length:SIZE},()=>Array(SIZE).fill(''));
   }
   render();
   updateCompletionStatus();
+  refocusGrid();
   trackUsage('load');
 })();
 
