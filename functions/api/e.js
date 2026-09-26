@@ -4,15 +4,19 @@
 // third-party Web Analytics beacon don't hide real players.
 //
 // Stored per event: event name, puzzle id, coarse geo (country / region /
-// city from Cloudflare's edge lookup), mobile-vs-desktop, and the random
-// visitor id the page keeps in localStorage. Never the IP or user agent.
+// city from Cloudflare's edge lookup), mobile-vs-desktop, the random
+// visitor id the page keeps in localStorage, and an optional label for
+// known browsers ("owner", "claude"; empty = the public). Never the IP or
+// user agent.
 //
 // Dataset schema (keep in sync with the queries in .claude/project-dry.md):
 //   blob1 event   blob2 puzzle   blob3 country   blob4 region
-//   blob5 city    blob6 device   index1 visitor id
+//   blob5 city    blob6 device   blob7 who (label, '' = public)
+//   index1 visitor id
 const EVENTS = new Set(['load', 'start', 'complete']);
 const PUZZLE_RE = /^\d{8}$/; // puzzle id, e.g. 20260925
 const VISITOR_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+const WHO_RE = /^[a-z0-9-]{0,20}$/; // same label rule as index.html; '' = unlabeled
 
 export async function onRequestPost({ request, env }) {
   if (!env.ANALYTICS_ENGINE) {
@@ -28,7 +32,8 @@ export async function onRequestPost({ request, env }) {
   const event = String(body?.e ?? '');
   const puzzle = String(body?.p ?? '');
   const visitor = String(body?.v ?? '');
-  if (!EVENTS.has(event) || !PUZZLE_RE.test(puzzle) || !VISITOR_RE.test(visitor)) {
+  const who = String(body?.w ?? '');
+  if (!EVENTS.has(event) || !PUZZLE_RE.test(puzzle) || !VISITOR_RE.test(visitor) || !WHO_RE.test(who)) {
     return new Response(null, { status: 400 });
   }
   const cf = request.cf ?? {};
@@ -41,6 +46,7 @@ export async function onRequestPost({ request, env }) {
       cf.region ?? '',
       cf.city ?? '',
       /Mobi|Android|iPhone|iPad/.test(ua) ? 'mobile' : 'desktop',
+      who,
     ],
     indexes: [visitor],
   });

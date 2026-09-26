@@ -137,26 +137,32 @@ Added 2026-09-26 by user request. The page sends `load` / `start` (first letter 
 `complete` (grid filled by typing) at most once per page view each, via `sendBeacon` to
 `/api/e`. It only sends from `ccpx.fyi`, so previews and localhost never count. The visitor
 ID is a random UUID in `localStorage['ccpx:vid']`; no cookie, no IP or user agent stored.
-Setting `localStorage['ccpx:notrack']` (any value) opts a browser out. User chose **no
-on-page notice**, and numbers **on request** (no dashboard/script). Schema lives in the
-header of `functions/api/e.js`: blob1 event, blob2 puzzle id, blob3 country, blob4 region,
-blob5 city, blob6 mobile/desktop, index1 visitor id.
+**Known browsers are labeled, not excluded** (user, 2026-09-26: "i dont want to not be
+counted in, i just want the tracker to know who is me or you"). Visiting any page with
+`?who=<label>` stores it in `localStorage['ccpx:who']` and strips it from the URL; every
+event then carries it. Labels: `owner` = the user's devices, `claude` = Claude's live test
+runs; empty = the public. There is no opt-out. User chose **no on-page notice**, and numbers
+**on request** (no dashboard/script). Schema lives in the header of `functions/api/e.js`:
+blob1 event, blob2 puzzle id, blob3 country, blob4 region, blob5 city, blob6 mobile/desktop,
+blob7 who, index1 visitor id.
 
 Query via the SQL API (needs the token's Account Analytics Read permission, added 2026-09-26):
 
 ```sh
 curl -s -H "Authorization: Bearer $CF_API_TOKEN_SINE" \
   "https://api.cloudflare.com/client/v4/accounts/ee6dc5f16660ea40f92271ec5fc1ec2b/analytics_engine/sql" \
-  -d "SELECT blob2 AS puzzle, blob1 AS event, count(DISTINCT index1) AS people, sum(_sample_interval) AS events
+  -d "SELECT blob2 AS puzzle, blob7 AS who, blob1 AS event, count(DISTINCT index1) AS people,
+        sum(_sample_interval) AS events
       FROM CCPX WHERE timestamp > NOW() - INTERVAL '7' DAY
         AND index1 != '00000000-0000-4000-8000-000000000000'
-      GROUP BY puzzle, event ORDER BY puzzle, event FORMAT JSON"
+      GROUP BY puzzle, who, event ORDER BY puzzle, who, event FORMAT JSON"
 ```
 
 Swap the GROUP BY to `blob3, blob4, blob5` for geo. AE keeps data 3 months.
-- Visitor `00000000-0000-4000-8000-000000000000` is the fixed test ID (set via Playwright
-  `addInitScript` before loading ccpx.fyi). Use it for any live check and exclude it as above.
-  Its first events (2026-09-26 16:18 UTC) confirmed geo works: US / South Carolina / Charleston.
+- For a live check, load `https://ccpx.fyi/?who=claude` in Playwright; clear localStorage
+  afterwards. Visitor `00000000-0000-4000-8000-000000000000` holds two unlabeled test events
+  from before labels existed (2026-09-26 16:18 UTC, US / South Carolina / Charleston); the
+  query above excludes it.
 - `ORDER BY timestamp` errors ("unable to find type of column") unless `timestamp` is also
   in the SELECT list.
 Pre-tracking baseline (2026-09-19→26, from zone logs): ~50 HTML hits/day on `/` (mostly
@@ -242,4 +248,4 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
   endpoint is better anyway).
 
 ---
-**Last updated:** 2026-09-26 — usage counts (Pages Function + Analytics Engine).
+**Last updated:** 2026-09-26 — usage counts (Pages Function + Analytics Engine); who labels.

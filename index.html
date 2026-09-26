@@ -1221,28 +1221,40 @@ async function loadState(){
 // Sent only from the production domain, so preview solves and local testing
 // never count. A random visitor id in localStorage (no cookie) lets repeat
 // visits be told apart from new people; functions/api/e.js adds coarse geo
-// server-side. Set localStorage 'ccpx:notrack' to anything to opt a browser
-// out (e.g. the site owner's own devices).
+// server-side. Known browsers (the site owner's devices, Claude's test runs)
+// are still counted but carry a label: visit once with ?who=<label> and it's
+// remembered in localStorage 'ccpx:who' and stripped from the URL.
 const USAGE_HOST = 'ccpx.fyi';
+const USAGE_WHO_RE = /^[a-z0-9-]{1,20}$/;
 const sentUsage = new Set();
-function usageVisitorId(){
+(function rememberUsageLabel(){
+  const params = new URLSearchParams(location.search);
+  const who = (params.get('who') || '').toLowerCase();
+  if(!params.has('who')) return;
   try{
-    if(window.localStorage.getItem('ccpx:notrack') !== null) return null;
+    if(USAGE_WHO_RE.test(who)) window.localStorage.setItem('ccpx:who', who);
+  }catch(e){ /* storage blocked -- nothing to remember it in */ }
+  params.delete('who');
+  const qs = params.toString();
+  history.replaceState(null, '', location.pathname + (qs ? '?'+qs : '') + location.hash);
+})();
+function usageVisitor(){
+  try{
     let id = window.localStorage.getItem('ccpx:vid');
     if(!id){
       id = crypto.randomUUID();
       window.localStorage.setItem('ccpx:vid', id);
     }
-    return id;
+    return {id, who: window.localStorage.getItem('ccpx:who') || ''};
   }catch(e){ return null; } // storage blocked -- skip rather than count every load as a new person
 }
 function trackUsage(event){
   if(location.hostname !== USAGE_HOST || sentUsage.has(event)) return;
   sentUsage.add(event); // once per page view per event
-  const visitor = usageVisitorId();
+  const visitor = usageVisitor();
   if(!visitor) return;
   try{
-    navigator.sendBeacon('/api/e', JSON.stringify({e:event, p:PUZZLE_ID, v:visitor}));
+    navigator.sendBeacon('/api/e', JSON.stringify({e:event, p:PUZZLE_ID, v:visitor.id, w:visitor.who}));
   }catch(e){ /* counting is best-effort; never let it affect play */ }
 }
 
