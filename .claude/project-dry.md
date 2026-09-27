@@ -175,6 +175,9 @@ list each labeled person's devices. AE keeps data 3 months.
   afterwards. Visitor `00000000-0000-4000-8000-000000000000` holds two unlabeled test events
   from before labels existed (2026-09-26 16:18 UTC, US / South Carolina / Charleston); the
   query above excludes it.
+- **Reporting format** (user, 2026-09-27): fold joe + cc into a single "you & me" row with
+  one number (page loads), no per-event breakdown. Only public visitors get the full
+  breakdown (loads / starts / completes / interest, browsers, geo).
 - The `if(index1 ...)` relabels three visitors whose only unlabeled loads came before
   their browser got `?me=` (2026-09-26, Charleston): d06402ec = joe's Mac Chrome and
   0ca3a8d4 = joe's iPhone Chrome (both later sent `joe` rows), affa981c = a cc Playwright
