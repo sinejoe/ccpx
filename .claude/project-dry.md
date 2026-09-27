@@ -158,7 +158,10 @@ Query via the SQL API (needs the token's Account Analytics Read permission, adde
 ```sh
 curl -s -H "Authorization: Bearer $CF_API_TOKEN_SINE" \
   "https://api.cloudflare.com/client/v4/accounts/ee6dc5f16660ea40f92271ec5fc1ec2b/analytics_engine/sql" \
-  -d "SELECT blob2 AS puzzle, blob7 AS me, blob1 AS event, count(DISTINCT index1) AS browsers,
+  -d "SELECT blob2 AS puzzle,
+        if(index1 IN ('d06402ec-f915-4445-b6fc-974fa2142600','0ca3a8d4-d18c-435a-b9ac-42f9497b7653'), 'joe',
+          if(index1 = 'affa981c-c358-4c96-a287-313cc26664a2', 'cc', blob7)) AS me,
+        blob1 AS event, count(DISTINCT index1) AS browsers,
         sum(_sample_interval) AS events
       FROM CCPX WHERE timestamp > NOW() - INTERVAL '7' DAY
         AND index1 != '00000000-0000-4000-8000-000000000000'
@@ -172,6 +175,12 @@ list each labeled person's devices. AE keeps data 3 months.
   afterwards. Visitor `00000000-0000-4000-8000-000000000000` holds two unlabeled test events
   from before labels existed (2026-09-26 16:18 UTC, US / South Carolina / Charleston); the
   query above excludes it.
+- The `if(index1 ...)` relabels three visitors whose only unlabeled loads came before
+  their browser got `?me=` (2026-09-26, Charleston): d06402ec = joe's Mac Chrome and
+  0ca3a8d4 = joe's iPhone Chrome (both later sent `joe` rows), affa981c = a cc Playwright
+  run (1s after cc's 3770f6bc load). User (2026-09-27): count these as known, and don't
+  bring them up again when reporting. AE rows can't be edited, so the mapping lives in the
+  query — keep it in every usage query.
 - Bot/headless user agents are dropped in `functions/api/e.js` since 2026-09-27; the
   query's `blob8 != 'Bot/headless'` hides the one crawler row stored before then
   (Moses Lake, WA, 2026-09-27 15:31 UTC).
