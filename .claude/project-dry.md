@@ -162,6 +162,7 @@ curl -s -H "Authorization: Bearer $CF_API_TOKEN_SINE" \
         sum(_sample_interval) AS events
       FROM CCPX WHERE timestamp > NOW() - INTERVAL '7' DAY
         AND index1 != '00000000-0000-4000-8000-000000000000'
+        AND blob8 != 'Bot/headless'
       GROUP BY puzzle, me, event ORDER BY puzzle, me, event FORMAT JSON"
 ```
 
@@ -171,6 +172,9 @@ list each labeled person's devices. AE keeps data 3 months.
   afterwards. Visitor `00000000-0000-4000-8000-000000000000` holds two unlabeled test events
   from before labels existed (2026-09-26 16:18 UTC, US / South Carolina / Charleston); the
   query above excludes it.
+- Bot/headless user agents are dropped in `functions/api/e.js` since 2026-09-27; the
+  query's `blob8 != 'Bot/headless'` hides the one crawler row stored before then
+  (Moses Lake, WA, 2026-09-27 15:31 UTC).
 - `ORDER BY timestamp` errors ("unable to find type of column") unless `timestamp` is also
   in the SELECT list.
 Pre-tracking baseline (2026-09-19→26, from zone logs): ~50 HTML hits/day on `/` (mostly

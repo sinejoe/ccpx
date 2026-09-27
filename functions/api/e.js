@@ -65,6 +65,9 @@ export async function onRequestPost({ request, env }) {
   const touchPoints = Number(body?.t ?? 0) || 0;
   const cf = request.cf ?? {};
   const { device, browser } = describeDevice(request.headers.get('user-agent') ?? '', touchPoints);
+  // Crawlers and headless browsers aren't players: accept the beacon but
+  // don't record it. (Playwright test runs use real Chrome, so ?me=cc still counts.)
+  if (browser === 'Bot/headless') return new Response(null, { status: 204 });
   env.ANALYTICS_ENGINE.writeDataPoint({
     blobs: [
       event,
