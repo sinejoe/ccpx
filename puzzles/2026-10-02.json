@@ -1,0 +1,342 @@
+{
+  "id": "20261002",
+  "date": "2026-10-02",
+  "kickerDate": "Oct 02 2026",
+  "title": "“It’s Always Something New”",
+  "subtitle": "Jonesin' by Matt Jones — sounds like an original idea.",
+  "solutionSalt": "ccpxwd-2026-ref-solve",
+  "solutionHashesFile": "puzzles/2026-10-02.solution-hashes.txt",
+  "pattern": [
+    "....#....##....",
+    "....#.....#....",
+    "..........#....",
+    "...#...........",
+    "......##...#...",
+    "###.....#...###",
+    "....#....#.....",
+    "...............",
+    ".....#....#....",
+    "###...#.....###",
+    "...#...##......",
+    "...........#...",
+    "....#..........",
+    "....#.....#....",
+    "....##....#...."
+  ],
+  "across": [
+    [
+      1,
+      "Surrender, so to speak"
+    ],
+    [
+      5,
+      "Diner breakfast option"
+    ],
+    [
+      9,
+      "“Frozen II” snowman"
+    ],
+    [
+      13,
+      "2023-2024 tour that set multiple Guinness World Records"
+    ],
+    [
+      14,
+      "Those not in favor"
+    ],
+    [
+      16,
+      "Jail unit"
+    ],
+    [
+      17,
+      "Quick burst of house cleaning?"
+    ],
+    [
+      19,
+      "Three in a gig?"
+    ],
+    [
+      20,
+      "Actor Vigoda"
+    ],
+    [
+      21,
+      "Chefs signing a contract before the wedding?"
+    ],
+    [
+      23,
+      "Scalawag"
+    ],
+    [
+      25,
+      "“Harper Valley ___” (#1 hit of 1968)"
+    ],
+    [
+      26,
+      "“Correct!”"
+    ],
+    [
+      27,
+      "Studio behind October 2026’s “Wildwood”"
+    ],
+    [
+      30,
+      "“___ Amatoria” (Ovid work)"
+    ],
+    [
+      32,
+      "State home to Celeryville and Mount Healthy"
+    ],
+    [
+      35,
+      "Bottle feature"
+    ],
+    [
+      37,
+      "Post-workout soreness"
+    ],
+    [
+      41,
+      "Huge statue that can’t lie?"
+    ],
+    [
+      44,
+      "Like the former financial backers of LIV Golf"
+    ],
+    [
+      45,
+      "Mapo ___"
+    ],
+    [
+      46,
+      "Website with a “Collectibles” section"
+    ],
+    [
+      47,
+      "Pepper’s rank"
+    ],
+    [
+      49,
+      "Nabisco’s ___ Wafers"
+    ],
+    [
+      51,
+      "Relaxing getaway"
+    ],
+    [
+      54,
+      "Owns"
+    ],
+    [
+      56,
+      "Bind securely"
+    ],
+    [
+      60,
+      "Fertilizer for only growing plants in the dark?"
+    ],
+    [
+      64,
+      "“Wayward” creator/star Martin"
+    ],
+    [
+      65,
+      "“Garfield” canine"
+    ],
+    [
+      66,
+      "Green fuzzy stuff on some legumes?"
+    ],
+    [
+      68,
+      "Maze divider"
+    ],
+    [
+      69,
+      "Per ___ (yearly)"
+    ],
+    [
+      70,
+      "Roster-shortening abbr."
+    ],
+    [
+      71,
+      "Took a gander at"
+    ],
+    [
+      72,
+      "___ Club (retail chain)"
+    ],
+    [
+      73,
+      "“Breakadawn” hip-hop group ___ Soul"
+    ]
+  ],
+  "down": [
+    [
+      1,
+      "Moth-repelling closet wood"
+    ],
+    [
+      2,
+      "Antilles resort island"
+    ],
+    [
+      3,
+      "Places to gather your buds?"
+    ],
+    [
+      4,
+      "Superlative suffix"
+    ],
+    [
+      5,
+      "Recession victim?"
+    ],
+    [
+      6,
+      "One of the Brontës"
+    ],
+    [
+      7,
+      "Astonish"
+    ],
+    [
+      8,
+      "Ask for money"
+    ],
+    [
+      9,
+      "Prefix meaning eight"
+    ],
+    [
+      10,
+      "Sports artist Neiman"
+    ],
+    [
+      11,
+      "Similar"
+    ],
+    [
+      12,
+      "Freebie from a dentist visit"
+    ],
+    [
+      15,
+      "58-Down partitions"
+    ],
+    [
+      18,
+      "Former name of the film ratings org."
+    ],
+    [
+      22,
+      "Jeweler’s weight unit"
+    ],
+    [
+      24,
+      "Overcast sky feature"
+    ],
+    [
+      28,
+      "Where Canterbury is"
+    ],
+    [
+      29,
+      "Be motivated by"
+    ],
+    [
+      31,
+      "1996 horror film with sequels"
+    ],
+    [
+      32,
+      "Chant sounds"
+    ],
+    [
+      33,
+      "Condo gp."
+    ],
+    [
+      34,
+      "Shiba ___ (Japanese dog breed)"
+    ],
+    [
+      36,
+      "Former U.N. secretary-general Annan"
+    ],
+    [
+      38,
+      "Airline’s home city"
+    ],
+    [
+      39,
+      "Rideshare app stat"
+    ],
+    [
+      40,
+      "Reserved"
+    ],
+    [
+      42,
+      "Could possibly"
+    ],
+    [
+      43,
+      "Seesaw pivots"
+    ],
+    [
+      48,
+      "Lightning’s home"
+    ],
+    [
+      50,
+      "Spelling style used by hackers"
+    ],
+    [
+      51,
+      "Longtime Maine senator Olympia"
+    ],
+    [
+      52,
+      "Math-themed March 14th observance"
+    ],
+    [
+      53,
+      "Nimble-footed"
+    ],
+    [
+      55,
+      "“Carnival of the Animals” composer Camille Saint-___"
+    ],
+    [
+      57,
+      "Act dramatically"
+    ],
+    [
+      58,
+      "Like some vowels in French"
+    ],
+    [
+      59,
+      "Unit of magnetic flux"
+    ],
+    [
+      61,
+      "Retained"
+    ],
+    [
+      62,
+      "“Peter Pan” dog"
+    ],
+    [
+      63,
+      "Word on a coin"
+    ],
+    [
+      67,
+      "Club ___ (resort chain)"
+    ]
+  ]
+}
