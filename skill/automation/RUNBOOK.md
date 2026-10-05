@@ -53,7 +53,7 @@ Then pick the **first** stage that applies:
 
 | Situation | Stage |
 |---|---|
-| On `origin/main` with hashes, preview gone, "published" mail sent | **Done.** Exit silently. |
+| On `origin/main` with hashes | **Done.** Exit silently, with one exception: if this week's thread exists and has no bot "Published" reply yet, finish Stage C steps 3–5 first. No thread means it was published by hand, and that's still Done. |
 | Not built anywhere | **A. Build** |
 | Built on the wip branch, no preview email sent yet | **A** (resume at deploy + email) |
 | Preview email sent, no user reply containing `crossword:<ID>=` | **Wait.** Exit silently. |
