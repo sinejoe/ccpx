@@ -262,8 +262,9 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
 - **Solve-framing rules are hard requirements:** never call a mismatch "wrong", never flag
   individual cells, always make clear it's *a* submitted solve rather than an official answer
   key, and keep the completion indicator a persistent badge — never a popup.
-- **`puzzles/*.solution.json`** files are gitignored local scratch and fully redundant — each
-  regenerates its committed hashes byte-for-byte.
+- **Plaintext solutions** live locally in `working-files/<date>/solution.txt` (gitignored, never
+  committed or shipped). The user wants one per puzzle, so write or refresh it whenever hashes are written.
+  The old `puzzles/*.solution.json` scratch files are gone. All 9 were rebuilt and hash-verified on 2026-10-04.
 - `.jekyll-cache/` is stale; nothing here uses Jekyll.
 
 ## Superseded (kept for history, don't rely on these)

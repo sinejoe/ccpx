@@ -26,7 +26,19 @@ means "email it"). Everything else in those files applies. Read
 - **Bot marker:** the Gmail connector sends as the user, so sender can't
   tell bot from human. Every message the routine sends starts with the
   line `[ccpx-bot]`. A thread message whose body does not start with
-  `[ccpx-bot]` is from the user. Ignore quoted text below a reply.
+  `[ccpx-bot]` is from the user. Judge only the reply's own text, above
+  its "On ... wrote:" line, after trimming leading whitespace: the user's
+  replies quote the whole bot mail, marker included.
+- Gmail rewrites every URL in stored mail to
+  `https://www.google.com/url?q=<real>&...`. Unwrap `q=` before using any
+  URL read back from the thread. Leave the links in outgoing mail as they are.
+- **Email style: short and plain.** The user reads these on a phone and
+  wants them easy to take in. Send only what they need to act on: the
+  marker, one or two lines of substance and the ask. No reports, no
+  background, no "helpful" notes, no list of what was checked or how, no
+  tool or infra details. Anything that went fine goes unmentioned. If
+  something broke, say what's broken and what you need from them in one
+  or two sentences.
 - Setup each fire: `pip install -q pillow numpy` and `npm ci`.
 
 ## Work out the stage (every fire)
@@ -47,7 +59,7 @@ Then pick the **first** stage that applies:
 | Preview email sent, no user reply containing `crossword:<ID>=` | **Wait.** Exit silently. |
 | User solve received, no verdict/question mail after it | **B. Answer check** |
 | Bot asked a question, user replied after it | **B** (apply the answer, re-check) |
-| Verdict sent ("OK to publish?"), user replied yes/ok/ship/publish after it | **C. Publish** |
+| Bot mail containing "Reply OK to publish." sent, user replied yes/ok/ship/publish after it | **C. Publish** |
 | Verdict sent, user replied with anything else | Treat as a question/correction: **B** |
 | Otherwise | **Wait.** Exit silently. |
 
@@ -65,14 +77,14 @@ It sends one short email that describes what it sees and asks, then exits.
 2. Do `fetch-issue` Step 2, then all of `build-puzzle-json` Steps 1–5,
    exactly as written, including the grid/numbering cross-check. **If the
    cross-check doesn't pass after a careful re-crop/re-parse, stop.**
-   Email the mismatch details (what the grid numbering says vs. the
-   printed clue numbers), commit nothing and exit. A wrong grid must not
+   Email one line saying the grid didn't read cleanly and the preview is
+   on hold, commit nothing and exit. A wrong grid must not
    reach the user's iPad.
-3. Validation (`build-puzzle-json` Step 6): try a headless browser
-   (`npx playwright install chromium` and a short script). If that can't
-   install here, do the structural checks in Node (JSON parses, number
-   sets match, 225 cells, index.json prepended), and say in the email
-   that the browser check was skipped.
+3. Validation (`build-puzzle-json` Step 6): Playwright and Chromium are
+   preinstalled in the cloud env (`npm root -g`, `/opt/pw-browsers`); don't
+   run `playwright install`. Use a short headless script. If it fails
+   anyway, do the structural checks in Node (JSON parses, number sets
+   match, 225 cells, index.json prepended) and leave it out of the email.
 4. Bake last week's official key (`build-puzzle-json` Step 7, and
    `skill/SKILL.md` "Baking in the official solve"). The browser
    verification there can use the same fallback: compare the transcribed
@@ -85,16 +97,18 @@ It sends one short email that describes what it sees and asks, then exits.
    commits (`git log -5`). Push.
 6. `CCPX_PREVIEW=1 npm run build`, then
    `CLOUDFLARE_API_TOKEN="$CF_API_TOKEN_CCPX" CLOUDFLARE_ACCOUNT_ID=ee6dc5f16660ea40f92271ec5fc1ec2b npx wrangler pages deploy dist --project-name=ccpx --branch=solve-<ID>`.
-   Load the URL with curl and confirm it serves the new puzzle id.
-7. Send the email: subject `ccpx <DATE>: ready to solve`. Body:
+   The sandbox blocks curl to `*.pages.dev`. Confirm instead that the CF
+   API lists the deployment with status success, and that `dist/index.html`
+   contains `devExportBox`.
+7. Send the email: subject `ccpx <DATE>: ready to solve`. Body is
+   exactly this, nothing more:
    - `[ccpx-bot]`
-   - title / constructor
+   - the puzzle title
    - the preview URL
-   - "When done, copy the line from the box under the grid and paste
-     it as a reply."
-   - one line on last week's official-key bake (matched / N entries
-     differ, listed)
-   - any validation caveat
+   - "When done, paste the line from the box under the grid as a reply."
+   - Only if last week's printed key differed from the submitted solve:
+     one line, e.g. "Last week's printed key had SNOWE where the solve had
+     SLOWE." Say nothing when it matched.
 
 ## Stage B — Answer check
 
@@ -104,16 +118,17 @@ It sends one short email that describes what it sees and asks, then exits.
 2. Run the answer-check gate from `skill/SKILL.md` "Reference solve"
    step 3 in full: pattern/empty-cell check, every answer read against its
    clue, web-check anything obscure, recent or pop-culture.
-3. **Open questions:** reply in the thread with `[ccpx-bot]`, the short
-   verdict (N/N checked, what was looked up) and each conflict as a
-   question. Example: "23A/11D cross: SNOWE/NIGHTMANURE or
+3. **Open questions:** reply in the thread with `[ccpx-bot]` and each
+   conflict as a short question, nothing else. Example: "23A/11D cross: SNOWE/NIGHTMANURE or
    SLOWE/LIGHTMANURE?". Never "wrong", no cell-by-cell dump. Exit and
    wait.
 4. **Clean:** write `puzzles/<DATE>.solution-hashes.txt` (Across first,
    then Down, each sorted by number) and commit it **separately** on
    the wip branch, the same as recent hash commits. Push. Then reply
-   with `[ccpx-bot]`, the verdict and **"Reply OK to publish."**
-   Never publish in this stage.
+   with just `[ccpx-bot]` and "All answers check out. Reply OK to publish."
+   Never publish in this stage. (The local-only
+   `working-files/<DATE>/solution.txt` plaintext copy can't persist from the cloud; the next
+   local session writes it from the solve string in this thread.)
 
 ## Stage C — Publish (only after an explicit OK reply)
 
@@ -124,12 +139,13 @@ It sends one short email that describes what it sees and asks, then exits.
    does not contain `devExportBox`.
 4. Delete every preview deployment for branch `solve-<ID>`, and any
    other `solve-*` preview older than this week. Use
-   `GET .../pages/projects/ccpx/deployments?env=preview`, then
+   `GET .../pages/projects/ccpx/deployments?env=preview` (the branch is in
+   `deployment_trigger.metadata.branch`), then
    `DELETE .../deployments/<id>?force=true`, then re-list and confirm
    zero remain. Never delete a production deployment.
-5. Reply with `[ccpx-bot]`, "Published: https://ccpx.fyi — preview
-   deleted." If any step failed, say exactly which one and what's still
-   up, and don't claim success.
+5. Reply with `[ccpx-bot]` and "Published: https://ccpx.fyi". If any step
+   failed, say in one or two sentences which one and what's still up,
+   and don't claim success.
 
 ## Git rules
 

@@ -16,3 +16,6 @@ working-files/*/printed_solution_grid_CANDIDATE.jpg
 # directory, which would silently drop .claude/ -- and project-dry.md with
 # it. Track it here on purpose.
 !.claude/
+
+# Plaintext solved grids, kept locally only -- never commit or ship them.
+working-files/*/solution.txt

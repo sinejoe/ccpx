@@ -128,7 +128,9 @@ isn't reachable from the device they're solving on.
 4. Compute `sha256hex(solutionSalt + word)` per Across/Down entry (same
    method as "Baking in the official solve" above) and write
    `puzzles/<date>.solution-hashes.txt` — Across entries first, then
-   Down, each sorted by number.
+   Down, each sorted by number. Also write the plaintext grid (15 rows, `#` = black) to
+   `working-files/<date>/solution.txt`, with a `# <date> — <official printed key | reference solve>`
+   first line. It's gitignored: a local-only record the user asked for, never committed or shipped.
 5. Leave `solutionSource` unset (defaults to `"reference"`) on
    `puzzles/<date>.json` — this is a submitted solve, not an official
    answer key, per the framing rules in `CLAUDE.md`.

@@ -146,7 +146,10 @@ prior week's `meta.json`. Use it to upgrade that already-published
    resulting Across/Down number sets exactly match that JSON's existing
    `across`/`down` clue-number lists before trusting the output — a
    mismatch means a transcription error, not a grid-structure error
-   (the pattern was already known-good).
+   (the pattern was already known-good). Also write the plaintext grid (15 rows, `#` = black) to
+   `working-files/<date>/solution.txt`, with a `# <date> — <official printed key | reference solve>`
+   first line. It's gitignored: a local-only record the user asked for, never committed or shipped.
+   (This overwrites the week's reference-solve copy with the official key.)
 4. Set `"solutionSource": "official"` and `"officialSolutionUrl"` (from
    that prior week's `meta.json`) on `puzzles/<prior-date>.json`.
 5. Verify in a real browser: load `?puzzle=<prior-id>`, fill the grid
