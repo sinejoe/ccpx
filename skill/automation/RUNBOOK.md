@@ -1,7 +1,10 @@
 # Unattended weekly run (cloud routine)
 
 The `ccpx weekly crossword` cloud routine follows this file. It fires every
-2 hours from 8am to midnight ET, and each fire does at most one stage of the
+2 hours on Fridays from 8am to 6pm ET (7am to 5pm EST), and also within a
+minute or so of each user reply, via the Gmail bridge
+(`skill/automation/gmail-bridge.gs`, which calls the routine's API
+trigger). The bridge's fire text is only a hint. Each fire does at most one stage of the
 Weekly MO, then exits. The fire has no memory of earlier ones, so it works
 out where things stand from **git + Gmail** every time. The user is not at
 a computer, and every human gate is an email they answer by reply.
@@ -48,6 +51,10 @@ means "email it"). Everything else in those files applies. Read
 2. Check `origin/claude/solve-wip` the same way.
 3. Search Gmail for the week's thread: `subject:"ccpx <DATE>"`. Read every
    message, then sort them into bot vs. user by the marker.
+4. **Overlap guard:** a bridge fire and a cron fire can run at the same
+   time. Before sending any email or pushing `main`, re-read the thread and
+   `git fetch origin`. If another run already sent this stage's email or
+   published since you started, exit silently.
 
 Then pick the **first** stage that applies:
 
@@ -137,8 +144,9 @@ It sends one short email that describes what it sees and asks, then exits.
 3. Poll `https://ccpx.fyi/puzzles/index.json` (cache-busting query) for
    up to 15 minutes until `<ID>` is newest. Confirm `https://ccpx.fyi/`
    does not contain `devExportBox`.
-4. Delete every preview deployment for branch `solve-<ID>`, and any
-   other `solve-*` preview older than this week. Use
+4. Delete every preview deployment for branch `solve-<ID>` or
+   `claude/solve-wip`, and any other `solve-*` preview older than this
+   week. Use
    `GET .../pages/projects/ccpx/deployments?env=preview` (the branch is in
    `deployment_trigger.metadata.branch`), then
    `DELETE .../deployments/<id>?force=true`, then re-list and confirm
