@@ -1,0 +1,334 @@
+{
+  "id": "20261009",
+  "date": "2026-10-09",
+  "kickerDate": "Oct 09 2026",
+  "title": "“I Was Not Invited”",
+  "subtitle": "Jonesin' by Matt Jones — but I appear anyway.",
+  "solutionSalt": "ccpxwd-2026-ref-solve",
+  "solutionHashesFile": "puzzles/2026-10-09.solution-hashes.txt",
+  "pattern": [
+    "....#.....#....",
+    "....#.....#....",
+    "....#.....#....",
+    "#.............#",
+    "###...###...###",
+    "...#.....#.....",
+    "....#....#.....",
+    "...............",
+    ".....#....#....",
+    ".....#.....#...",
+    "###...###...###",
+    "#.............#",
+    "....#.....#....",
+    "....#.....#....",
+    "....#.....#...."
+  ],
+  "across": [
+    [
+      1,
+      "Plays quizmaster"
+    ],
+    [
+      5,
+      "Big name in photography since 1888"
+    ],
+    [
+      10,
+      "Barn attachment"
+    ],
+    [
+      14,
+      "Karaoke option"
+    ],
+    [
+      15,
+      "Naproxen brand"
+    ],
+    [
+      16,
+      "Huge celebrity"
+    ],
+    [
+      17,
+      "Suspicious of"
+    ],
+    [
+      18,
+      "Actress Shire of “Rocky” and “The Godfather”"
+    ],
+    [
+      19,
+      "Banquet hall platform"
+    ],
+    [
+      20,
+      "Inheritor of the secret to flying in V formation?"
+    ],
+    [
+      23,
+      "Badly lit"
+    ],
+    [
+      24,
+      "“Hamilton” Tony nominee Phillipa"
+    ],
+    [
+      25,
+      "Abbr. on a bounced check"
+    ],
+    [
+      28,
+      "Seacrest took over for him"
+    ],
+    [
+      32,
+      "Waste paper"
+    ],
+    [
+      36,
+      "Melville captain"
+    ],
+    [
+      38,
+      "___-tiller"
+    ],
+    [
+      39,
+      "Author Ferrante"
+    ],
+    [
+      40,
+      "Bouncy coils on an underground cart track?"
+    ],
+    [
+      43,
+      "Lauder of makeup fame"
+    ],
+    [
+      44,
+      "Rapper ___ Dogg"
+    ],
+    [
+      45,
+      "Irksome sort"
+    ],
+    [
+      46,
+      "1971 film with an Oscar-winning theme"
+    ],
+    [
+      47,
+      "Goes after flies"
+    ],
+    [
+      49,
+      "Airport info"
+    ],
+    [
+      50,
+      "Irish folk dance"
+    ],
+    [
+      52,
+      "Diamond official"
+    ],
+    [
+      54,
+      "Royal leader of cashing out change?"
+    ],
+    [
+      61,
+      "“Hamilton” character, sir"
+    ],
+    [
+      62,
+      "“Rice-___, the San Francisco treat”"
+    ],
+    [
+      63,
+      "Spencer of “Good Morning America”"
+    ],
+    [
+      65,
+      "Australian Netflix comedy about a probate lawyer"
+    ],
+    [
+      66,
+      "Character resurrected by AI in a 2026 Netflix reality show"
+    ],
+    [
+      67,
+      "Almost rainless"
+    ],
+    [
+      68,
+      "Greeting for 65-Across"
+    ],
+    [
+      69,
+      "Goes back and forth"
+    ],
+    [
+      70,
+      "Customer service center workers"
+    ]
+  ],
+  "down": [
+    [
+      1,
+      "Commotion"
+    ],
+    [
+      2,
+      "“Song ___ Blue” (Hugh Jackman movie)"
+    ],
+    [
+      3,
+      "High-fat, low-carb diet"
+    ],
+    [
+      4,
+      "Remained in effect"
+    ],
+    [
+      5,
+      "One of the real-life sisters playing twins in Werner Herzog’s 2026 film “Bucking Fastard”"
+    ],
+    [
+      6,
+      "St. ___ College in Northfield, Minn."
+    ],
+    [
+      7,
+      "“Remove,” in proofreading"
+    ],
+    [
+      8,
+      "Athletic shoe company"
+    ],
+    [
+      9,
+      "“Ode to a Nightingale” poet"
+    ],
+    [
+      10,
+      "Part of a movie trailer"
+    ],
+    [
+      11,
+      "Berry in a bowl"
+    ],
+    [
+      12,
+      "“Dark” film genre"
+    ],
+    [
+      13,
+      "Naan ingredients?"
+    ],
+    [
+      21,
+      "Bro’s opposite"
+    ],
+    [
+      22,
+      "“Strange Brew” insult"
+    ],
+    [
+      25,
+      "Directory listings"
+    ],
+    [
+      26,
+      "___ kebab"
+    ],
+    [
+      27,
+      "Fruit-flavored Coca-Cola brand"
+    ],
+    [
+      29,
+      "Gets into"
+    ],
+    [
+      30,
+      "Attorney ___"
+    ],
+    [
+      31,
+      "Tennis player-turned-“Daily Show” correspondent Michael"
+    ],
+    [
+      33,
+      "Hugh’s “Bridget Jones: Mad About the Boy” co-star"
+    ],
+    [
+      34,
+      "Feeling of unease"
+    ],
+    [
+      35,
+      "Noodles"
+    ],
+    [
+      37,
+      "Strips at a convenience store?"
+    ],
+    [
+      41,
+      "Fix, as a shoelace"
+    ],
+    [
+      42,
+      "Funnel-shaped flowers"
+    ],
+    [
+      48,
+      "Texting format, briefly"
+    ],
+    [
+      51,
+      "Goes after a chew toy"
+    ],
+    [
+      53,
+      "___ opposites"
+    ],
+    [
+      54,
+      "British pound, informally"
+    ],
+    [
+      55,
+      "Bear up there"
+    ],
+    [
+      56,
+      "Rook’s cousin"
+    ],
+    [
+      57,
+      "“Avatar: Fire and Ash” actress Chaplin"
+    ],
+    [
+      58,
+      "Black like the night"
+    ],
+    [
+      59,
+      "Very infrequent"
+    ],
+    [
+      60,
+      "Sojourn"
+    ],
+    [
+      61,
+      "Voice role for Mark Rylance in a 2016 Dahl adaptation"
+    ],
+    [
+      64,
+      "Spots"
+    ]
+  ]
+}
