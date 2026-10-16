@@ -1,0 +1,326 @@
+{
+  "id": "20261016",
+  "date": "2026-10-16",
+  "kickerDate": "Oct 16 2026",
+  "title": "“Y’know, Like Michigan”",
+  "subtitle": "Jonesin' by Matt Jones — it’s good for the gander.",
+  "solutionSalt": "ccpxwd-2026-ref-solve",
+  "solutionHashesFile": "puzzles/2026-10-16.solution-hashes.txt",
+  "pattern": [
+    "....#....#.....",
+    "....#....#.....",
+    ".........#.....",
+    "...............",
+    "##....###......",
+    "...##.....##...",
+    "............###",
+    ".....#...#.....",
+    "###............",
+    "...##.....##...",
+    "......###....##",
+    "...............",
+    ".....#.........",
+    ".....#....#....",
+    ".....#....#...."
+  ],
+  "across": [
+    [
+      1,
+      "Agglomerate"
+    ],
+    [
+      5,
+      "It flies around a rink"
+    ],
+    [
+      9,
+      "Frequent “Wait, Wait ...” panelist Poundstone"
+    ],
+    [
+      14,
+      "A thing ___ itself"
+    ],
+    [
+      15,
+      "Worker protection agcy."
+    ],
+    [
+      16,
+      "Pompeo of “Grey’s Anatomy”"
+    ],
+    [
+      17,
+      "“___ Academy” (2026 sci-fi series with Holly Hunter)"
+    ],
+    [
+      19,
+      "It’ll come back to you"
+    ],
+    [
+      20,
+      "Spinning that will just make you more weary?"
+    ],
+    [
+      22,
+      "Airport shuttle vehicle"
+    ],
+    [
+      23,
+      "Demolishes"
+    ],
+    [
+      24,
+      "Prefix for puncture"
+    ],
+    [
+      26,
+      "Block housing?"
+    ],
+    [
+      30,
+      "___ polloi"
+    ],
+    [
+      31,
+      "Seafood stew for young dogs?"
+    ],
+    [
+      36,
+      "“Eighth Grade” star Fisher"
+    ],
+    [
+      37,
+      "West end?"
+    ],
+    [
+      38,
+      "“Heard, chef”"
+    ],
+    [
+      42,
+      "Group of women who roam about?"
+    ],
+    [
+      45,
+      "Singer with the 2015 #1 hit “Cheerleader”"
+    ],
+    [
+      48,
+      "“Our Flag Means Death” (and real-life) pirate ___ Bonnet"
+    ],
+    [
+      49,
+      "Letters before a stage name"
+    ],
+    [
+      50,
+      "Charges"
+    ],
+    [
+      53,
+      "Plummet"
+    ],
+    [
+      56,
+      "Optimal instruction not to be questioned?"
+    ],
+    [
+      62,
+      "“Ad ___” (2019 film)"
+    ],
+    [
+      63,
+      "It may cover Watergate, but not Waterloo"
+    ],
+    [
+      64,
+      "Do the dishes, maybe"
+    ],
+    [
+      65,
+      "Upright wall timber"
+    ],
+    [
+      66,
+      "Golf goal"
+    ],
+    [
+      67,
+      "Mammal whose males can reach nearly 10,000 lbs."
+    ],
+    [
+      68,
+      "Non-feral"
+    ],
+    [
+      69,
+      "Minecraft collection"
+    ]
+  ],
+  "down": [
+    [
+      1,
+      "Have to"
+    ],
+    [
+      2,
+      "Oppositionist"
+    ],
+    [
+      3,
+      "Seed money seekers"
+    ],
+    [
+      4,
+      "More peeved"
+    ],
+    [
+      5,
+      "Screed"
+    ],
+    [
+      6,
+      "The “U” in EULA"
+    ],
+    [
+      7,
+      "“Clueless” heroine"
+    ],
+    [
+      8,
+      "Bruce Lee’s role in TV’s “The Green Hornet”"
+    ],
+    [
+      9,
+      "“American Splendor” comic book writer Harvey"
+    ],
+    [
+      10,
+      "Get ___ start (not begin on time)"
+    ],
+    [
+      11,
+      "Metallica drummer Lars"
+    ],
+    [
+      12,
+      "Classic French film “Pépé ___” (which inspired the cartoon skunk name)"
+    ],
+    [
+      13,
+      "Trickster god of African folklore"
+    ],
+    [
+      18,
+      "Approver of new meds"
+    ],
+    [
+      21,
+      "Lacking depth, for short"
+    ],
+    [
+      24,
+      "King Kong or Magilla Gorilla"
+    ],
+    [
+      25,
+      "___-de-sac"
+    ],
+    [
+      27,
+      "Belgian treaty city"
+    ],
+    [
+      28,
+      "“Royals” singer"
+    ],
+    [
+      29,
+      "Possessed"
+    ],
+    [
+      32,
+      "“Smiling Friends” main character ___ Pimling"
+    ],
+    [
+      33,
+      "“___-haw!”"
+    ],
+    [
+      34,
+      "Shakshouka ingredient"
+    ],
+    [
+      35,
+      "King of Cannes?"
+    ],
+    [
+      39,
+      "Stage opening?"
+    ],
+    [
+      40,
+      "Kind"
+    ],
+    [
+      41,
+      "Airport screening gp."
+    ],
+    [
+      43,
+      "Italian sparkling wine town"
+    ],
+    [
+      44,
+      "Colorful algal bloom that’s a beach concern"
+    ],
+    [
+      45,
+      "Jerry who played Det. Lennie Briscoe"
+    ],
+    [
+      46,
+      "Cereal and fruit mix"
+    ],
+    [
+      47,
+      "Arched foot part"
+    ],
+    [
+      51,
+      "Backpack component"
+    ],
+    [
+      52,
+      "“A Bell for ___” (1944 John Hersey novel)"
+    ],
+    [
+      54,
+      "Sigur ___ (Icelandic post-rock band)"
+    ],
+    [
+      55,
+      "Lawn care brand"
+    ],
+    [
+      57,
+      "Oxidation indication"
+    ],
+    [
+      58,
+      "“¿Dónde ___ la biblioteca?”"
+    ],
+    [
+      59,
+      "Pal"
+    ],
+    [
+      60,
+      "Perry Mason creator ___ Stanley Gardner"
+    ],
+    [
+      61,
+      "Bread aisle choices"
+    ]
+  ]
+}
