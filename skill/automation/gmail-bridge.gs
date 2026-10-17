@@ -21,7 +21,7 @@
 
 var ROUTINE_ID = 'trig_01KbVr5VESyUnkJsYV9BTDqc';
 var FIRE_URL = 'https://api.anthropic.com/v1/claude_code/routines/' + ROUTINE_ID + '/fire';
-var QUERY = 'subject:"ccpx 20" newer_than:3d';
+var QUERY = 'subject:ccpx newer_than:3d';
 var MARKER = '[ccpx-bot]';
 var SEEN_KEY = 'seenIds';
 var SEEN_MAX = 300;
