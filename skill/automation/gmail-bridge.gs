@@ -1,9 +1,10 @@
 /**
  * ccpx Gmail → routine bridge (Google Apps Script).
  *
- * Polls Gmail every minute for new user replies in a week's `ccpx <DATE>`
- * thread and fires the "ccpx weekly crossword" routine's API trigger, so a
- * solve or an OK is picked up in minutes instead of waiting for the cron.
+ * Polls Gmail for new user replies in a week's `ccpx <DATE>` thread (every
+ * minute on Fridays ET, hourly the rest of the week) and fires the "ccpx
+ * weekly crossword" routine's API trigger, so a solve or an OK is picked up
+ * in minutes instead of waiting for the cron.
  * The routine still decides what to do from git + Gmail (RUNBOOK.md); the
  * fire text is only a hint.
  *
@@ -13,8 +14,9 @@
  *   2. Project Settings → Script Properties → add ROUTINE_TOKEN = the
  *      sk-ant-oat01-… token from the routine's API trigger.
  *   3. Run `install` once and approve the Gmail + external-request scopes.
- *      It seeds the already-seen messages (no fire) and adds the 1-minute
- *      trigger. Run `uninstall` to stop.
+ *      It seeds the already-seen messages (no fire) and adds the hourly
+ *      trigger, which adds the 1-minute trigger on Fridays and removes it
+ *      after. Run `uninstall` to stop.
  */
 
 var ROUTINE_ID = 'trig_01KbVr5VESyUnkJsYV9BTDqc';
@@ -23,17 +25,39 @@ var QUERY = 'subject:"ccpx 20" newer_than:3d';
 var MARKER = '[ccpx-bot]';
 var SEEN_KEY = 'seenIds';
 var SEEN_MAX = 300;
+var TZ = 'America/New_York';
 
 function install() {
   uninstall();
   scan_(false);
-  ScriptApp.newTrigger('poll').timeBased().everyMinutes(1).create();
+  ScriptApp.newTrigger('hourly').timeBased().everyHours(1).create();
+  syncFast_();
 }
 
 function uninstall() {
   ScriptApp.getProjectTriggers().forEach(function (t) {
-    if (t.getHandlerFunction() === 'poll') ScriptApp.deleteTrigger(t);
+    var fn = t.getHandlerFunction();
+    if (fn === 'poll' || fn === 'hourly') ScriptApp.deleteTrigger(t);
   });
+}
+
+// Time triggers can't be limited to one weekday, so this hourly trigger
+// keeps a 1-minute `poll` trigger present only on Fridays (ET), then polls.
+function hourly() {
+  syncFast_();
+  poll();
+}
+
+function syncFast_() {
+  var friday = Utilities.formatDate(new Date(), TZ, 'u') === '5';
+  var fast = ScriptApp.getProjectTriggers().filter(function (t) {
+    return t.getHandlerFunction() === 'poll';
+  });
+  if (friday && !fast.length) {
+    ScriptApp.newTrigger('poll').timeBased().everyMinutes(1).create();
+  } else if (!friday) {
+    fast.forEach(function (t) { ScriptApp.deleteTrigger(t); });
+  }
 }
 
 function poll() {
