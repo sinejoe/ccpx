@@ -144,13 +144,11 @@ It sends one short email that describes what it sees and asks, then exits.
 3. Poll `https://ccpx.fyi/puzzles/index.json` (cache-busting query) for
    up to 15 minutes until `<ID>` is newest. Confirm `https://ccpx.fyi/`
    does not contain `devExportBox`.
-4. Delete every preview deployment for branch `solve-<ID>` or
-   `claude/solve-wip`, and any other `solve-*` preview older than this
-   week. Use
-   `GET .../pages/projects/ccpx/deployments?env=preview` (the branch is in
-   `deployment_trigger.metadata.branch`), then
-   `DELETE .../deployments/<id>?force=true`, then re-list and confirm
-   zero remain. Never delete a production deployment.
+4. Delete the preview deployments (`claude/solve-wip` and every
+   `solve-*`) by running exactly `python3 skill/automation/delete-previews.py`
+   as its own command, with nothing chained or piped. That exact command is
+   what the routine's permissions allow. It re-lists afterwards and prints
+   `previews left: 0` on success. It never touches production deployments.
 5. Reply with `[ccpx-bot]` and "Published: https://ccpx.fyi". If any step
    failed, say in one or two sentences which one and what's still up,
    and don't claim success.
