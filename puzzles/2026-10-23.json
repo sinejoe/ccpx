@@ -1,0 +1,334 @@
+{
+  "id": "20261023",
+  "date": "2026-10-23",
+  "kickerDate": "Oct 23 2026",
+  "title": "“Capital Gains”",
+  "subtitle": "Jonesin' by Matt Jones — gaining an extra letter.",
+  "solutionSalt": "ccpxwd-2026-ref-solve",
+  "solutionHashesFile": "puzzles/2026-10-23.solution-hashes.txt",
+  "pattern": [
+    ".....#....#....",
+    ".....#....#....",
+    ".....#....#....",
+    "...............",
+    "....#...#...###",
+    "####...##......",
+    ".....#....#....",
+    "...............",
+    "....#....#.....",
+    "......##...####",
+    "###...#...#....",
+    "...............",
+    "....#....#.....",
+    "....#....#.....",
+    "....#....#....."
+  ],
+  "across": [
+    [
+      1,
+      "African capital on the Atlantic"
+    ],
+    [
+      6,
+      "Sound of surprise"
+    ],
+    [
+      10,
+      "Made an escape"
+    ],
+    [
+      14,
+      "Savory sensation"
+    ],
+    [
+      15,
+      "State where dirty sodas originated"
+    ],
+    [
+      16,
+      "“Touched by an Angel” costar Downey"
+    ],
+    [
+      17,
+      "Animal on old nickels"
+    ],
+    [
+      18,
+      "“A Streetcar Named Desire” director Kazan"
+    ],
+    [
+      19,
+      "Final writeup?"
+    ],
+    [
+      20,
+      "Living room controller"
+    ],
+    [
+      23,
+      "North ___, Alaska"
+    ],
+    [
+      24,
+      "“___ not worth much”"
+    ],
+    [
+      25,
+      "Oscar nominee for “The Crying Game”"
+    ],
+    [
+      26,
+      "Amorphous amount"
+    ],
+    [
+      27,
+      "“___ up” (Canadian hockey slogan that gained traction in 2025)"
+    ],
+    [
+      31,
+      "Helmet attachment"
+    ],
+    [
+      35,
+      "Prized Australian export"
+    ],
+    [
+      38,
+      "Suffix meaning “vision”"
+    ],
+    [
+      39,
+      "Fans of cruciverbalism (like you, I hope?)"
+    ],
+    [
+      42,
+      "Car with a four-ring logo"
+    ],
+    [
+      43,
+      "___ out (barely got by)"
+    ],
+    [
+      44,
+      "“Chicago” actress Zellweger"
+    ],
+    [
+      45,
+      "Joint, back in the day"
+    ],
+    [
+      47,
+      "Word before maker or breaker"
+    ],
+    [
+      49,
+      "Vexation"
+    ],
+    [
+      50,
+      "Inc., in Cambridge"
+    ],
+    [
+      51,
+      "Gare du ___ (Paris train terminal)"
+    ],
+    [
+      55,
+      "Playful words to an infant"
+    ],
+    [
+      60,
+      "“Terrible” ruler"
+    ],
+    [
+      61,
+      "___-speak (altered words to bypass social media filters)"
+    ],
+    [
+      62,
+      "Backless couch"
+    ],
+    [
+      63,
+      "“Scream” star Campbell"
+    ],
+    [
+      64,
+      "Genesis figure"
+    ],
+    [
+      65,
+      "Bandleader Miller"
+    ],
+    [
+      66,
+      "Became larger"
+    ],
+    [
+      67,
+      "Fast-food franchises that announced a switch from Pepsi to Coke beverages after 40 years"
+    ],
+    [
+      68,
+      "Alex’s mom on “Family Ties”"
+    ]
+  ],
+  "down": [
+    [
+      1,
+      "Brush (against)"
+    ],
+    [
+      2,
+      "Acid in proteins"
+    ],
+    [
+      3,
+      "“Fawlty Towers” owner"
+    ],
+    [
+      4,
+      "“Don’t make ___!”"
+    ],
+    [
+      5,
+      "Spork part"
+    ],
+    [
+      6,
+      "Place to write your name in a museum or B&B"
+    ],
+    [
+      7,
+      "Collection of cartography"
+    ],
+    [
+      8,
+      "Nautical sheet"
+    ],
+    [
+      9,
+      "“Happy” singer Williams"
+    ],
+    [
+      10,
+      "Rain source?"
+    ],
+    [
+      11,
+      "Rebecca of the Basketball Hall of Fame"
+    ],
+    [
+      12,
+      "Release"
+    ],
+    [
+      13,
+      "November 3, for one"
+    ],
+    [
+      21,
+      "Museu do Amanhã site, casually"
+    ],
+    [
+      22,
+      "Anago, in sushi bars (if it’s saltwater)"
+    ],
+    [
+      26,
+      "Navigation aid"
+    ],
+    [
+      28,
+      "Store door sign"
+    ],
+    [
+      29,
+      "Send via Western Union"
+    ],
+    [
+      30,
+      "Freelancer’s postal encl."
+    ],
+    [
+      31,
+      "Simba’s uncle"
+    ],
+    [
+      32,
+      "Provable"
+    ],
+    [
+      33,
+      "Took the bus"
+    ],
+    [
+      34,
+      "“No idea, really”"
+    ],
+    [
+      36,
+      "Post’s opposite"
+    ],
+    [
+      37,
+      "Building expansions"
+    ],
+    [
+      40,
+      "Return announcement?"
+    ],
+    [
+      41,
+      "Siderite, for one"
+    ],
+    [
+      46,
+      "Mesozoic, e.g."
+    ],
+    [
+      48,
+      "Columbia House offerings, once"
+    ],
+    [
+      50,
+      "Sudoku solving skill"
+    ],
+    [
+      51,
+      "“Jurassic Park” actor Sam"
+    ],
+    [
+      52,
+      "“Up, Up and ___” (2006 book about Judaism and comics)"
+    ],
+    [
+      53,
+      "Chestnut horses"
+    ],
+    [
+      54,
+      "“Practical Magic” director Griffin"
+    ],
+    [
+      55,
+      "Attempt to message"
+    ],
+    [
+      56,
+      "At any point"
+    ],
+    [
+      57,
+      "Roof’s overhang"
+    ],
+    [
+      58,
+      "Lemony Snicket’s Count"
+    ],
+    [
+      59,
+      "Jigsaw starting point"
+    ]
+  ]
+}
