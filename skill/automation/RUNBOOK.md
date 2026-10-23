@@ -32,6 +32,10 @@ means "email it"). Everything else in those files applies. Read
   `[ccpx-bot]` is from the user. Judge only the reply's own text, above
   its "On ... wrote:" line, after trimming leading whitespace: the user's
   replies quote the whole bot mail, marker included.
+- **Step label:** the marker line also says which step of the week this
+  is, so the user can tell the emails apart in a collapsed thread:
+  `[ccpx-bot] Step <N>/3: <label>`. Use exactly the labels given in
+  each stage below. Nothing else goes on that line.
 - Gmail rewrites every URL in stored mail to
   `https://www.google.com/url?q=<real>&...`. Unwrap `q=` before using any
   URL read back from the thread. Leave the links in outgoing mail as they are.
@@ -79,13 +83,15 @@ It sends one short email that describes what it sees and asks, then exits.
    - **Issue not on Issuu yet** (script reports no matching doc/byline):
      if it is Friday 10pm ET or later and no thread for `<DATE>` exists,
      send ONE email, subject `ccpx <DATE>: issue not on Issuu yet`, body
-     "will keep checking." Otherwise send nothing. Exit.
-   - Special issue / no crossword found: email that, then exit.
+     `[ccpx-bot] Step 1/3: on hold` and "will keep checking." Otherwise
+     send nothing. Exit.
+   - Special issue / no crossword found: email that (label
+     `Step 1/3: on hold`), then exit.
 2. Do `fetch-issue` Step 2, then all of `build-puzzle-json` Steps 1–5,
    exactly as written, including the grid/numbering cross-check. **If the
    cross-check doesn't pass after a careful re-crop/re-parse, stop.**
-   Email one line saying the grid didn't read cleanly and the preview is
-   on hold, commit nothing and exit. A wrong grid must not
+   Email `[ccpx-bot] Step 1/3: on hold` and one line saying the grid
+   didn't read cleanly and the preview is on hold, commit nothing and exit. A wrong grid must not
    reach the user's iPad.
 3. Validation (`build-puzzle-json` Step 6): Playwright and Chromium are
    preinstalled in the cloud env (`npm root -g`, `/opt/pw-browsers`); don't
@@ -109,7 +115,7 @@ It sends one short email that describes what it sees and asks, then exits.
    contains `devExportBox`.
 7. Send the email: subject `ccpx <DATE>: ready to solve`. Body is
    exactly this, nothing more:
-   - `[ccpx-bot]`
+   - `[ccpx-bot] Step 1/3: solve this`
    - the puzzle title
    - the preview URL
    - "When done, paste the line from the box under the grid as a reply."
@@ -125,14 +131,16 @@ It sends one short email that describes what it sees and asks, then exits.
 2. Run the answer-check gate from `skill/SKILL.md` "Reference solve"
    step 3 in full: pattern/empty-cell check, every answer read against its
    clue, web-check anything obscure, recent or pop-culture.
-3. **Open questions:** reply in the thread with `[ccpx-bot]` and each
+3. **Open questions:** reply in the thread with
+   `[ccpx-bot] Step 2/3: question` and each
    conflict as a short question, nothing else. Example: "23A/11D cross: SNOWE/NIGHTMANURE or
    SLOWE/LIGHTMANURE?". Never "wrong", no cell-by-cell dump. Exit and
    wait.
 4. **Clean:** write `puzzles/<DATE>.solution-hashes.txt` (Across first,
    then Down, each sorted by number) and commit it **separately** on
    the wip branch, the same as recent hash commits. Push. Then reply
-   with just `[ccpx-bot]` and "All answers check out. Reply OK to publish."
+   with just `[ccpx-bot] Step 2/3: reply OK to publish` and "All answers
+   check out. Reply OK to publish."
    Never publish in this stage. (The local-only
    `working-files/<DATE>/solution.txt` plaintext copy can't persist from the cloud; the next
    local session writes it from the solve string in this thread.)
@@ -140,7 +148,11 @@ It sends one short email that describes what it sees and asks, then exits.
 ## Stage C — Publish (only after an explicit OK reply)
 
 1. `node build.js` (default production build) must succeed.
-2. Move `main` to the wip branch head (see "Git rules") and push `main`.
+2. Move `main` to the wip branch head (see "Git rules") and push `main`
+   by running exactly `git push origin claude/solve-wip:main` as its own
+   command, with nothing chained, piped or redirected. That exact command
+   is what the routine's permissions allow. Confirm with a separate
+   `git fetch origin && git log -1 --oneline origin/main`.
 3. Poll `https://ccpx.fyi/puzzles/index.json` (cache-busting query) for
    up to 15 minutes until `<ID>` is newest. Confirm `https://ccpx.fyi/`
    does not contain `devExportBox`.
@@ -149,9 +161,10 @@ It sends one short email that describes what it sees and asks, then exits.
    as its own command, with nothing chained or piped. That exact command is
    what the routine's permissions allow. It re-lists afterwards and prints
    `previews left: 0` on success. It never touches production deployments.
-5. Reply with `[ccpx-bot]` and "Published: https://ccpx.fyi". If any step
-   failed, say in one or two sentences which one and what's still up,
-   and don't claim success.
+5. Reply with `[ccpx-bot] Step 3/3: published` and "Published:
+   https://ccpx.fyi". If any step failed, use
+   `[ccpx-bot] Step 3/3: publish failed` instead and say in one or two
+   sentences which one and what's still up; don't claim success.
 
 ## Git rules
 
@@ -166,7 +179,8 @@ fast-forwards:
   email.
 - Publishing: if `origin/main` moved since the branch was cut, run
   `git merge origin/main` on the wip branch first (no rebase, no force).
-  Then `git push origin claude/solve-wip:main`. Since that's a
+  Then `git push origin claude/solve-wip:main` (standalone, see Stage C
+  step 2). Since that's a
   fast-forward, the wip branch head is an ancestor of `main` again,
   ready for next week.
 - Never force-push and never push to `main` outside Stage C. Never touch
