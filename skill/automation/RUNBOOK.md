@@ -148,7 +148,11 @@ It sends one short email that describes what it sees and asks, then exits.
 ## Stage C — Publish (only after an explicit OK reply)
 
 1. `node build.js` (default production build) must succeed.
-2. Move `main` to the wip branch head (see "Git rules") and push `main`.
+2. Move `main` to the wip branch head (see "Git rules") and push `main`
+   by running exactly `git push origin claude/solve-wip:main` as its own
+   command, with nothing chained, piped or redirected. That exact command
+   is what the routine's permissions allow. Confirm with a separate
+   `git fetch origin && git log -1 --oneline origin/main`.
 3. Poll `https://ccpx.fyi/puzzles/index.json` (cache-busting query) for
    up to 15 minutes until `<ID>` is newest. Confirm `https://ccpx.fyi/`
    does not contain `devExportBox`.
@@ -175,7 +179,8 @@ fast-forwards:
   email.
 - Publishing: if `origin/main` moved since the branch was cut, run
   `git merge origin/main` on the wip branch first (no rebase, no force).
-  Then `git push origin claude/solve-wip:main`. Since that's a
+  Then `git push origin claude/solve-wip:main` (standalone, see Stage C
+  step 2). Since that's a
   fast-forward, the wip branch head is an ancestor of `main` again,
   ready for next week.
 - Never force-push and never push to `main` outside Stage C. Never touch
