@@ -151,8 +151,9 @@ It sends one short email that describes what it sees and asks, then exits.
 2. Move `main` to the wip branch head (see "Git rules") and push `main`
    by running exactly `git push origin claude/solve-wip:main` as its own
    command, with nothing chained, piped or redirected. That exact command
-   is what the routine's permissions allow. Confirm with a separate
-   `git fetch origin && git log -1 --oneline origin/main`.
+   is what the routine's permissions allow. Its own output
+   (`<old>..<new>  claude/solve-wip -> main`) is the confirmation; don't
+   run any further git commands against `main` after it.
 3. Poll `https://ccpx.fyi/puzzles/index.json` (cache-busting query) for
    up to 15 minutes until `<ID>` is newest. Confirm `https://ccpx.fyi/`
    does not contain `devExportBox`.
