@@ -156,9 +156,11 @@ It sends one short email that describes what it sees and asks, then exits.
    run any further git commands against `main` after it.
 3. Confirm the site is live by running exactly
    `python3 skill/automation/verify-live.py` as its own command, with
-   nothing chained or piped. It polls ccpx.fyi for up to 15 minutes until
-   `<ID>` is newest, checks there's no `devExportBox`, and prints
-   `live: <ID>` on success.
+   nothing chained or piped. The sandbox proxy blocks ccpx.fyi itself, so
+   it asks the Cloudflare API: it polls for up to 15 minutes until the
+   production deployment of the pushed commit succeeds, checks
+   `dist/index.html` has no `devExportBox`, and prints `live: <sha>` on
+   success.
 4. Delete the preview deployments (`claude/solve-wip` and every
    `solve-*`) by running exactly `python3 skill/automation/delete-previews.py`
    as its own command, with nothing chained or piped. That exact command is
@@ -188,9 +190,9 @@ fast-forwards:
   ready for next week.
 - Never force-push and never push to `main` outside Stage C. Never touch
   other branches.
-- Pushes to `claude/*` don't build a Cloudflare preview: the Pages
-  project excludes that pattern. Previews come only from the
-  direct-upload deploy in Stage A.
+- Pushes to `claude/solve-wip` also build a Cloudflare preview. Stage C's
+  cleanup script deletes those along with the `solve-*` direct-upload
+  previews.
 
 ## Hard rules (from `CLAUDE.md` / project-dry, restated because they're easy to break unattended)
 

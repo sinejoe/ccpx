@@ -1,60 +1,77 @@
 #!/usr/bin/env python3
-"""Wait for the newest puzzle to go live on ccpx.fyi after a publish.
+"""Wait for the pushed commit to go live on ccpx.fyi after a publish.
 
-Stage C step 3 of RUNBOOK.md. Reads the newest puzzle id from the checked-out
-puzzles/index.json, polls https://ccpx.fyi/puzzles/index.json (cache-busted)
-for up to 15 minutes until that id is first, then checks the live page has no
+Stage C step 3 of RUNBOOK.md. The cloud sandbox's proxy blocks ccpx.fyi
+itself (403), so this asks the Cloudflare API instead: it polls the ccpx
+project's production deployments for up to 15 minutes until the one built from
+the checked-out HEAD commit has finished with status success. It also checks the
+local production build (dist/index.html, from Stage C step 1) has no
 devExportBox. Exits 0 when live, 1 otherwise.
 
-Takes no arguments, so the routine can allow exactly
-`python3 skill/automation/verify-live.py`.
+Needs CF_API_TOKEN_CCPX (Pages read on the ccpx project). Takes no arguments,
+so the routine can allow exactly `python3 skill/automation/verify-live.py`.
 """
 
 import json
+import os
+import subprocess
 import sys
 import time
 import urllib.request
 
-SITE = 'https://ccpx.fyi'
+ACCOUNT = 'ee6dc5f16660ea40f92271ec5fc1ec2b'
+BASE = ('https://api.cloudflare.com/client/v4/accounts/' + ACCOUNT +
+        '/pages/projects/ccpx/deployments')
 TIMEOUT_S = 15 * 60
 POLL_S = 20
 
 
-def fetch(path):
-    url = '%s%s?cb=%d' % (SITE, path, int(time.time() * 1000))
-    req = urllib.request.Request(url, headers={'User-Agent': 'ccpx-verify-live'})
+def production_deployments(token):
+    req = urllib.request.Request(BASE + '?env=production&per_page=10',
+                                 headers={'Authorization': 'Bearer ' + token})
     with urllib.request.urlopen(req, timeout=30) as res:
-        return res.read().decode('utf-8')
+        body = json.load(res)
+    if not body.get('success', False):
+        raise RuntimeError('list failed: %s' % body.get('errors', []))
+    return body.get('result', [])
 
 
 def main():
-    with open('puzzles/index.json') as f:
-        local = json.load(f)
-    if not local:
-        raise SystemExit('puzzles/index.json is empty')
-    want = local[0].get('id', '')
-    if not want:
-        raise SystemExit('newest entry in puzzles/index.json has no id')
+    token = os.environ.get('CF_API_TOKEN_CCPX', '')
+    if not token:
+        raise SystemExit('CF_API_TOKEN_CCPX is not set')
+    want = subprocess.run(['git', 'rev-parse', 'HEAD'], capture_output=True,
+                          text=True, check=True).stdout.strip()
+
+    if os.path.exists('dist/index.html'):
+        with open('dist/index.html') as f:
+            if 'devExportBox' in f.read():
+                print('dist/index.html contains devExportBox (preview build)')
+                sys.exit(1)
 
     deadline = time.time() + TIMEOUT_S
-    newest = ''
+    state = 'no production deployment for %s yet' % want[:7]
     while True:
         try:
-            live = json.loads(fetch('/puzzles/index.json'))
-            newest = live[0].get('id', '') if live else ''
-        except Exception as e:  # network hiccup or a deploy in progress
+            for dep in production_deployments(token):
+                commit = dep.get('deployment_trigger', {}).get('metadata', {}).get('commit_hash', '')
+                if commit != want:
+                    continue
+                stage = dep.get('latest_stage', {})
+                state = '%s %s' % (stage.get('name', ''), stage.get('status', ''))
+                if stage.get('name', '') == 'deploy' and stage.get('status', '') == 'success':
+                    print('live:', want[:7])
+                    return
+                if stage.get('status', '') == 'failure':
+                    print('production build failed for %s: %s' % (want[:7], state))
+                    sys.exit(1)
+                break
+        except Exception as e:  # network hiccup
             print('poll error:', e)
-        if newest == want:
-            break
         if time.time() >= deadline:
-            print('not live after 15 min: newest is %r, want %r' % (newest, want))
+            print('not live after 15 min: %s' % state)
             sys.exit(1)
         time.sleep(POLL_S)
-
-    if 'devExportBox' in fetch('/'):
-        print('live, but the page contains devExportBox (preview build on production)')
-        sys.exit(1)
-    print('live:', want)
 
 
 if __name__ == '__main__':
