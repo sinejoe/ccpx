@@ -154,9 +154,11 @@ It sends one short email that describes what it sees and asks, then exits.
    is what the routine's permissions allow. Its own output
    (`<old>..<new>  claude/solve-wip -> main`) is the confirmation; don't
    run any further git commands against `main` after it.
-3. Poll `https://ccpx.fyi/puzzles/index.json` (cache-busting query) for
-   up to 15 minutes until `<ID>` is newest. Confirm `https://ccpx.fyi/`
-   does not contain `devExportBox`.
+3. Confirm the site is live by running exactly
+   `python3 skill/automation/verify-live.py` as its own command, with
+   nothing chained or piped. It polls ccpx.fyi for up to 15 minutes until
+   `<ID>` is newest, checks there's no `devExportBox`, and prints
+   `live: <ID>` on success.
 4. Delete the preview deployments (`claude/solve-wip` and every
    `solve-*`) by running exactly `python3 skill/automation/delete-previews.py`
    as its own command, with nothing chained or piped. That exact command is
