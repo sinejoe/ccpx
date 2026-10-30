@@ -1,0 +1,342 @@
+{
+  "id": "20261030",
+  "date": "2026-10-30",
+  "kickerDate": "Oct 30 2026",
+  "title": "“Against the Graint”",
+  "subtitle": "Jonesin' by Matt Jones — a few special breakfast items.",
+  "solutionSalt": "ccpxwd-2026-ref-solve",
+  "solutionHashesFile": "puzzles/2026-10-30.solution-hashes.txt",
+  "pattern": [
+    ".....#...#.....",
+    ".....#...#.....",
+    ".........#.....",
+    "..........#....",
+    "...#....#......",
+    "###...##.....##",
+    "....#....#.....",
+    ".....#...#.....",
+    ".....#....#....",
+    "##.....##...###",
+    "......#....#...",
+    "....#..........",
+    ".....#.........",
+    ".....#...#.....",
+    ".....#...#....."
+  ],
+  "across": [
+    [
+      1,
+      "Component of some salads"
+    ],
+    [
+      6,
+      "An HMO may require you to have one"
+    ],
+    [
+      9,
+      "Fall blossom"
+    ],
+    [
+      14,
+      "Nomo in the Japanese Baseball Hall of Fame"
+    ],
+    [
+      15,
+      "“The Serpent and the Rope” novelist Raja ___"
+    ],
+    [
+      16,
+      "Get going"
+    ],
+    [
+      17,
+      "Mischievous visages"
+    ],
+    [
+      19,
+      "Airport circlers"
+    ],
+    [
+      20,
+      "Breakfast maker’s reattempt?"
+    ],
+    [
+      22,
+      "Annoying one"
+    ],
+    [
+      23,
+      "Furtive"
+    ],
+    [
+      24,
+      "Personal emanation"
+    ],
+    [
+      25,
+      "Sigourney Weaver sequel of 1986"
+    ],
+    [
+      27,
+      "AMA members"
+    ],
+    [
+      28,
+      "Pac-Man enemy"
+    ],
+    [
+      29,
+      "Archbishop Desmond"
+    ],
+    [
+      32,
+      "Montreal baseball player, once"
+    ],
+    [
+      35,
+      "Integra maker"
+    ],
+    [
+      38,
+      "Detergent brand formulated for baby clothes"
+    ],
+    [
+      40,
+      "Pursue office"
+    ],
+    [
+      41,
+      "Late 1990s toy fad"
+    ],
+    [
+      42,
+      "Blunder"
+    ],
+    [
+      43,
+      "Ripening element"
+    ],
+    [
+      45,
+      "“Come Back, Little Sheba” playwright"
+    ],
+    [
+      46,
+      "Like most toothpaste"
+    ],
+    [
+      48,
+      "Have lunch"
+    ],
+    [
+      50,
+      "British mathematician and author (and “Celebrity Traitors” player) Fry"
+    ],
+    [
+      52,
+      "Daily Planet reporter Clark"
+    ],
+    [
+      54,
+      "Principle of Eastern religion"
+    ],
+    [
+      57,
+      "“___ all possible ...”"
+    ],
+    [
+      58,
+      "Obvious pop-up observation at breakfast?"
+    ],
+    [
+      61,
+      "Pumbaa’s pal"
+    ],
+    [
+      63,
+      "Classification for yttrium or ytterbium"
+    ],
+    [
+      64,
+      "Blintz relative"
+    ],
+    [
+      65,
+      "Vat contents, maybe"
+    ],
+    [
+      66,
+      "Beach"
+    ],
+    [
+      67,
+      "“Siddhartha” author Hermann"
+    ],
+    [
+      68,
+      "Little ___ (viral late 2000s pitchman for Starburst Berries and Cream)"
+    ],
+    [
+      69,
+      "Grad student job"
+    ]
+  ],
+  "down": [
+    [
+      1,
+      "Processes food?"
+    ],
+    [
+      2,
+      "Opponent"
+    ],
+    [
+      3,
+      "Impart knowledge to"
+    ],
+    [
+      4,
+      "___-driving vehicle"
+    ],
+    [
+      5,
+      "“Great news!”"
+    ],
+    [
+      6,
+      "Earlier in time"
+    ],
+    [
+      7,
+      "Graphic design software company based in Australia"
+    ],
+    [
+      8,
+      "Be a model"
+    ],
+    [
+      9,
+      "___-J (indie rock band)"
+    ],
+    [
+      10,
+      "Part of a maritime breakfast?"
+    ],
+    [
+      11,
+      "April filing"
+    ],
+    [
+      12,
+      "Aquafina competitor"
+    ],
+    [
+      13,
+      "Sits for a bit"
+    ],
+    [
+      18,
+      "Upcycle, maybe"
+    ],
+    [
+      21,
+      "Cheerleader’s cheer"
+    ],
+    [
+      26,
+      "Bakery purchase"
+    ],
+    [
+      27,
+      "Comment about a breakfast item being the best?"
+    ],
+    [
+      28,
+      "Not there anymore"
+    ],
+    [
+      29,
+      "QB stats"
+    ],
+    [
+      30,
+      "Decorative server"
+    ],
+    [
+      31,
+      "Pub quiz creations"
+    ],
+    [
+      33,
+      "Revealing picture"
+    ],
+    [
+      34,
+      "Pooch with a curly tail"
+    ],
+    [
+      36,
+      "Late SCOTUS member"
+    ],
+    [
+      37,
+      "Yes vote"
+    ],
+    [
+      39,
+      "Subway option"
+    ],
+    [
+      44,
+      "“Cold Mountain” star Zellweger"
+    ],
+    [
+      47,
+      "Shakespearean pronoun"
+    ],
+    [
+      49,
+      "Bear witness"
+    ],
+    [
+      50,
+      "Sudden snag"
+    ],
+    [
+      51,
+      "Blazing"
+    ],
+    [
+      52,
+      "___ Lumpur, Malaysia"
+    ],
+    [
+      53,
+      "Messed up"
+    ],
+    [
+      54,
+      "Judgement deck?"
+    ],
+    [
+      55,
+      "Jetson family pet"
+    ],
+    [
+      56,
+      "“Everything else” category"
+    ],
+    [
+      59,
+      "Like folk traditions"
+    ],
+    [
+      60,
+      "Diamond Head’s island"
+    ],
+    [
+      62,
+      "“Born,” in some announcements"
+    ]
+  ]
+}
