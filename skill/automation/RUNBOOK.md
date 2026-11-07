@@ -1,7 +1,7 @@
 # Unattended weekly run (cloud routine)
 
-The `ccpx weekly crossword` cloud routine follows this file. It fires every
-2 hours on Fridays from 8am to 6pm ET (7am to 5pm EST), and also within a
+The `ccpx weekly crossword` cloud routine follows this file. It fires hourly
+(at :07) on Fridays from 8am to 6pm EDT (7am to 5pm EST), and also within a
 minute or so of each user reply, via the Gmail bridge
 (`skill/automation/gmail-bridge.gs`, which calls the routine's API
 trigger). The bridge's fire text is only a hint. Each fire does at most one stage of the
