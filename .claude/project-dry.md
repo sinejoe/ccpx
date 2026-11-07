@@ -49,6 +49,11 @@ Pages serves. The weekly content pipeline is implemented as Claude Code skills u
   Defined in `~/.secrets/tools/cloudflare.env`; `~/.profile:81` sources every `*.env` in
   `~/.secrets/tools/` at shell startup, so they're already in the environment — no sourcing
   step needed. (`paypal.env` and `porkbun.env` sit alongside it; same pattern.)
+- `CF_API_TOKEN_CCPX` (Pages Edit, can list and delete deployments) is set in the cloud routine
+  env, not on this Mac. To run `verify-live.py` locally, use
+  `CF_API_TOKEN_CCPX="$CF_API_TOKEN_SINE" python3 skill/automation/verify-live.py`.
+- The routine's API-trigger token (`sk-ant-oat01-…`) lives only in the Apps Script project's
+  Script Properties as `ROUTINE_TOKEN`. The user keeps it; never put it in chat or the repo.
 - `.claude-env` (gitignored) holds only the CF account shortname `sansjoe`, no secret value.
 - Nothing in this repo needs a credential to *build* or *serve* — only to deploy.
 
@@ -68,7 +73,8 @@ Pages serves. The weekly content pipeline is implemented as Claude Code skills u
 ### Weekly MO — the user's standing routine (same every week, don't ask)
 
 User directive (2026-09-25): "i want every week to be same MO." Run straight through without
-asking which path to take:
+asking which path to take. Since 2026-10-09 the cloud routine runs these same steps by email
+(see "Weekly cloud routine" below); do them by hand only if the routine failed.
 
 1. Fetch → build JSON → verify locally → bake last week's official solve → commit locally.
    **Do not push yet.**
@@ -130,6 +136,48 @@ resulting Across/Down number sets exactly equal that JSON's existing clue-number
 build strips those `dev-export-box:start/end` marker regions from `index.html` outright and
 `build.js` throws if any `devExportBox`/`devExportText`/`isPreviewHost` reference survives the
 strip. The box must not exist in public source, not merely be runtime-gated.
+
+### Weekly cloud routine (unattended Weekly MO)
+
+The routine follows `skill/automation/RUNBOOK.md`, which overrides interactive habits where they
+conflict. 2026-10-30 and 2026-11-06 were the first fully hands-off weeks: no blocks and no manual
+steps.
+
+- **Routines:**
+  - Main: `trig_01KbVr5VESyUnkJsYV9BTDqc` "ccpx weekly crossword", in cloud env
+    `env_016c3Rs2zPrBtAGiAToPnbPX`. Cron `7 12-22 * * 5` UTC, so hourly at :07 on Fridays,
+    8am–6pm EDT. It also has an API trigger.
+  - Permission-test copy: `trig_01LjMGhpLCCycsHYrk15c7LJ` "ccpx Stage C replay test
+    (one-off)". It's disabled, with a dummy cron and the same permissions as main. Rerunning it
+    is safe (the push is a no-op). Use it to prove a permission change before a real Friday.
+- **Gmail bridge:** `skill/automation/gmail-bridge.gs` is an Apps Script in the mailbox that gets
+  the replies.
+  - It polls `subject:ccpx newer_than:3d`: every minute on Fridays ET, hourly otherwise. It
+    fires the main routine's API trigger on each reply that doesn't start with `[ccpx-bot]`.
+  - To reinstall, paste the file and run `install`. Re-running `install` marks pending mail as
+    seen, so send a fresh test reply afterwards.
+- **Flow:** each fire works out the stage from git + Gmail, does at most one stage, then exits.
+  It sends one thread per week, subject `ccpx <DATE>: ready to solve`, and every bot message's
+  first line is `[ccpx-bot] Step <N>/3: <label>`:
+  - **A, "Step 1/3: solve this":** build the puzzle on `claude/solve-wip`, bake in last week's
+    official key, deploy the `solve-<ID>` preview, email the link.
+  - **B:** the user replies with the `crossword:<ID>=` line. The routine answer-checks it, then
+    sends either "Step 2/3: question" (an open question) or "Step 2/3: reply OK to publish"
+    (clean, hashes written).
+  - **C:** the user replies OK. The routine runs `node build.js`, then the standalone
+    `git push origin claude/solve-wip:main`, then `python3 skill/automation/verify-live.py`,
+    then `python3 skill/automation/delete-previews.py`. Last it sends "Step 3/3: published" (or
+    "publish failed").
+- **Permissions that work:**
+  - In the routine's `allowed_tools`: exact rules for the main push (plain and `:*`) and both
+    no-argument scripts.
+  - In `auto_mode_allow`: `$defaults` plus unconditional publish and preview-cleanup prose.
+  - In `auto_mode_environment`: a line saying the owner authorizes these actions.
+- **verify-live.py** takes no arguments. The cloud proxy 403s ccpx.fyi, so it polls the CF API
+  for a successful production deployment of `git rev-parse HEAD` (15-minute timeout). It also
+  checks that `dist/index.html` has no `devExportBox`. It needs `CF_API_TOKEN_CCPX`.
+- **delete-previews.py** deletes every preview deployment (both `solve-*` and
+  `claude/solve-wip` git previews) and never touches production. It prints `previews left: 0`.
 
 ### Usage counts (answering "do we have real users?")
 
@@ -264,8 +312,35 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
   key, and keep the completion indicator a persistent badge — never a popup.
 - **Plaintext solutions** live locally in `working-files/<date>/solution.txt` (gitignored, never
   committed or shipped). The user wants one per puzzle, so write or refresh it whenever hashes are written.
-  The old `puzzles/*.solution.json` scratch files are gone. All 9 were rebuilt and hash-verified on 2026-10-04.
+  The old `puzzles/*.solution.json` scratch files are gone. All 9 were rebuilt and hash-verified on 2026-10-04;
+  10/09–11/06 were written and hash-verified on 2026-11-06. The header line says "official printed key" once
+  `solutionSource` is `official`, otherwise "reference solve". Parse grids by skipping only that first line,
+  since rows can start with `#`.
 - `.jekyll-cache/` is stale; nothing here uses Jekyll.
+
+**Cloud routine gotchas** (each one stalled a real week before it was fixed):
+- **Saving the routine in the Desktop/web UI wipes `auto_mode_allow`** and adds a random
+  `outcomes` branch. Change routines only through RemoteTrigger `update`, sending the full
+  `session_request`.
+- **The cloud classifier can't see tool output or email,** so a conditional prose allow rule
+  ("after the user replied OK") can never be met. Exact `allowed_tools` rules plus
+  unconditional prose are what work.
+- **Commands that need permission must run standalone.** Piping or chaining them (e.g.
+  `git push … 2>&1 | tail`) sends them to the classifier, which blocks them as
+  [Production Deploy]. Even a read-only `git fetch` right after the push was blocked 3× and
+  stalled the run (2026-10-23). The RUNBOOK forbids git commands after the push.
+- **Cloud limits:** the cloud git proxy can't delete remote branches (and probably can't
+  force-push), so the routine reuses `claude/solve-wip` with fast-forwards only. The cloud
+  proxy also 403s `ccpx.fyi`.
+- **Pushes to `claude/solve-wip` DO build CF git previews,** despite the `claude/*` exclusion
+  in the Pages settings. `delete-previews.py` cleans them up.
+- **Gmail URL rewriting:** Gmail rewrites links in stored mail to
+  `google.com/url?q=<real>&…`. Unwrap `q=` before using any URL read back from a thread.
+- **Gmail subject search matches whole words:** `subject:"ccpx 20"` matched nothing; use
+  `subject:ccpx`.
+- **Telling bot from human:** the Gmail connector sends as the user, so only the
+  `[ccpx-bot]` first line tells bot mail from the user's. User replies quote the bot mail,
+  so judge only the text above "On … wrote:".
 
 ## Superseded (kept for history, don't rely on these)
 
@@ -277,10 +352,18 @@ discouraged and the user's main Chrome is off limits. Useful selectors:
   stale dev server, not a code defect.
 - *2026-09-18* — "Reference solving is done over localhost." It's done over a Cloudflare Pages
   preview URL, because the user solves on a separate device.
+- *2026-11-06* — "The routine fires every 2 hours" (RUNBOOK header, cron
+  `7 12,14,16,18,20,22 * * 5` from 2026-10-09). The cron is now hourly, `7 12-22 * * 5`; the
+  RUNBOOK was fixed in `02b9169`.
+- *2026-11-06* — "Excluding `claude/*` in Pages settings stops solve-wip previews." It doesn't;
+  `delete-previews.py` removes them.
+- *2026-11-06* — "Prose `auto_mode_allow` rules alone let the routine push main / delete
+  previews." The cloud classifier ignored them (blocked 10/16, 10/17); exact `allowed_tools`
+  rules are what work.
 - See also `skill/references/workflow_notes.md` for two more retired beliefs: the
   `<YYMMDD>fullbookweb` doc-slug pattern (404s; resolve the slug from the listing page), and
   the claim that `image.isu.pub` was unreachable without a browser (it's reachable; the SVG
   endpoint is better anyway).
 
 ---
-**Last updated:** 2026-09-26 — usage counts (Pages Function + Analytics Engine); ?me= labels + device parsing.
+**Last updated:** 2026-11-06 — added the weekly cloud-routine section (routines, bridge, stages, permissions, scripts) and routine gotchas; 3 entries superseded.
