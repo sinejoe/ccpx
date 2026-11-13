@@ -1,0 +1,342 @@
+{
+  "id": "20261113",
+  "date": "2026-11-13",
+  "kickerDate": "Nov 13 2026",
+  "title": "“Just Before the Apostrophe”",
+  "subtitle": "Jonesin' by Matt Jones — one character at a time.",
+  "solutionSalt": "ccpxwd-2026-ref-solve",
+  "solutionHashesFile": "puzzles/2026-11-13.solution-hashes.txt",
+  "pattern": [
+    "#.......#......",
+    "........#......",
+    "........#......",
+    ".....##...##...",
+    "...#...........",
+    "###....#....###",
+    "....#...##.....",
+    "...............",
+    ".....##...#....",
+    "###....#....###",
+    "...........#...",
+    "...##...##.....",
+    "......#........",
+    "......#........",
+    "......#.......#"
+  ],
+  "across": [
+    [
+      1,
+      "Beseech"
+    ],
+    [
+      8,
+      "Elephant-headed deity"
+    ],
+    [
+      14,
+      "Tithe amount, often"
+    ],
+    [
+      15,
+      "Delphic prophet"
+    ],
+    [
+      16,
+      "*Geelong greeting"
+    ],
+    [
+      17,
+      "*Bat mitzvah toast"
+    ],
+    [
+      18,
+      "Esther of “Good Times”"
+    ],
+    [
+      19,
+      "“Yokokimthurston” collaborator (2012)"
+    ],
+    [
+      21,
+      "Fig. on a vitamin bottle"
+    ],
+    [
+      22,
+      "She-eep?"
+    ],
+    [
+      23,
+      "*She played an “anthropomorphized vessel of knowledge” on “The Good Place”"
+    ],
+    [
+      28,
+      "___ Ren of “Star Wars”"
+    ],
+    [
+      29,
+      "2017 title character voiced by Ana Ofelia Murguía"
+    ],
+    [
+      30,
+      "Classic poodle name"
+    ],
+    [
+      33,
+      "Spinner"
+    ],
+    [
+      35,
+      "Birthing assistant"
+    ],
+    [
+      39,
+      "*“Tune in next week,” in the “Beverly Hillbillies” closing credits"
+    ],
+    [
+      43,
+      "Acclimatize (to)"
+    ],
+    [
+      44,
+      "Pizza option"
+    ],
+    [
+      45,
+      "Remote spot, perhaps"
+    ],
+    [
+      46,
+      "Rival of Ford, long ago"
+    ],
+    [
+      49,
+      "“Bus Stop” dramatist William"
+    ],
+    [
+      51,
+      "*Repeated line by a family of redheaded bullies in “Billy Madison”"
+    ],
+    [
+      55,
+      "Seller of Web access, briefly"
+    ],
+    [
+      58,
+      "___ Perce (Chief Joseph’s tribe)"
+    ],
+    [
+      59,
+      "Singer Kershaw who performed at Live Aid"
+    ],
+    [
+      60,
+      "David Thewlis’s role in “Kaos,” where his realm is in black-and-white"
+    ],
+    [
+      62,
+      "*Campfire treats"
+    ],
+    [
+      65,
+      "*Capital of Chad"
+    ],
+    [
+      68,
+      "Kennedy daughter who married Sargent Shriver"
+    ],
+    [
+      69,
+      "Provide (a ship) with a post that’s too big"
+    ],
+    [
+      70,
+      "Shaky motion"
+    ],
+    [
+      71,
+      "Street where Elizabeth Barrett lived"
+    ]
+  ],
+  "down": [
+    [
+      1,
+      "Grant"
+    ],
+    [
+      2,
+      "“Their Eyes Were Watching God” novelist Zora ___ Hurston"
+    ],
+    [
+      3,
+      "“Gotta go,” in texts"
+    ],
+    [
+      4,
+      "Medical solution"
+    ],
+    [
+      5,
+      "___ Shibahara, U.S.-born tennis doubles specialist who plays internationally for Japan"
+    ],
+    [
+      6,
+      "Court fig."
+    ],
+    [
+      7,
+      "2000s teen drama set in Newport Beach"
+    ],
+    [
+      8,
+      "Act erratically, in a way"
+    ],
+    [
+      9,
+      "Curved path"
+    ],
+    [
+      10,
+      "“I reckon it ain’t”"
+    ],
+    [
+      11,
+      "Alternative to a mailed greeting"
+    ],
+    [
+      12,
+      "Trombone part"
+    ],
+    [
+      13,
+      "“I have the power!” proclaimer"
+    ],
+    [
+      14,
+      "Fiona, for one"
+    ],
+    [
+      20,
+      "Tribeca is part of it"
+    ],
+    [
+      24,
+      "Saxophone variety"
+    ],
+    [
+      25,
+      "Space"
+    ],
+    [
+      26,
+      "“Highway to Hell” band"
+    ],
+    [
+      27,
+      "Team newcomer"
+    ],
+    [
+      28,
+      "“___ was here” (WWII-era meme)"
+    ],
+    [
+      30,
+      "“By the way ...”"
+    ],
+    [
+      31,
+      "Malcolm played by Jeff Goldblum in “Jurassic Park”"
+    ],
+    [
+      32,
+      "Seasonal shot target"
+    ],
+    [
+      34,
+      "Energy"
+    ],
+    [
+      36,
+      "Young ___ (small children)"
+    ],
+    [
+      37,
+      "Response to a cat video, maybe"
+    ],
+    [
+      38,
+      "Deeply impress"
+    ],
+    [
+      40,
+      "Alternative to work or home?"
+    ],
+    [
+      41,
+      "Pre-trial court payment"
+    ],
+    [
+      42,
+      "Author Tyler"
+    ],
+    [
+      47,
+      "Like heavier cakes"
+    ],
+    [
+      48,
+      "Word in Ceylon’s current name"
+    ],
+    [
+      50,
+      "A preceder"
+    ],
+    [
+      51,
+      "Beginning stage"
+    ],
+    [
+      52,
+      "Raise an objection"
+    ],
+    [
+      53,
+      "It’s represented as O-O-O"
+    ],
+    [
+      54,
+      "“The Whitest Kids ___” (late-2000s IFC sketch show)"
+    ],
+    [
+      55,
+      "Best-case"
+    ],
+    [
+      56,
+      "Have the feeling"
+    ],
+    [
+      57,
+      "11th-grade exam"
+    ],
+    [
+      61,
+      "Cannonballs and such"
+    ],
+    [
+      63,
+      "Basketball net holder"
+    ],
+    [
+      64,
+      "“Foucault’s Pendulum” novelist Umberto"
+    ],
+    [
+      66,
+      "506, in ancient Rome"
+    ],
+    [
+      67,
+      "Cartoon leader of the Holograms"
+    ]
+  ]
+}
