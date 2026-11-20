@@ -1,0 +1,334 @@
+{
+  "id": "20261120",
+  "date": "2026-11-20",
+  "kickerDate": "Nov 20 2026",
+  "title": "“The Age of Optimization”",
+  "subtitle": "Jonesin' by Matt Jones — looks aren’t the only thing.",
+  "solutionSalt": "ccpxwd-2026-ref-solve",
+  "solutionHashesFile": "puzzles/2026-11-20.solution-hashes.txt",
+  "pattern": [
+    "......#....#...",
+    "......#........",
+    "......#........",
+    "............###",
+    "####...###....#",
+    ".....#....#....",
+    "......#....#...",
+    "...............",
+    "...#....#......",
+    "....#....#.....",
+    "#....###...####",
+    "###............",
+    "........#......",
+    "........#......",
+    "...#....#......"
+  ],
+  "across": [
+    [
+      1,
+      "Liang ___, figure in Chinese legend “The Butterfly Lovers”"
+    ],
+    [
+      7,
+      "Half-started?"
+    ],
+    [
+      11,
+      "Little doggie"
+    ],
+    [
+      14,
+      "Bullring figure"
+    ],
+    [
+      15,
+      "“Let’s hope this movie screen is ginormous,” perhaps?"
+    ],
+    [
+      17,
+      "Prebiotic soft drink brand since 2018"
+    ],
+    [
+      18,
+      "Sprang (from)"
+    ],
+    [
+      19,
+      "“Big Hero 6” robot belonging to someone who’s lost her husband?"
+    ],
+    [
+      21,
+      "“Science Guy” Bill"
+    ],
+    [
+      22,
+      "Himalayan cryptid"
+    ],
+    [
+      25,
+      "Limited-time fast-food offering"
+    ],
+    [
+      29,
+      "Bristol brews"
+    ],
+    [
+      33,
+      "Jutland resident, maybe"
+    ],
+    [
+      35,
+      "“Gotcha”"
+    ],
+    [
+      37,
+      "Certain choir member"
+    ],
+    [
+      39,
+      "Solo played by Harrison"
+    ],
+    [
+      40,
+      "One who tries to figure out the physics of Thunderdome?"
+    ],
+    [
+      43,
+      "Iron source"
+    ],
+    [
+      44,
+      "Dance with glow sticks"
+    ],
+    [
+      45,
+      "Novelist Jennifer"
+    ],
+    [
+      46,
+      "“... three men in ___”"
+    ],
+    [
+      48,
+      "Rumple, as hair"
+    ],
+    [
+      50,
+      "___ Island (“Jaws” town)"
+    ],
+    [
+      51,
+      "Dubious email"
+    ],
+    [
+      53,
+      "Calligrapher’s item"
+    ],
+    [
+      55,
+      "Degradation of a VHS competitor?"
+    ],
+    [
+      63,
+      "Reaction to hearing the 1990s referred to as “late 20th-century”"
+    ],
+    [
+      66,
+      "Food critic’s asset"
+    ],
+    [
+      67,
+      "Ethnomusicologist Alan’s average grade?"
+    ],
+    [
+      68,
+      "Rodrigo with the album “You Seem Pretty Sad for a Girl So in Love”"
+    ],
+    [
+      69,
+      "“It’s coming home” World Cup team, on scoreboards"
+    ],
+    [
+      70,
+      "Actor ___ Patrick Harris"
+    ],
+    [
+      71,
+      "Precipitates pellets"
+    ]
+  ],
+  "down": [
+    [
+      1,
+      "Cram into the overhead"
+    ],
+    [
+      2,
+      "Festival of colors"
+    ],
+    [
+      3,
+      "Dry as a desert"
+    ],
+    [
+      4,
+      "___ baby (celebrity offspring)"
+    ],
+    [
+      5,
+      "Kodiak, for one"
+    ],
+    [
+      6,
+      "“___-daisy!”"
+    ],
+    [
+      7,
+      "“Ev’ry time we say goodbye / I ___ little” (Cole Porter lyric)"
+    ],
+    [
+      8,
+      "Primetime or Daytime award"
+    ],
+    [
+      9,
+      "Palindromic title"
+    ],
+    [
+      10,
+      "“Negatory!”"
+    ],
+    [
+      11,
+      "Avocado center"
+    ],
+    [
+      12,
+      "Reap the benefit of"
+    ],
+    [
+      13,
+      "Master’s follower, maybe"
+    ],
+    [
+      16,
+      "Did floor work"
+    ],
+    [
+      20,
+      "She played Dorothy on “The Golden Girls”"
+    ],
+    [
+      23,
+      "Sesame spread"
+    ],
+    [
+      24,
+      "Packaged together"
+    ],
+    [
+      25,
+      "Jason of “A Minecraft Movie”"
+    ],
+    [
+      26,
+      "Some song lists"
+    ],
+    [
+      27,
+      "Creep higher, as clothing"
+    ],
+    [
+      28,
+      "Philosopher’s suffix"
+    ],
+    [
+      30,
+      "Bowling shoe fasteners"
+    ],
+    [
+      31,
+      "Cotton gin inventor Whitney"
+    ],
+    [
+      32,
+      "Beefy dish"
+    ],
+    [
+      34,
+      "Contest submission"
+    ],
+    [
+      36,
+      "Quiz"
+    ],
+    [
+      38,
+      "Everybody, inclusively"
+    ],
+    [
+      41,
+      "“Law & Order: ___”"
+    ],
+    [
+      42,
+      "“Ed Wood” director Burton"
+    ],
+    [
+      47,
+      "Tower in Genesis"
+    ],
+    [
+      49,
+      "Place for restoration"
+    ],
+    [
+      52,
+      "Edible fruit arrangement ingredient, perhaps"
+    ],
+    [
+      54,
+      "Montreal baseball team, once"
+    ],
+    [
+      56,
+      "Big book"
+    ],
+    [
+      57,
+      "Jai ___"
+    ],
+    [
+      58,
+      "1540, in old Rome"
+    ],
+    [
+      59,
+      "“Dawn” author Wiesel"
+    ],
+    [
+      60,
+      "Spelunker’s hangout"
+    ],
+    [
+      61,
+      "Working away"
+    ],
+    [
+      62,
+      "Affirmative votes"
+    ],
+    [
+      63,
+      "Arctic sight"
+    ],
+    [
+      64,
+      "Boggy lowland"
+    ],
+    [
+      65,
+      "Neurological test, briefly"
+    ]
+  ]
+}
